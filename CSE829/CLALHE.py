@@ -6,6 +6,34 @@ class CLALHE:
     """
     Contrast Limited Adaptive Local Histogram Equalization (CLALHE)
     Based on: Mohammed & Isa, IEEE Access 2025
+
+    Implementation note - subimage boundary blending
+    ------------------------------------------------
+    Part 2 of the paper subdivides the image into ONS subimages (Eq. 5-6) and
+    equalizes each one independently. Taken literally, that produces visible
+    block seams: each subimage derives its own transfer function from its own
+    histogram, so two pixels straddling a boundary have almost identical input
+    intensities but are mapped through unrelated LUTs, and the output jumps.
+    This is the same discontinuity that made plain (non-interpolated) AHE
+    unusable, and it is why Zuiderveld's CLAHE bilinearly interpolates between
+    tile mappings.
+
+    The paper specifies no remedy. Its Part 2 step (v) says only "combination
+    of the enhanced subimages", and Section IX pins that down as literal
+    concatenation: "(viii) Merging of subimages involves their concatenation".
+    "Bilinear interpolation" appears once in the whole paper, in the literature
+    review, describing a different method (ACE-HM, ref [78]) - not CLALHE. The
+    reported metrics could not have caught the seams either: PSNR, entropy,
+    AMBE, SSI, CII and RMSE are all global statistics that a handful of
+    boundary rows and columns barely move. It only shows up when you look at
+    the picture.
+
+    So the subdivision is kept exactly as specified - the number of subimages,
+    their dimensions and their independent histograms are untouched - and only
+    the write-back is changed: each subimage is read with an extra margin of
+    context and composited through a linear cross-fade whose weights sum to 1
+    across every shared boundary. This is the sub-image-level analogue of the
+    tile interpolation CLAHE already performs internally, applied one level up.
     """
     
     def __init__(self):
@@ -120,9 +148,41 @@ class CLALHE:
         
         return cbd, best_i_cl, n_peaks, n_valleys
     
-    def part2_enhance(self, gray_image, n_valleys=None):
+    def _blend_profile(self, p_start, p_stop, c_start, c_stop, margin,
+                       ramp_head, ramp_tail):
+        """
+        1D weight profile for one subimage along a single axis.
+
+        The weight is 1.0 in the interior of the subimage core and falls
+        linearly to 0.0 across a 2*margin wide band centred on each shared
+        boundary. Two adjacent subimages therefore contribute weights that
+        sum to exactly 1.0 everywhere in their overlap, so the cross-fade is
+        energy preserving and leaves no visible step.
+        """
+        coords = np.arange(p_start, p_stop, dtype=np.float64)
+        weights = np.ones(p_stop - p_start, dtype=np.float64)
+
+        if margin > 0:
+            if ramp_head:  # boundary shared with the previous subimage
+                weights = np.minimum(
+                    weights, np.clip((coords - (c_start - margin)) / (2.0 * margin), 0.0, 1.0)
+                )
+            if ramp_tail:  # boundary shared with the next subimage
+                weights = np.minimum(
+                    weights, np.clip(((c_stop + margin) - coords) / (2.0 * margin), 0.0, 1.0)
+                )
+
+        return weights
+
+    def part2_enhance(self, gray_image, n_valleys=None, blend_ratio=0.25):
         """
         Part 2: Subdivide image and enhance each subimage independently
+
+        Each subimage is equalized on its own (as the paper specifies), but it
+        is read with an extra `blend_ratio` margin of context on every shared
+        side and written back through a linear cross-fade. This removes the
+        block seams caused by neighbouring subimages using unrelated transfer
+        functions, without merging their histograms.
         """
         if self.optimal_cbd is None or self.optimal_i_cl is None:
             raise ValueError("Run part1_determine_optimal_params first!")
@@ -151,28 +211,48 @@ class CLALHE:
         sub_w = max(sub_w, 1)
         
         # Subdivide and enhance each subimage independently
-        enhanced_image = np.zeros_like(gray_image)
-        
         rows = max(1, h // sub_h)
         cols = max(1, w // sub_w)
-        
+
+        # Overlap margins: only needed along axes that are actually split
+        margin_y = max(1, int(sub_h * blend_ratio)) if rows > 1 else 0
+        margin_x = max(1, int(sub_w * blend_ratio)) if cols > 1 else 0
+
+        accumulator = np.zeros((h, w), dtype=np.float64)
+        weight_total = np.zeros((h, w), dtype=np.float64)
+
         for r in range(rows):
             for c in range(cols):
                 y_start = r * sub_h
                 y_end = min((r + 1) * sub_h, h) if r < rows - 1 else h
                 x_start = c * sub_w
                 x_end = min((c + 1) * sub_w, w) if c < cols - 1 else w
-                
-                subimage = gray_image[y_start:y_end, x_start:x_end]
-                
+
+                # Extended read window: the subimage plus its blending margin
+                py_start = max(0, y_start - margin_y)
+                py_end = min(h, y_end + margin_y)
+                px_start = max(0, x_start - margin_x)
+                px_end = min(w, x_end + margin_x)
+
+                subimage = gray_image[py_start:py_end, px_start:px_end]
+
                 # Apply optimal CLAHE to each subimage
                 enhanced_sub = self._apply_clahe_with_params(
                     subimage, self.optimal_cbd, self.optimal_i_cl
                 )
-                
-                enhanced_image[y_start:y_end, x_start:x_end] = enhanced_sub
-        
-        return enhanced_image
+
+                # Cross-fade weights, separable along the two axes
+                w_y = self._blend_profile(py_start, py_end, y_start, y_end, margin_y,
+                                          ramp_head=(r > 0), ramp_tail=(r < rows - 1))
+                w_x = self._blend_profile(px_start, px_end, x_start, x_end, margin_x,
+                                          ramp_head=(c > 0), ramp_tail=(c < cols - 1))
+                weights = w_y[:, None] * w_x[None, :]
+
+                accumulator[py_start:py_end, px_start:px_end] += enhanced_sub * weights
+                weight_total[py_start:py_end, px_start:px_end] += weights
+
+        enhanced_image = accumulator / np.maximum(weight_total, 1e-8)
+        return np.clip(np.round(enhanced_image), 0, 255).astype(gray_image.dtype)
     
     def enhance(self, image):
         """
@@ -205,7 +285,7 @@ class CLALHE:
 # === USAGE EXAMPLE ===
 if __name__ == "__main__":
     # Load image
-    img = cv2.imread("crybaby.jpeg")
+    img = cv2.imread("public/input_image.jpg")
     if img is None:
         print("Error: Could not load image")
     else:

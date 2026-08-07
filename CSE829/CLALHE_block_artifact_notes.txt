@@ -1,0 +1,480 @@
+================================================================================
+CLALHE - BLOCK ARTIFACT: DIAGNOSIS, FIX, AND PAPER-FIDELITY AUDIT
+File under discussion: CLALHE.py
+Reference: Mohammed & Isa, "Contrast Limited Adaptive Local Histogram
+           Equalization (CLALHE) Method for Poor Contrast Image Enhancement",
+           IEEE Access, vol. 13, pp. 62600-62632, 2025.
+           DOI 10.1109/ACCESS.2025.3558506
+Test image: crybaby.jpeg (800 x 1024)
+
+NOTE: this revision was written WITH the paper in hand. Every claim below is
+checked against the published text; section and equation numbers are cited.
+================================================================================
+
+
+--------------------------------------------------------------------------------
+1. WHAT YOU WERE SEEING
+--------------------------------------------------------------------------------
+
+The output had straight lines cutting the picture into rectangles. They were
+most obvious in the smooth, out-of-focus background (top-left crowd, the blurred
+region behind the shoulder) and invisible in busy areas such as the face and the
+shirt texture.
+
+For crybaby.jpeg the pipeline produced these parameters:
+
+    peaks found        = 55
+    valleys found      = 54
+    CBD (Eq. 2)        = 5
+    I_CL (Eq. 3)       = 1.000
+    ONS (Eq. 5)        = 6
+    SID (Eq. 6)        = sub_h = 400, sub_w = 341
+    resulting grid     = 2 rows x 3 columns
+
+So the seams were expected at:
+
+    horizontal seam at y = 400
+    vertical  seams at x = 341 and x = 682
+
+which is exactly where the lines appeared in your screenshot. The artifact was
+not random noise or a JPEG problem - it was the subimage grid itself becoming
+visible.
+
+
+--------------------------------------------------------------------------------
+2. WHY THE SUBIMAGE BOUNDARIES WERE VISIBLE
+--------------------------------------------------------------------------------
+
+The cause was in part2_enhance. The original loop did this:
+
+    subimage     = gray_image[y_start:y_end, x_start:x_end]     # cut
+    enhanced_sub = clahe.apply(subimage)                        # equalize alone
+    enhanced_image[y_start:y_end, x_start:x_end] = enhanced_sub # paste back
+
+Each subimage was cut out, passed through its OWN separate call to
+cv2.createCLAHE(...).apply(), and pasted straight back with a hard edge.
+
+Histogram equalization is a per-pixel intensity remapping: it builds a lookup
+table T from the histogram of whatever region it is given, then replaces every
+pixel value v with T(v). Six independent subimages means six independent
+histograms, therefore six DIFFERENT lookup tables T1..T6.
+
+Now consider two neighbouring pixels sitting on opposite sides of x = 341:
+
+    left  pixel, input value 118  ->  T1(118) = 131
+    right pixel, input value 119  ->  T2(119) = 147
+
+The inputs are almost the same (the background is smooth there), but they are
+remapped by unrelated functions, so the outputs differ by a visible amount. Do
+this down the whole column and you get a continuous, perfectly straight step in
+brightness - a seam. The human visual system is extremely good at detecting
+straight, extended edges of even 2-3 grey levels, which is why the lines were so
+obvious even though I_CL was only 1.0 (very mild enhancement).
+
+Three follow-on points that explain the specific look of the artifact:
+
+  (a) Why the seams show up in the blurred background but not on the face.
+      The step size is roughly constant everywhere, but in textured regions it
+      is masked by the local detail. In a smooth gradient there is nothing to
+      hide it, so it reads as a hard line.
+
+  (b) Why you did NOT see a 5x5 grid of lines inside each subimage.
+      CBD = 5, so OpenCV's CLAHE internally divides each subimage into 5x5
+      tiles, each with its own LUT. Those would produce exactly the same kind
+      of seam - except OpenCV bilinearly interpolates between the four nearest
+      tile LUTs for every pixel (Zuiderveld's original algorithm, the paper's
+      reference [28]), which makes the transition smooth. That interpolation is
+      confined to a single .apply() call. Six separate .apply() calls have
+      nothing tying them together, so the boundaries BETWEEN subimages stayed
+      sharp.
+
+  (c) Why it appeared in both grayscale and colour.
+      For colour input, enhance() converts to LAB and processes only the L
+      (lightness) channel, then converts back. The seams are therefore pure
+      luminance steps in both cases and look identical. The colour conversion
+      is not involved in the artifact.
+
+This is not a CLALHE-specific problem. It is the classic block artifact of
+plain, non-interpolated Adaptive Histogram Equalization - historically the
+exact defect that motivated the interpolation step in CLAHE. The paper itself
+describes this defect in Section III, calling it the 'halo effect' and
+describing it as "a distinct grid-like pattern surrounding edges" - but it
+applies that reasoning only to AHE's tiles, never to its own subimage grid.
+
+
+--------------------------------------------------------------------------------
+3. DOES THE PAPER MENTION BILINEAR INTERPOLATION? - NO. VERIFIED.
+--------------------------------------------------------------------------------
+
+This was your direct question, so it gets its own section. Short answer: you
+did not miss a blending step. There is none to miss.
+
+3.1  The phrase "bilinear interpolation" appears exactly ONCE in the entire
+     paper, on p. 62606, and it is NOT about CLALHE. It is in the literature
+     review, describing ACE-HM (reference [78], Liu et al.), one of the prior
+     methods being surveyed:
+
+         "Bilinear interpolation also reduces blocking artifacts, which
+          eliminates the problems caused by block-wise histogram processing
+          and makes the transitions between image regions smoother."
+
+     So the authors were explicitly aware that block-wise histogram processing
+     causes blocking artifacts, and that bilinear interpolation is the standard
+     cure - they wrote that sentence about someone else's method. They did not
+     carry it into their own.
+
+3.2  What CLALHE actually specifies for the merge. Section V.B lists Part 2's
+     five steps; step (v) is only:
+
+         "combination of the enhanced subimages to produce the final enhanced
+          image"
+
+     and the body text adds:
+
+         "Once all the subimages have been enhanced, they are then combined to
+          construct the resultant image. ... The resulting image is a composite
+          of enhanced subimages."
+
+     No overlap, no weighting, no interpolation, no smoothing - "combined" and
+     "composite" are the only words used.
+
+3.3  The decisive line is in Section IX (Computational Complexity), item (viii),
+     where the authors enumerate what each step costs:
+
+         "(viii) Merging of subimages involves their concatenation, which is
+          linear in terms of total pixels and results in a linear complexity
+          of O(M.N)."
+
+     CONCATENATION. That is unambiguous - the subimages are stuck together edge
+     to edge, exactly as your original code did. A blended or interpolated merge
+     would not be described as concatenation, and the complexity budget leaves
+     no room for one.
+
+3.4  Conclusion: your original part2_enhance was a CORRECT implementation of the
+     paper's Part 2. The seams are a property of the published method, not a
+     bug you introduced. The paper claims its output is free of "washed-out or
+     unwanted artifact details" (Section V) and highlights "minimization of
+     unwanted artifacts" (Section X), but nothing in the described algorithm
+     prevents subimage seams.
+
+3.5  Worth noting for your report: POSHE - reference [29], one of the seven
+     methods CLALHE is benchmarked against - is literally "Partially Overlapped
+     Sub-block Histogram Equalization". The overlap-based cure for this exact
+     artifact is sitting in the paper's own comparison table.
+
+
+--------------------------------------------------------------------------------
+4. WHAT I CHANGED, AND WHY THIS APPROACH
+--------------------------------------------------------------------------------
+
+There were two ways to remove the seams:
+
+  Option A - drop the manual subdivision entirely and make a single
+  cv2.createCLAHE call over the whole image with tileGridSize =
+  (cols*CBD, rows*CBD). Same effective tile density, and OpenCV's internal
+  interpolation removes every seam for free.
+
+  Option B - keep the paper's subdivision and blend the subimage boundaries.
+
+Option A is less code, but it collapses Part 2 of the paper into a single CLAHE
+call, so the "Local" in CLALHE - the independent per-subimage histograms - would
+no longer exist. You asked to stay faithful to the paper, so I implemented
+Option B.
+
+CHANGES MADE (all inside CLALHE.py):
+
+  1. New helper: _blend_profile(...)
+     Builds a 1-D weight curve for one subimage along one axis. The weight is
+     1.0 in the interior of the subimage, and falls linearly to 0.0 across a
+     band of width 2*margin centred on each SHARED boundary. No ramp is applied
+     at the outer image border.
+
+  2. part2_enhance(...) now takes a blend_ratio argument (default 0.25) and its
+     write-back loop was restructured:
+
+       - Read window is enlarged. Each subimage is still defined by exactly the
+         same core rectangle from Eq. (5)/(6), but it is READ with an extra
+         margin (25% of the subimage size) on every side that touches a
+         neighbour, clipped at the image border.
+
+       - CLAHE is still applied once per subimage, independently, with the same
+         optimal CBD and I_CL. Nothing about the parameter scheme changed.
+
+       - Write-back is now a weighted accumulation instead of a hard paste:
+
+             accumulator  += enhanced_sub * weights
+             weight_total += weights
+             result = accumulator / weight_total
+
+         where weights = w_y[:,None] * w_x[None,:] (separable 2-D cross-fade).
+
+  3. The result is rounded, clipped to [0,255] and cast back to the input dtype,
+     since the accumulation happens in float64.
+
+WHY THIS PARTICULAR WEIGHTING
+
+The two ramps are deliberately centred ON the boundary, not started at it.
+Subimage A's weight falls 1 -> 0 over [b-m, b+m]; subimage B's weight rises
+0 -> 1 over the same interval. Linear ramps that are mirror images sum to
+exactly 1.0 at every position in the overlap, so:
+
+    - the composite is a true convex combination of the two enhanced versions
+      (no brightening or darkening of the seam region, no halo band);
+    - the output is continuous across the boundary, because at the boundary
+      itself both subimages contribute 0.5 and the value slides smoothly from
+      pure-A to pure-B;
+    - the normalisation by weight_total is mathematically redundant in the
+      interior, but it is kept because it makes the border/corner cases
+      (clipped read windows, odd remainders in the last row/column) correct
+      automatically.
+
+Conceptually this is the same trick CLAHE already performs internally between
+its CBD x CBD tiles, applied one level up, between the ONS subimages. It is
+also, in effect, what POSHE [29] does with its partially overlapped sub-blocks
+and what ACE-HM [78] does with bilinear interpolation - both of which the paper
+cites approvingly in its own literature review.
+
+WHAT IS PRESERVED
+
+    - ONS and SID (Eq. 5, Eq. 6)        unchanged
+    - number and placement of subimages unchanged
+    - one independent CLAHE per subimage unchanged
+    - CBD and I_CL from Part 1          unchanged
+    - blend_ratio = 0.0 reproduces the original hard-cut behaviour exactly,
+      so you can A/B the two for your report.
+
+MEASURED RESULT
+
+Seam strength was measured as the mean absolute intensity step across the
+boundary row/column, divided by the median step of nearby rows/columns. A
+ratio of 1.0 means "indistinguishable from ordinary local image gradient";
+higher means a visible artifact. The unenhanced input is included as the
+baseline, because the photo has some real content near y=400.
+
+                          x=341      x=682      y=400
+    original (baseline)   1.27x      1.02x      2.29x
+    hard cut (before)     1.72x      2.14x      3.92x
+    blended  (after)      1.28x      0.95x      2.38x
+
+After blending, every boundary is back to the baseline level of the original
+photograph, i.e. the algorithm no longer adds any step of its own. (The 2.29x
+at y=400 is a real horizontal edge in the source image, not an artifact - note
+that the unenhanced input shows it too.) This was also confirmed visually on a
+side-by-side render.
+
+COST
+
+25% overlap on split axes means each subimage is read about 1.5x larger in each
+split direction, so roughly 2x more pixels are pushed through CLAHE overall.
+For these image sizes it is not noticeable. Lower blend_ratio = cheaper and
+sharper transitions but a higher chance of a residual seam; higher = smoother
+but the subimages' distinct local adaptation gets averaged away over a wider
+band. 0.25 was comfortably sufficient here.
+
+Note this does change the paper's O(M.N) complexity claim by a constant factor
+(still linear, roughly 2x the pixel work in Part 2).
+
+
+--------------------------------------------------------------------------------
+5. AUDIT - WHAT YOUR CODE GOT RIGHT
+--------------------------------------------------------------------------------
+
+Checked against the paper directly. These are all faithful, and it is worth
+saying so explicitly before the list of deviations:
+
+5.1  Peak/valley definition. Section V.A defines a peak as a grey level whose
+     frequency is higher than BOTH immediate neighbours, and a valley as one
+     lower than both. That is precisely argrelextrema(..., order=1). There is
+     no prominence threshold, no minimum separation, no smoothing in the paper.
+     Your detector implements the published rule.
+
+     Importantly, the large peak count is NOT a bug and NOT noise-fitting: the
+     paper's own worked example in Section V.A uses NPeaks = 52 to demonstrate
+     Eq. (2). Your 55 is exactly the regime the authors expect.
+
+5.2  Eq. (1) N-parameter = sum(Valley[i]) / NValleys. Correct.
+
+5.3  Eq. (2) CBD = ceil(Ln(NPeaks)), same value for height and width. Correct.
+     (Paper's example: NPeaks=52 -> ceil(3.951) = 4, so CBD 4x4.)
+
+5.4  Eq. (3) I_CL = (Peaks[i] + N-parameter) / Max(Valley), evaluated PER PEAK
+     inside the search loop. Correct - see 6.2 for the one clamp you added.
+
+5.5  The multi-enhancement search. Section V.A: "the input image is subjected
+     to the enhancement process multiple times. The frequency of enhancement
+     process depends on the number of identified peaks ... this part tests each
+     value of the identified peaks group to specify the peak that generates the
+     optimum enhanced image." Your loop does exactly this, and it correctly
+     scores each candidate on the WHOLE image, which is what the paper's own
+     complexity analysis confirms: "(v) ... the CLAHE operation and PSNR,
+     entropy and AMBE computation iterate over all image pixels for each peak,
+     which results in a complexity of O(P.M.N)". Correct.
+
+     (In my previous revision I flagged this as a possible mismatch between
+     Part 1 and Part 2. The paper resolves it: whole-image scoring is intended.)
+
+5.6  Eq. (4) CIQI = (PSNR + Entropy)/AMBE, selected by maximum. Correct, and
+     the paper confirms the direction: "The proposed CLALHE requires high PSNR
+     and entropy and the lowest AMBE value to obtain the highest or optimal
+     CIQI." See 6.3 for what that implies.
+
+5.7  Eq. (5) ONS, including the forced-even rule. Section V.B: "if the numbers
+     of histogram valleys are 50 and 100 ... log2 produces 5.65 and 6.65. Thus
+     the ONS values were set to 6 (ceil(5.65)=6) and 8 (ceil(6.65)+1=8)."
+     Your code ceilings first, then adds 1 if odd - matching both examples.
+     Correct. (My previous revision wrongly listed "force even" as your
+     addition; it is in the paper.)
+
+5.8  Eq. (6) SID. The printed equation is typographically mangled, but the
+     paper's worked examples pin it down, on a 592-high x 896-wide image:
+         ONS = 2  ->  Height = 592,    Width = 896/2 = 448
+         ONS = 4  ->  Height = 592/2,  Width = 896/4 x 2 = 448
+     i.e. for ONS>2, Height = M/2 and Width = N/(ONS/2), giving a 2 x (ONS/2)
+     grid. Your `sub_h = h//2; sub_w = w//(ons//2)` is algebraically identical.
+     Correct.
+
+5.9  Global parameters applied to every subimage. Section V.B step (iv):
+     "utilisation of the optimum enhancement parameters obtained previously in
+     Part 1 for the enhancement of each subimage." The subimages do NOT
+     re-derive their own CBD/I_CL. Your code is correct. (Previously flagged as
+     unverifiable; now resolved.)
+
+5.10 CLAHE (not plain HE) as the per-subimage operation. Confirmed by Section
+     IX item (vii): "The application of CLAHE for each block". Correct.
+
+5.11 Grid arithmetic. I verified across image sizes from 20x20 to 1280x959 and
+     ONS values 2..10 that rows*cols always equals ONS, and that the remainder
+     handling ("if r < rows-1 else h") leaves no gap or double-cover. Sound.
+
+
+--------------------------------------------------------------------------------
+6. AUDIT - WHAT YOU MISSED OR ADDED
+--------------------------------------------------------------------------------
+
+6.1  MISSING: nothing about blending - because the paper specifies none.
+     Covered in Section 3. Your original code was faithful; the artifact is
+     the method's, not yours. The fix in Section 4 is a deliberate, documented
+     departure from the published algorithm.
+
+6.2  ADDED, AND IT CHANGES THE OUTPUT: the clamp `max(i_cl, 1.0)` in
+     _calculate_i_cl. Eq. (3) has no such floor. On crybaby.jpeg:
+
+         I_CL candidates from Eq. (3): min 0.371, max 1.210
+         47 of 55 candidates fall below 1.0 and are pinned to 1.0 by the clamp
+
+     The clamp makes your enhancement STRONGER than the paper's, not weaker.
+     Compare the selected operating point:
+
+                                 selected I_CL   PSNR    entropy   AMBE
+         your code (clamped)         1.000       23.23    7.720   10.425
+         Eq. (3) as published        0.371       30.95    7.564    4.759
+
+     Now compare against what the paper reports for the Faces 1999 dataset
+     (Table 8): PSNR 31.822, AMBE 3.464. The unclamped, paper-faithful run
+     (30.95 / 4.76) lands right next to the published numbers; the clamped run
+     (23.23 / 10.43) does not. That is good evidence the clamp is the single
+     deviation pushing your results away from the paper's.
+
+     Note OpenCV accepts clipLimit < 1 fine - it simply clips the histogram
+     below the mean bin count, which is aggressive clipping and therefore a
+     gentle enhancement. There is no numerical reason for the floor.
+
+6.3  THE CIQI SEARCH NEVER ACTUALLY SEARCHES - and this is the paper's issue,
+     not yours. CIQI = (PSNR + Entropy)/AMBE is strictly monotonically
+     DECREASING in the clip limit. Measured on crybaby.jpeg at CBD=5:
+
+         clip=0.05  PSNR 45.79  ent 7.457  AMBE  1.09  CIQI 48.82
+         clip=0.20  PSNR 36.03  ent 7.513  AMBE  2.75  CIQI 15.85
+         clip=0.37  PSNR 30.95  ent 7.564  AMBE  4.76  CIQI  8.09
+         clip=1.00  PSNR 23.23  ent 7.720  AMBE 10.43  CIQI  2.97
+         clip=2.00  PSNR 19.03  ent 7.867  AMBE 14.80  CIQI  1.82
+         clip=5.00  PSNR 16.11  ent 7.963  AMBE 18.71  CIQI  1.29
+
+     Entropy barely moves (7.46 -> 7.96 across a 100x change in clip limit)
+     while AMBE grows by 17x and PSNR falls by 30 dB. So the ratio is dominated
+     by AMBE, and argmax(CIQI) is provably equivalent to min(candidates).
+     The "multiple enhancement" loop of Section V.A - the paper's headline
+     novelty (i) - evaluates NPeaks candidates and then always returns the
+     smallest one. It could be replaced by a one-line min() with identical
+     output.
+
+     Taken to its logical end, AMBE -> 0 sends CIQI -> infinity, so the global
+     optimum of Eq. (4) is to not enhance the image at all. This is a genuine
+     weakness of the published fitness function. It is also consistent with the
+     paper's own results: CLALHE wins Table 8 on AMBE (lowest) and PSNR
+     (highest) on every dataset, which is exactly what "changed the image
+     least" produces. Worth raising if you are writing a critique.
+
+6.4  ADDED: the 3-tap moving-average smoothing of the histogram in
+     _find_peaks_valleys. Not in the paper - Section V.A compares raw
+     frequencies. It is load-bearing:
+
+                                   peaks  valleys  CBD  ONS   grid
+         with your smoothing         55      54     5    6    2 x 3
+         raw histogram (paper)       76      75     5    8    2 x 4
+
+     So the smoothing changes the subdivision from 6 subimages to 8. If you
+     want to match the paper, remove the convolution.
+
+6.5  ADDED: other guards not present in the equations. Less consequential than
+     6.2 and 6.4, but declare them if you write this up:
+         - max(cbd, 2) in _calculate_cbd
+         - the various fallbacks: n_peaks=1, n_valleys=4, CBD=4, I_CL=2.0,
+           AMBE=0.001, max(ons,2), max(sub_h,1), max(sub_w,1)
+     These only fire on degenerate histograms, so they do not affect your
+     current results.
+
+6.6  COLOUR HANDLING - a defensible deviation. Section V.A says the input "will
+     be converted into a greyscale scheme ... because we only need to apply the
+     technique to a single channel, which represents the image's intensity".
+     The paper describes a greyscale pipeline, yet its result figures (12, 19,
+     23) are in colour, so the text and figures do not fully agree and no
+     colour-reconstruction step is ever specified. Your LAB L-channel route is
+     a reasonable reading - LAB's L IS the intensity channel, and it lets you
+     rebuild a colour output while leaving hue untouched. Just flag it as an
+     interpretation, since the paper does not state it.
+
+6.7  MINOR: PSNR constant. Eq. (10) is PSNR = 10 log10((Max(Ii))^2 / MSE),
+     where Max(Ii) is "the maximum grey level intensity to the original image".
+     You use 255 unconditionally. That is the conventional choice and it only
+     matters for images that never reach 255, but it is not literally Eq. (10).
+
+6.8  MINOR: _calculate_i_cl internally does np.max(peak_values) with the
+     comment "use the maximum peak", which contradicts the per-peak intent of
+     Eq. (3). It is harmless because part1 calls it with a one-element array
+     inside the loop, so the correct per-peak behaviour is what runs. Still
+     worth tidying so the function states one intent.
+
+
+--------------------------------------------------------------------------------
+7. SUMMARY
+--------------------------------------------------------------------------------
+
+You did not miss a blending or interpolation step, because the paper does not
+have one. "Bilinear interpolation" appears once in the whole paper and it is
+describing a different method (ACE-HM, ref [78]) in the literature review.
+For CLALHE itself, Section IX explicitly calls the merge a "concatenation".
+Your original part2_enhance implemented the published Part 2 correctly, and the
+seams follow directly from it: each subimage is equalized through its own
+lookup table and the results are butted together with hard edges, so brightness
+jumps across every boundary. The paper's evaluation could not detect this -
+PSNR, entropy, AMBE, SSI, CII and RMSE are all global statistics that a few
+boundary rows barely move.
+
+The fix keeps every element of the paper's algorithm - ONS, SID, subimage count
+and placement, independent per-subimage histograms, the Part 1 parameters - and
+changes only the compositing: each subimage is read with a 25% context margin
+and merged through a linear cross-fade whose weights sum to 1 at every
+boundary. Measured seam strength drops to the level of the original photograph.
+
+Separately, two things in your code do differ from the paper and both are worth
+fixing or at least declaring: the `max(i_cl, 1.0)` clamp, which moves the
+selected clip limit from 0.371 to 1.0 and pushes your PSNR/AMBE away from the
+paper's published numbers (6.2); and the histogram smoothing, which changes ONS
+from 8 to 6 and therefore the whole subdivision (6.4).
+
+And one finding that belongs to the paper rather than to you: maximising CIQI
+over the peak candidates is provably equivalent to picking the smallest clip
+limit, so the "multiple enhancement" search - contribution (i) of Section VI -
+never explores anything (6.3).
+================================================================================

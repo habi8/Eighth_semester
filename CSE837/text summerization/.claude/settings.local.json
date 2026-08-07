@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m ipykernel install --user --name python3)",
+      "Bash(python -m jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor.timeout=1800 seq2seq_bahdanau_numpy.ipynb)",
+      "Read(//c/Users/Hp/AppData/Local/Temp/claude/e--LAST-and-The-LEAST-Semester-text-summerization/b9fc9daf-9656-4968-94a3-7491395e3b00/scratchpad/**)",
+      "Bash(python build_notebook.py)"
+    ]
+  }
+}
