@@ -205,18 +205,27 @@ class CLALHE:
 # === USAGE EXAMPLE ===
 if __name__ == "__main__":
     # Load image
-    img = cv2.imread("input_image.jpg")
+    img = cv2.imread("crybaby.jpeg")
     if img is None:
         print("Error: Could not load image")
     else:
         clalhe = CLALHE()
         enhanced = clalhe.enhance(img)
         
-        cv2.imshow("Original", img)
-        cv2.imshow("CLALHE Enhanced", enhanced)
+        # cv2.imshow("Original", img)
+        # cv2.imshow("CLALHE Enhanced", enhanced)
+        # cv2.waitKey(0)
+        # cv2.destroyAllWindows()
+        h, w = img.shape[:2]
+        half_w = w // 2
+        # left = cv2.resize(img, (half_w, h))
+        # right = cv2.resize(enhanced, (w - half_w, h))
+        # side_by_side = cv2.hconcat([left, right])
+        side_by_side = cv2.hconcat([img, enhanced])
+        cv2.imshow("Original | CLALHE Enhanced", side_by_side)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
-        
+
         cv2.imwrite("clalhe_output.jpg", enhanced)
         print(f"Optimal CBD: {clalhe.optimal_cbd}")
         print(f"Optimal I_CL: {clalhe.optimal_i_cl:.4f}")
