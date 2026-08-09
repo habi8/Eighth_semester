@@ -30,3 +30,7 @@ dist/
 # OS
 .DS_Store
 Thumbs.db
+
+# CLALHE domain study artefacts (downloaded data + generated results)
+CSE829/data/
+CSE829/results/
