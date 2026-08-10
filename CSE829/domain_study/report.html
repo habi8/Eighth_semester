@@ -1,7 +1,10 @@
 <title>Does CLALHE hold up outside its own test set?</title>
 <style>
+/* Committed light theme: the report is printed and read on white, so the
+   palette does not follow the viewer's dark-mode preference. Every colour
+   below is defined once, on :root, and painted explicitly on body. */
 :root{
-  color-scheme: light;
+  color-scheme: light only;
   --ground:#f2f5f6; --surface:#fbfcfc; --surface-2:#e8edee; --sunk:#dfe6e8;
   --ink:#0d1417; --ink-2:#4a585e; --ink-3:#79878d;
   --rule:#d3dbde; --rule-soft:#e3e9eb;
@@ -13,28 +16,8 @@
   --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif;
   --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    color-scheme: dark;
-    --ground:#0e1315; --surface:#151c1f; --surface-2:#1c2529; --sunk:#111719;
-    --ink:#eaf1f2; --ink-2:#a3b1b6; --ink-3:#77868c;
-    --rule:#263135; --rule-soft:#1d272a;
-    --accent:#42b7c6; --accent-ink:#7ed3de; --accent-wash:#102e33;
-    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
-    --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 28px -18px rgba(0,0,0,.9);
-  }
-}
-:root[data-theme="dark"]{
-  color-scheme: dark;
-  --ground:#0e1315; --surface:#151c1f; --surface-2:#1c2529; --sunk:#111719;
-  --ink:#eaf1f2; --ink-2:#a3b1b6; --ink-3:#77868c;
-  --rule:#263135; --rule-soft:#1d272a;
-  --accent:#42b7c6; --accent-ink:#7ed3de; --accent-wash:#102e33;
-  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
-  --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 28px -18px rgba(0,0,0,.9);
-}
-
 *{box-sizing:border-box}
+html{background:var(--ground)}
 body{
   margin:0; background:var(--ground); color:var(--ink);
   font-family:var(--serif); font-size:17px; line-height:1.66;
