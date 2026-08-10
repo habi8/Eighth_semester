@@ -285,7 +285,7 @@ class CLALHE:
 # === USAGE EXAMPLE ===
 if __name__ == "__main__":
     # Load image
-    img = cv2.imread("public/sdrd.png")
+    img = cv2.imread("public/input_image.jpg")
     if img is None:
         print("Error: Could not load image")
     else:
