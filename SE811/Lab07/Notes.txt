@@ -1,0 +1,80 @@
+WHY CODEFACE WOULD NOT RUN ON A MODERN MACHINE, AND WHAT FIXED IT
+=================================================================
+
+Codeface targeted Ubuntu 14.04, Python 2.7, R 3.x and MySQL 5.5 (archived
+2022). None of that exists anymore. Failures split into two kinds: the
+environment is gone, or old code hit stricter modern library behaviour.
+
+
+PART 1 - THE ENVIRONMENT NO LONGER EXISTS
+-----------------------------------------
+
+1. Ubuntu 14.04/16.04 packages are gone from the default mirrors.
+   Fix: pin ubuntu:18.04, apt from old-releases.ubuntu.com.
+
+2. Python 2.7 is retired; pip won't bootstrap, PyPI dropped py2 wheels.
+   Fix: bootstrap pip manually, pin every package to its last py2 release.
+
+3. CRAN only serves current package versions, incompatible with 2013 code.
+   Fix: R 3.6.3 from bionic-cran35 + a 2020-04-01 Posit snapshot + Bioconductor 3.10.
+
+4. dependencies=TRUE pulled in Suggests -> 1544 packages, hours-long build.
+   Fix: resolve only Depends/Imports/LinkingTo -> 96 packages.
+
+5. Prebuilt R binaries installed fine but failed dyn.load() (missing .so's).
+   Fix: install libglpk/libgmp/libmpfr/BLAS/LAPACK dev libs found via objdump.
+
+6. svglite (ggplot2's runtime-only dependency) invisible to static analysis.
+   Fix: added explicitly to the required package list.
+
+7. MySQL 5.7's stricter default sql_mode rejected 5.5-era queries.
+   Fix: empty sql_mode in codeface.cnf.
+
+8. Node/npm from apt was uninstallable; Node 16+ needs a newer glibc.
+   Fix: install the Node 14.21.3 tarball directly.
+
+9. Vagrant provisioning and the custom shiny-server fork it needed are dead.
+   Fix: Dockerfile + bootstrap script, official Shiny Server (run_as non-root).
+
+10. setup.py's "VCS" dependency collided with an unrelated PyPI package.
+    Fix: removed it; Codeface's VCS is its own in-tree module.
+
+
+PART 2 - LATENT BUGS THAT MODERN LIBRARIES TURNED FATAL
+--------------------------------------------------------
+
+11. config.r used c() to merge configs -> appended, didn't override.
+    Fix: assign by key instead.
+
+12. sloccount.r workers shared one cache dir -> only 6/41 samples survived.
+    Fix: per-invocation temp datadir.
+
+13. plots/timeseries/timezones apps were missing global.r -> HTTP 500.
+    Fix: added the missing file.
+
+14. htmltools now rejects multi-value attributes (was silently tolerated).
+    Broke the dashboard href and the project-comparison selector.
+    Fix: use single values; locate elements by name, not list position.
+
+15. selectInput's "selected" now matches choice values, not labels.
+    Fix: pass ids instead of names.
+
+16. Tag objects rendered via as.character() showed as escaped HTML text.
+    Fix: pass tags through unchanged.
+
+17. Dashboard observer crashed on a not-yet-existing input (NULL == 0).
+    Fix: null-check before comparing.
+
+18. Missing URL params crashed the session instead of showing a message.
+    Fix: validate and show an error in the page instead of stop().
+
+19. Shared stylesheet lived in one app's own www/, unreachable by the other five.
+    Fix: moved to the shared nav/ directory; fixed a "div .class" selector typo.
+
+
+SUMMARY
+-------
+Most effort went into Part 1: finding exact, still-downloadable versions
+contemporary with the code (hence a pinned Dockerfile, not a script). Part 2
+is the reminder that unchanged code can still break when what it runs on
+changes underneath it.

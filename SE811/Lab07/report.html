@@ -1,0 +1,847 @@
+<title>Lab 07 — Adaptive Maintenance of Codeface</title>
+<style>
+  /* ---- tokens: light is the base, both dark states redefine only tokens ---- */
+  :root {
+    --ground:      #F6F7F8;
+    --surface:     #FFFFFF;
+    --console:     #12171A;
+    --console-ink: #D6DEE1;
+    --ink:         #14181B;
+    --ink-2:       #515B61;
+    --ink-3:       #78848A;
+    --rule:        #DEE3E5;
+    --rule-soft:   #EAEEEF;
+    --accent:      #0E6E68;
+    --accent-soft: #E2F0EE;
+    --fail:        #A23A29;
+    --fail-soft:   #F7E7E3;
+    --amber:       #86671A;
+    --amber-soft:  #F5EEDC;
+    --shadow:      0 1px 2px rgba(20,24,27,.06), 0 8px 24px -16px rgba(20,24,27,.28);
+
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #0E1113;
+      --surface:     #161A1D;
+      --console:     #0A0D0F;
+      --console-ink: #C9D3D7;
+      --ink:         #E8EBEC;
+      --ink-2:       #9DA8AD;
+      --ink-3:       #78848A;
+      --rule:        #262C30;
+      --rule-soft:   #1E2427;
+      --accent:      #3FB9AE;
+      --accent-soft: #122A29;
+      --fail:        #E08876;
+      --fail-soft:   #2B1A17;
+      --amber:       #D5A73F;
+      --amber-soft:  #2A2312;
+      --shadow:      0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:      #0E1113;
+    --surface:     #161A1D;
+    --console:     #0A0D0F;
+    --console-ink: #C9D3D7;
+    --ink:         #E8EBEC;
+    --ink-2:       #9DA8AD;
+    --ink-3:       #78848A;
+    --rule:        #262C30;
+    --rule-soft:   #1E2427;
+    --accent:      #3FB9AE;
+    --accent-soft: #122A29;
+    --fail:        #E08876;
+    --fail-soft:   #2B1A17;
+    --amber:       #D5A73F;
+    --amber-soft:  #2A2312;
+    --shadow:      0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16.5px;
+    line-height: 1.65;
+    margin: 0;
+    padding: 0 1.25rem 6rem;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 60rem; margin: 0 auto; }
+  .prose { max-width: 40rem; }
+
+  /* ---- masthead ---- */
+  header.masthead {
+    padding: 4rem 0 2rem;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 2.5rem;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: .72rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 1.1rem;
+  }
+  h1 {
+    font-family: var(--mono);
+    font-size: clamp(1.9rem, 4.6vw, 2.9rem);
+    font-weight: 600;
+    letter-spacing: -.02em;
+    line-height: 1.12;
+    text-wrap: balance;
+    margin: 0 0 1rem;
+  }
+  .standfirst {
+    font-size: 1.1rem;
+    color: var(--ink-2);
+    max-width: 38rem;
+    margin: 0 0 2rem;
+    text-wrap: pretty;
+  }
+  dl.meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    gap: 1rem 1.75rem;
+    margin: 0;
+    font-family: var(--mono);
+    font-size: .8rem;
+  }
+  dl.meta dt {
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    font-size: .68rem;
+    margin-bottom: .3rem;
+  }
+  dl.meta dd { margin: 0; color: var(--ink-2); word-break: break-word; }
+
+  /* ---- sections ---- */
+  section { margin: 0 0 3.5rem; }
+  h2 {
+    font-family: var(--mono);
+    font-size: 1.28rem;
+    font-weight: 600;
+    letter-spacing: -.01em;
+    margin: 0 0 1.2rem;
+    padding-bottom: .6rem;
+    border-bottom: 1px solid var(--rule);
+    text-wrap: balance;
+  }
+  h3 {
+    font-family: var(--mono);
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 2.25rem 0 .75rem;
+    color: var(--ink);
+  }
+  p { margin: 0 0 1rem; text-wrap: pretty; }
+  a { color: var(--accent); text-underline-offset: 2px; }
+  strong { font-weight: 640; }
+  code {
+    font-family: var(--mono);
+    font-size: .855em;
+    background: var(--rule-soft);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: .08em .34em;
+    word-break: break-word;
+  }
+
+  /* ---- outcome tiles ---- */
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
+    gap: .85rem;
+    margin: 0 0 2rem;
+  }
+  .tile {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 1.05rem 1.1rem;
+    box-shadow: var(--shadow);
+  }
+  .tile .n {
+    font-family: var(--mono);
+    font-size: 1.75rem;
+    font-weight: 600;
+    letter-spacing: -.03em;
+    font-variant-numeric: tabular-nums;
+    display: block;
+    line-height: 1.1;
+    color: var(--accent);
+  }
+  .tile .l {
+    font-size: .78rem;
+    color: var(--ink-2);
+    margin-top: .35rem;
+    display: block;
+    line-height: 1.4;
+  }
+
+  /* ---- tables ---- */
+  .scroll { overflow-x: auto; margin: 0 0 1.5rem; border-radius: 8px; }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: .9rem;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+  }
+  th, td {
+    text-align: left;
+    padding: .62rem .85rem;
+    border-bottom: 1px solid var(--rule-soft);
+    vertical-align: top;
+  }
+  thead th {
+    font-family: var(--mono);
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--ink-3);
+    background: var(--rule-soft);
+    white-space: nowrap;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+  td.mono, th.mono { font-family: var(--mono); font-size: .82rem; }
+
+  /* ---- console ---- */
+  pre {
+    background: var(--console);
+    color: var(--console-ink);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: .795rem;
+    line-height: 1.6;
+    margin: 0 0 1.5rem;
+    tab-size: 2;
+  }
+  pre code { background: none; border: none; padding: 0; font-size: inherit; color: inherit; }
+  pre .ok   { color: #6FD6B5; }
+  pre .bad  { color: #F0907C; }
+  pre .dim  { color: #6B7A80; }
+  pre .cmd  { color: #E7C86A; }
+
+  /* ---- defect cards ---- */
+  .defect {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--fail);
+    border-radius: 8px;
+    padding: 1.25rem 1.35rem .35rem;
+    margin: 0 0 1.35rem;
+    box-shadow: var(--shadow);
+  }
+  .defect.upstream { border-left-color: var(--amber); }
+  .defect.mine { border-left-color: var(--ink-3); }
+  .defect > h3 { margin-top: 0; }
+  .defect pre { margin-bottom: 1.1rem; }
+  .chips { display: flex; flex-wrap: wrap; gap: .4rem; margin: 0 0 .9rem; }
+  .chip {
+    font-family: var(--mono);
+    font-size: .66rem;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    padding: .22rem .5rem;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    white-space: nowrap;
+  }
+  .chip.fixed    { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .chip.upstream { background: var(--amber-soft);  color: var(--amber);  border-color: var(--amber); }
+  .chip.mine     { background: var(--rule-soft);   color: var(--ink-2);  border-color: var(--rule); }
+  .chip.expected { background: var(--fail-soft);   color: var(--fail);   border-color: var(--fail); }
+
+  /* ---- callout ---- */
+  .note {
+    background: var(--accent-soft);
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    padding: .95rem 1.15rem;
+    margin: 0 0 1.5rem;
+    font-size: .92rem;
+  }
+  .note p:last-child { margin-bottom: 0; }
+  .note .lbl {
+    font-family: var(--mono);
+    font-size: .67rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: .3rem;
+  }
+
+  ul, ol { margin: 0 0 1rem; padding-left: 1.25rem; }
+  li { margin-bottom: .45rem; }
+
+  footer {
+    border-top: 1px solid var(--rule);
+    padding-top: 1.5rem;
+    color: var(--ink-3);
+    font-size: .85rem;
+    font-family: var(--mono);
+  }
+
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">Lab 07 · Adaptive Maintenance</p>
+  <h1>Bringing Codeface back from the dead</h1>
+  <p class="standfirst">
+    Codeface was archived in 2022 and targets Ubuntu 14.04, Python 2.7, R 3.x and
+    MySQL 5.5. Its documented install path is not merely awkward on a 2026
+    machine — it is impossible. This is what it took to make it run again, and
+    the four defects that surfaced on the way.
+  </p>
+  <dl class="meta">
+    <div><dt>Target system</dt><dd>siemens/codeface @ e6640c93</dd></div>
+    <div><dt>Analysed project</dt><dd>pallets/flask — 5,546 commits</dd></div>
+    <div><dt>Host</dt><dd>Ubuntu 24.04.2, Docker 28.3.3</dd></div>
+    <div><dt>Date</dt><dd>2026-08-11</dd></div>
+  </dl>
+</header>
+
+<section>
+  <h2>Outcome</h2>
+  <div class="tiles">
+    <div class="tile"><span class="n">2m 05s</span><span class="l">Full 7-range analysis, exit code 0</span></div>
+    <div class="tile"><span class="n">1,223</span><span class="l">Commits ingested, counts verified against git</span></div>
+    <div class="tile"><span class="n">32/32</span><span class="l">Required R packages verified <em>loadable</em></span></div>
+    <div class="tile"><span class="n">4/4</span><span class="l">Codeface's own integration tests pass</span></div>
+  </div>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Success criterion</th><th>Evidence</th></tr></thead>
+      <tbody>
+        <tr><td>Dependencies installed and linked</td><td>32/32 required R packages load; all Python 2.7 deps import</td></tr>
+        <tr><td>Backing services communicating</td><td>MySQL 5.7, 41 tables, reached independently by <code>MySQLdb</code> and <code>RMySQL</code>; Node ID service on <code>:8080</code></td></tr>
+        <tr><td>Analysis run executed</td><td>7 release ranges of Flask, <code>=&gt; Codeface run complete!</code></td></tr>
+        <tr><td>Output generated, no fatal crashes</td><td>1,223 commits + 315 developers + 40 clusters in DB; 255 files, 89 PDFs, 88 sociograms</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="prose">Three latent bugs in Codeface itself were found and fixed along the way.</p>
+</section>
+
+<section>
+  <h2>Why it doesn't run today</h2>
+  <div class="prose">
+    <p>
+      The documented path is <code>vagrant up</code> against an Ubuntu 14.04 box.
+      That path is dead, for three independent reasons:
+    </p>
+    <ul>
+      <li><code>install_repositories.sh</code> hard-aborts on anything that isn't 14.04 or 16.04.</li>
+      <li>Both releases are past end-of-life — I confirmed their archives no longer resolve
+        (<code>old-releases.ubuntu.com/.../xenial</code> → <strong>404</strong>).</li>
+      <li>The stack it wants — Python 2.7, R 3.x, MySQL <strong>5.5</strong> (Travis explicitly
+        <em>downgrades</em> 5.6 → 5.5) — has no counterpart on a host shipping Python 3.12 and no R at all.</li>
+    </ul>
+    <p>
+      So the task isn't "install the dependencies". It's: decide which era to reconstruct,
+      find which pieces of that era still exist, and rebuild the rest.
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2>Choosing the base: an availability probe</h2>
+  <p class="prose">Before writing anything, I checked what still exists.</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Source</th><th>Result</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">old-releases.ubuntu.com/…/xenial</td><td><strong>404</strong> — 16.04 archives gone</td></tr>
+        <tr><td class="mono">archive.ubuntu.com/…/bionic</td><td><strong>200</strong> — 18.04 still live</td></tr>
+        <tr><td class="mono">cloud.r-project.org/…/bionic-cran35</td><td><strong>200</strong> — R up to 3.6.3</td></tr>
+        <tr><td class="mono">packagemanager.posit.co/…/bionic/&lt;date&gt;</td><td><strong>200</strong> — date-pinned CRAN</td></tr>
+        <tr><td class="mono">bootstrap.pypa.io/pip/2.7/get-pip.py</td><td><strong>200</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <span class="lbl">The detail that decided it</span>
+    <p>
+      <code>util.py:check4ctags()</code> asserts the ctags version string <em>starts with</em>
+      <code>Exuberant Ctags 5.9~svn20110310</code> and raises otherwise. Bionic ships exactly
+      <code>1:5.9~svn20110310-11ubuntu0.1</code>. Any modern distro ships <em>universal</em>-ctags,
+      where this check can never pass — proximity tagging would be unusable without patching Codeface.
+    </p>
+  </div>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Component</th><th class="mono">Version</th><th>Why this one</th></tr></thead>
+      <tbody>
+        <tr><td>Ubuntu</td><td class="mono">18.04.6</td><td>Last with <code>python2.7</code> in main <em>and</em> live archives</td></tr>
+        <tr><td>Python</td><td class="mono">2.7.17</td><td>What Codeface is written in</td></tr>
+        <tr><td>R</td><td class="mono">3.6.3</td><td>Newest in CRAN's frozen <code>bionic-cran35</code>; matches Codeface's 2019 era</td></tr>
+        <tr><td>CRAN</td><td class="mono">2020-04-01</td><td>Dated just <em>before</em> R 4.0.0 shipped, so every package still declares R 3.x compatibility</td></tr>
+        <tr><td>Bioconductor</td><td class="mono">3.10</td><td>The release matched to R 3.6</td></tr>
+        <tr><td>MySQL</td><td class="mono">5.7.42</td><td>Bionic's default, with 5.5 semantics emulated</td></tr>
+        <tr><td>Node.js</td><td class="mono">14.21.3</td><td>Newest line still running on bionic's glibc 2.27</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>Scoping the R dependency set</h2>
+  <div class="prose">
+    <p>
+      Upstream <code>packages.r</code> installs ~45 packages and is unusable as written: it calls
+      <code>biocLite()</code> (retired 2019), installs from live CRAN HEAD (requires R ≥ 4.x), pulls four
+      packages from GitHub, and passes <code>dependencies=TRUE</code>.
+    </p>
+    <p>
+      Rather than install all 45, I computed the transitive <code>source()</code> closure of the three
+      scripts <code>codeface run</code> actually executes. That reaches 23 R files needing
+      <strong>33 libraries</strong> — the mailing-list-only packages aren't on this path at all.
+      Parsing the pinned CRAN index then showed why the upstream flag is fatal:
+    </p>
+  </div>
+  <div class="tiles">
+    <div class="tile"><span class="n">1,544</span><span class="l">Closure with <code>dependencies=TRUE</code> (incl. Suggests)</span></div>
+    <div class="tile"><span class="n">96</span><span class="l">Closure with hard dependencies only</span></div>
+    <div class="tile"><span class="n">~8 min</span><span class="l">Resulting install time on 12 cores</span></div>
+  </div>
+  <p class="prose">
+    A tempting shortcut was rejected: Michael Rutter's <code>c2d4u3.5</code> PPA is still alive with
+    6,201 prebuilt <code>r-cran-*</code> debs. But they're built against <strong>R 4.4</strong> while we
+    run 3.6.3 — beyond the ABI mismatch, R 4.x flips the <code>stringsAsFactors</code> default and carries
+    a decade of igraph API drift. That's the class of breakage that quietly corrupts results from
+    2013-era code rather than failing loudly.
+  </p>
+</section>
+
+<section>
+  <h2>The four defects</h2>
+  <p class="prose">
+    Each failure below is tagged by origin: whether it was a bug in Codeface itself, in my own
+    scaffolding, or an environmental casualty of the choices above.
+  </p>
+
+  <div class="defect">
+    <h3>1 · <code>libglpk.so.40</code>: a package that "installed" but could not load</h3>
+    <div class="chips">
+      <span class="chip expected">Environmental</span>
+      <span class="chip fixed">Fixed</span>
+    </div>
+<pre><code><span class="bad">Error: package or namespace load failed for 'igraph' in dyn.load(...):
+ unable to load shared object '.../igraph/libs/igraph.so':
+  libglpk.so.40: cannot open shared object file: No such file or directory</span>
+<span class="dim">ERROR: required packages failed to install: igraph, markovchain, BiRewire</span></code></pre>
+    <p>
+      <code>markovchain</code> and <code>BiRewire</code> were collateral damage — both depend on igraph.
+      The log line <code>* installing *binary* package 'igraph'</code> corrected an assumption I'd made:
+      <strong>97 of 101 packages arrived as prebuilt binaries.</strong> Posit's index advertises source
+      tarballs, but downloads are content-negotiated on the R <code>User-Agent</code>.
+    </p>
+    <p>
+      The consequence is subtle: <strong><code>install.packages()</code> reported success.</strong> A
+      prebuilt binary is unpacked, never linked, so a missing shared-library dependency isn't detected at
+      install time — it surfaces later at <code>dyn.load()</code>. I confirmed the exact requirement by
+      downloading the artefact Posit actually serves and reading its ELF headers:
+    </p>
+<pre><code><span class="cmd">$ objdump -p igraph/libs/igraph.so | grep NEEDED</span>
+  NEEDED  libxml2.so.2     NEEDED  <span class="bad">libgmp.so.10</span>    NEEDED  <span class="bad">libglpk.so.40</span>
+  NEEDED  liblapack.so.3   NEEDED  libblas.so.3    NEEDED  libgfortran.so.4</code></pre>
+    <p>
+      Fixed with an APT layer for the missing libraries, placed immediately before the R package layer so
+      the expensive earlier layers stayed cached. I also changed the verifier to print the actual
+      <code>dyn.load</code> message per failing package, so the next iteration wouldn't need the same forensics.
+    </p>
+  </div>
+
+  <div class="defect mine">
+    <h3>2 · <code>npm</code> missing — a failure my own Dockerfile hid</h3>
+    <div class="chips">
+      <span class="chip mine">My scaffolding</span>
+      <span class="chip fixed">Fixed</span>
+    </div>
+    <p>The first bootstrap ended with <code>npm: command not found</code> — even though the image built successfully. The cause was my own line:</p>
+<pre><code>RUN apt-get install -y --no-install-recommends nodejs npm &amp;&amp; ... <span class="bad">|| true</span></code></pre>
+    <p>The trailing <code>|| true</code> applies to the <strong>whole <code>&amp;&amp;</code> chain</strong>, swallowing a real apt failure that had been sitting in the build log all along:</p>
+<pre><code><span class="bad">npm : Depends: node-gyp (>= 0.10.9) but it is not going to be installed
+E: Unable to correct problems, you have held broken packages.</span></code></pre>
+    <p>
+      <code>--no-install-recommends</code> prevents <code>node-gyp</code>'s dependencies from resolving.
+      Rather than drop the flag, I installed the official Node 14.21.3 tarball — the newest line still
+      running on bionic's glibc 2.27, bundling npm 6.
+    </p>
+    <div class="note">
+      <span class="lbl">Lesson recorded</span>
+      <p>Never terminate a Dockerfile <code>RUN</code> chain with <code>|| true</code>. It converts a build failure into a runtime failure far from its cause.</p>
+    </div>
+  </div>
+
+  <div class="defect">
+    <h3>3 · <code>svglite</code>: a dependency no static analysis can find</h3>
+    <div class="chips">
+      <span class="chip expected">Environmental</span>
+      <span class="chip fixed">Fixed</span>
+    </div>
+<pre><code><span class="bad">[codeface.R] CRITICAL: there is no package called 'svglite'</span>
+  4: ggsave(file.path(graphdir, "ts_commits.svg"), g, width = 12, height = 8)
+  6: svglite::svglite</code></pre>
+    <p>
+      <code>svglite</code> appears <strong>nowhere</strong> in Codeface's source. I re-scanned the whole
+      run-path closure for <code>library()</code>, <code>require()</code>, <code>requireNamespace()</code>
+      <em>and</em> <code>pkg::</code> references; the only namespace-qualified package is <code>igraph</code>.
+      The dependency is indirect: <code>ggsave()</code> dispatches on the <code>.svg</code> extension to
+      <code>svglite::svglite</code> at runtime, and ggplot2 declares it only under <strong>Suggests</strong> —
+      precisely the field my dependency restriction dropped.
+    </p>
+    <p>
+      So the 16× build-time saving had exactly one casualty, and it was invisible to static analysis.
+      The general lesson: a source-derived dependency closure is a <strong>lower bound</strong>;
+      runtime dispatch escapes it.
+    </p>
+  </div>
+
+  <div class="defect upstream">
+    <h3>4 · Upstream bug: project configs cannot enable <code>sloccount</code></h3>
+    <div class="chips">
+      <span class="chip upstream">Codeface bug</span>
+      <span class="chip fixed">Patched</span>
+    </div>
+    <p>
+      The run succeeded but <code>sloccount_ts</code> was empty. At <code>--loglevel devinfo</code> the
+      config showed <code>sloccount : FALSE</code> — even though the project file says
+      <code>sloccount: true</code>. The cause is in <code>R/config.r::load.config</code>:
+    </p>
+<pre><code>if(is.null(conf$understand)) { conf$understand &lt;- FALSE }
+if(is.null(conf$sloccount))  { conf$sloccount  &lt;- FALSE }
+...
+conf &lt;- c(conf, yaml.load_file(project.file))    <span class="bad"># appends, does not merge</span></code></pre>
+    <p>
+      Defaults are applied to the global config <strong>before</strong> the project file is merged, and
+      <code>c()</code> <em>concatenates</em> lists rather than merging them. The result holds
+      <strong>two</strong> elements named <code>sloccount</code>, and <code>conf$sloccount</code> returns the
+      first — the default <code>FALSE</code>. So <code>sloccount: true</code> in <em>any</em> project config
+      was silently discarded and the complexity analysis always returned early.
+    </p>
+    <p>
+      The Python side doesn't share the bug: <code>configuration.py</code> uses <code>dict.update()</code>,
+      which replaces correctly. Patched to replace duplicate keys instead of appending — after which the
+      stage reports <code>Analysing 41 code samples</code>.
+    </p>
+  </div>
+
+  <div class="defect upstream">
+    <h3>5 · Upstream bug: sloccount races itself under <code>-j &gt; 1</code></h3>
+    <div class="chips">
+      <span class="chip upstream">Codeface bug</span>
+      <span class="chip fixed">Patched</span>
+    </div>
+    <p>
+      With sloccount finally enabled, only <strong>6 of 41</strong> samples reached the database.
+      sloccount alone worked fine, and so did two sequential runs. Running four <em>concurrently</em>
+      reproduced it instantly:
+    </p>
+<pre><code><span class="bad">mkdir: cannot create directory '/root/.slocdata': File exists</span>
+run1 EXIT=1  run2 EXIT=1  run3 EXIT=1  run4 EXIT=1</code></pre>
+    <p>
+      <code>gather.sloccount.results()</code> invokes sloccount without <code>--datadir</code>, so every
+      instance uses the single default <code>~/.slocdata</code>. It's called from inside
+      <code>mclapply.db()</code>, so with <code>-j &gt; 1</code> the instances race and all but one abort.
+      The failures were invisible because <code>do.system</code> discards stderr — the only symptom was a
+      sparsely populated table.
+    </p>
+    <p>
+      Patched to give each invocation its own data directory. One wrinkle found by testing: sloccount
+      requires the directory to <em>already exist</em>. Verified — four concurrent runs all exit 0, and the
+      stage now writes <strong>41 of 41</strong> samples.
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2>Patches applied</h2>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>File</th><th>Change</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">setup.py</td><td>Removed the bogus <code>'VCS'</code> dependency — Codeface's VCS abstraction is the in-tree <code>codeface/VCS.py</code>; <code>VCS</code> on PyPI is an unrelated 2010–2011 package, so pip was fetching foreign code that is never imported</td></tr>
+        <tr><td class="mono">codeface/R/config.r</td><td>Fixed the project-config merge so <code>sloccount</code>/<code>understand</code> are honoured</td></tr>
+        <tr><td class="mono">codeface/R/sloccount.r</td><td>Per-invocation <code>--datadir</code>, making the complexity stage concurrency-safe</td></tr>
+        <tr><td class="mono">R/shiny/apps/{plots,timeseries,timezones}/global.r</td><td>New — the missing <code>global.r</code> all three apps need in order to render</td></tr>
+        <tr><td class="mono">conf/flask.conf</td><td>New — 7-range Flask analysis configuration</td></tr>
+        <tr><td class="mono">conf/flask-smoke.conf</td><td>New — single-range config for fast debug cycles</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>Evidence</h2>
+
+  <h3>The successful run</h3>
+<pre><code><span class="cmd">$ docker exec -e JOBS=4 codeface bash /scripts/run_analysis.sh conf/flask.conf</span>
+[codeface.project] INFO: =&gt; Setting up project 'flask'
+[codeface.util] Process-1 INFO:   -&gt; Revision range 1/7 (1.0..1.1.0): Analysing commits...
+[codeface.util] Process-2 INFO:   -&gt; Revision range 2/7 (1.1.0..2.0.0): Analysing commits...
+[codeface.util] Process-3 INFO:   -&gt; Revision range 3/7 (2.0.0..2.1.0): Analysing commits...
+[codeface.util] Process-4 INFO:   -&gt; Revision range 4/7 (2.1.0..2.2.0): Analysing commits...
+                                     <span class="dim">... 7 ranges, clusters, reports ...</span>
+[codeface.project] INFO: =&gt; Preparing time series data
+[codeface.project] INFO: =&gt; Performing complexity analysis
+[codeface.project] INFO: =&gt; Analysing time series
+<span class="ok">[codeface.project] INFO: =&gt; Codeface run complete!</span></code></pre>
+
+  <h3>Database population</h3>
+  <div class="scroll">
+    <table>
+      <thead>
+        <tr><th>Range</th><th>From</th><th>To</th><th class="num">Commits</th><th class="num">Authors</th><th class="num">Added</th><th class="num">Deleted</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="num">1</td><td class="mono">1.0</td><td class="mono">1.1.0</td><td class="num">257</td><td class="num">112</td><td class="num">9,208</td><td class="num">7,856</td></tr>
+        <tr><td class="num">2</td><td class="mono">1.1.0</td><td class="mono">2.0.0</td><td class="num">312</td><td class="num">86</td><td class="num">8,830</td><td class="num">9,009</td></tr>
+        <tr><td class="num">3</td><td class="mono">2.0.0</td><td class="mono">2.1.0</td><td class="num">201</td><td class="num">52</td><td class="num">3,072</td><td class="num">2,266</td></tr>
+        <tr><td class="num">4</td><td class="mono">2.1.0</td><td class="mono">2.2.0</td><td class="num">118</td><td class="num">33</td><td class="num">5,717</td><td class="num">5,071</td></tr>
+        <tr><td class="num">5</td><td class="mono">2.2.0</td><td class="mono">2.3.0</td><td class="num">127</td><td class="num">35</td><td class="num">2,899</td><td class="num">3,995</td></tr>
+        <tr><td class="num">6</td><td class="mono">2.3.0</td><td class="mono">3.0.0</td><td class="num">85</td><td class="num">13</td><td class="num">2,299</td><td class="num">2,209</td></tr>
+        <tr><td class="num">7</td><td class="mono">3.0.0</td><td class="mono">3.1.0</td><td class="num">123</td><td class="num">23</td><td class="num">2,862</td><td class="num">2,025</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <span class="lbl">Cross-check</span>
+    <p>
+      Per-range commit counts were verified against <code>git rev-list --no-merges --count</code> run
+      directly on the Flask repository. They match exactly, range for range
+      (257 + 312 + 201 + 118 + 127 + 85 + 123 = 1,223). The results aren't merely present — they're
+      <em>correct</em>. The top committer is <strong>David Lord</strong> (552 commits), Flask's lead
+      maintainer, and <strong>Armin Ronacher</strong>, its original author, appears in the developer list.
+    </p>
+  </div>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Table</th><th class="num">Rows</th><th>Table</th><th class="num">Rows</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">commit_dependency</td><td class="num">2,942</td><td class="mono">person</td><td class="num">315</td></tr>
+        <tr><td class="mono">timeseries</td><td class="num">1,824</td><td class="mono">sloccount_ts</td><td class="num">234</td></tr>
+        <tr><td class="mono">commit</td><td class="num">1,223</td><td class="mono">cluster</td><td class="num">40</td></tr>
+        <tr><td class="mono">edgelist</td><td class="num">808</td><td class="mono">release_timeline</td><td class="num">15</td></tr>
+        <tr><td class="mono">pagerank_matrix</td><td class="num">724</td><td class="mono">pagerank</td><td class="num">14</td></tr>
+        <tr><td class="mono">cluster_user_mapping</td><td class="num">395</td><td class="mono">plots</td><td class="num">10</td></tr>
+        <tr><td class="mono">author_commit_stats</td><td class="num">362</td><td class="mono">release_range</td><td class="num">7</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Reproducibility check</h3>
+  <p class="prose">
+    <code>svglite</code> was initially installed into the <em>running</em> container to keep the debugging
+    loop moving — which meant the image definition was, briefly, not the thing proven to work. To close
+    that gap the image was rebuilt from the Dockerfile alone and a <strong>fresh container</strong>
+    created from it:
+  </p>
+<pre><code><span class="ok">All 33 required R packages installed and loadable.</span>
+Total packages in library: 133
+<span class="dim">...</span>
+<span class="ok">=&gt; Codeface run complete!</span>
++---------+--------+----------+----------------+
+| commits | people | clusters | sloccount_rows |
++---------+--------+----------+----------------+
+|     123 |     24 |        3 |             <span class="ok">41</span> |
++---------+--------+----------+----------------+</code></pre>
+  <p class="prose">
+    The 41 <code>sloccount_ts</code> rows are the load-bearing number: they only appear if both R source
+    patches are in effect, and the run only completes at all if <code>svglite</code> is baked into the
+    image. The environment is reproducible from its definition, not from accumulated manual state.
+  </p>
+
+  <h3>Generated files</h3>
+  <p class="prose">
+    255 files under <code>work/res/flask/proximity/</code>: seven LaTeX-compiled PDF reports (one per
+    release range), 88 sociogram files, 89 PDFs in total, plus per-range adjacency matrices and
+    top-20 tables. A generated sociogram is genuine igraph output with community detection:
+  </p>
+<pre><code><span class="dim">/* Created by igraph 1.2.5 */</span>
+digraph {
+  graph [ label="Spin Glass Community 1 Community Quality = 0.706490384615385" ];
+  0 [ name=1 label=pgjones fontsize=50 fillcolor=grey60 style=filled</code></pre>
+
+  <h3>The web frontend</h3>
+  <p class="prose">
+    The frontend serves on <strong>http://localhost:8081/</strong>, driven by the same database the
+    analysis populated — but <em>not</em> by the documented route.
+    <code>docs/webserver.md</code> instructs you to install a custom fork of shiny-server
+    (<code>JohannesEbke/shiny-server</code>, branch <code>no-su</code>) into a bundled
+    <strong>Node.js 0.10.13</strong> — a 2013 runtime that no longer builds, from a fork that has since
+    disappeared.
+  </p>
+  <p class="prose">
+    That route is also unnecessary: <code>codeface dynamic</code> runs the same Shiny apps directly
+    through R's own built-in web server, with no Node involved. Two packages were still missing:
+  </p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Package</th><th>Upstream source</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">shinybootstrap2</td><td class="mono">install_github("rstudio/shinybootstrap2")</td><td>That repo now <strong>404s</strong> — but it <em>is</em> on CRAN, so the pinned snapshot supplies it (0.2.1)</td></tr>
+        <tr><td class="mono">shinyGridster</td><td class="mono">install_github("wch/shiny-gridster")</td><td>Genuinely GitHub-only; still alive. Installed from a source tarball rather than pulling the whole devtools tree into the image</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="prose">
+    Every Shiny app wraps its UI in <code>shinybootstrap2::withBootstrap2()</code>, so without it
+    <em>all six</em> apps fail. <code>shinyGridster</code> is needed only by <code>dashboard</code>.
+  </p>
+  <p class="prose">
+    <strong>But one app is not enough.</strong> <code>codeface dynamic</code> calls
+    <code>runApp()</code>, which mounts a <em>single</em> app at <code>/</code>. The breadcrumb
+    navigation uses <strong>relative</strong> links — <code>breadcrumb.config.r</code> builds
+    <code>"../dashboard/?projectid=2"</code> — so selecting a project resolves to a path that doesn't
+    exist and returns <strong>404</strong>. Each app must be mounted under its own URL path beneath a
+    shared parent, which is exactly what <code>site_dir</code> + <code>directory_index</code> in
+    <code>shiny-server.config</code> was for.
+  </p>
+  <p class="prose">
+    The official Shiny Server understands that same configuration and RStudio still publishes a bionic
+    build (1.5.20.1002), so it replaces the dead fork — with two adaptations: <strong>absolute paths</strong>
+    (the original <code>site_dir</code> is relative to the checkout), and a <strong><code>run_as</code>
+    directive</strong>, which the original omits. Shiny Server only <em>warns</em> about
+    <code>run_as root</code> at startup, then hard-refuses at request time with
+    <code>Aborting attempt to launch worker process as root</code> — surfacing as an HTTP 500 with
+    empty app logs.
+  </p>
+
+  <div class="defect upstream">
+    <h3>A third upstream defect: three apps ship no <code>global.r</code></h3>
+    <div class="chips">
+      <span class="chip upstream">Codeface bug</span>
+      <span class="chip fixed">Patched</span>
+    </div>
+    <p>
+      With routing fixed, <code>projects</code>, <code>dashboard</code> and <code>details</code> returned
+      200 — but <code>plots</code>, <code>timeseries</code> and <code>timezones</code> returned 500 with
+      empty logs. Run directly:
+    </p>
+<pre><code><span class="bad">Warning: Error in breadcrumbOutput: could not find function "breadcrumbOutput"</span>
+  53: shinybootstrap2::withBootstrap2</code></pre>
+    <p>
+      The three working apps each ship a <code>global.r</code> that sources
+      <code>common.server.r</code> — which defines the navigation helpers and the global
+      <code>conf</code>/<code>projects.list</code> objects. The three failing apps have
+      <strong>no <code>global.r</code> at all</strong>: their <code>ui.r</code> sources
+      <code>common.ui.r</code>, so the UI loads but the first render dies. Adding the missing file to
+      each fixes all three.
+    </p>
+  </div>
+
+  <h3>Verifying it actually renders</h3>
+  <p class="prose">
+    An HTTP 200 proves only that the initial HTML was served — Shiny fills the page over a websocket
+    afterwards, so a broken app still returns 200. Driving a real session over Shiny Server's SockJS
+    transport failed twice for reasons that both look like server faults and are not:
+  </p>
+  <ul class="prose">
+    <li>A raw websocket to <code>/apps/projects/websocket/</code> never opened — that endpoint belongs to
+      standalone <code>runApp()</code>; Shiny Server uses
+      <code>/apps/&lt;app&gt;/__sockjs__/&lt;server&gt;/&lt;session&gt;/</code>.</li>
+    <li>Plain SockJS to that path got <code>o</code> then an immediate <code>c[1000,"Normal closure"]</code>.
+      The server log gave the reason: <code>Invalid multiplex packet received</code>. Shiny Server wraps
+      SockJS in its own multiplex layer — every frame is <code>&lt;id&gt;|&lt;method&gt;|&lt;payload&gt;</code>.</li>
+  </ul>
+  <p class="prose">With correct framing the app returns its rendered outputs:</p>
+<pre><code>output$quantarchBreadcrumb   -&gt;  "Codeface projects  /  <span class="ok">flask</span>"
+output$selectionlistelements -&gt;  "Open Source Projects  /  <span class="ok">flask</span>"</code></pre>
+  <div class="note">
+    <span class="lbl">Usability trap</span>
+    <p>
+      Because Shiny Server mounts each app under its own path, <code>http://localhost:8081/</code> serves a
+      bare <em>directory listing</em>, not the UI. Opening the root and seeing no application is the most
+      likely reason to conclude the frontend is broken when it is fine. A small <code>index.html</code>
+      landing page now redirects the root to <code>apps/projects/</code>.
+    </p>
+  </div>
+
+<pre><code><span class="dim"># all six apps, verified from the host:</span>
+/apps/projects/    -> <span class="ok">200</span>      /apps/plots/      -> <span class="ok">200</span>
+/apps/dashboard/   -> <span class="ok">200</span>      /apps/timeseries/ -> <span class="ok">200</span>
+/apps/details/     -> <span class="ok">200</span>      /apps/timezones/  -> <span class="ok">200</span>
+
+<span class="dim"># the app's own data query, against the analysed database:</span>
+  id  name analysisMethod
+1  2 <span class="ok">flask</span>      proximity</code></pre>
+  <p class="prose">
+    The served page is real Shiny output (<code>shiny[1.4.0.2]</code>, <code>bootstrap[2.3.2]</code>).
+  </p>
+
+  <h3>Codeface's own test suite</h3>
+  <p class="prose">
+    Integration (<code>test_exampleprojects</code>): <strong>4/4 passed</strong> in 81 s.
+    Unit: 28/29. The single failure is <code>test_cppstats_works</code> — cppstats is only needed for
+    <code>feature</code> tagging, not the <code>proximity</code> tagging used here, and it is
+    <strong>no longer installable at all</strong>: <code>install_cppstats.sh</code> fetches srcML from
+    <code>http://131.123.42.38/…</code>, a host that now times out.
+  </p>
+  <p class="prose">
+    <code>per_cluster_statistics</code> remains empty. This is <em>expected upstream behaviour</em>, not a
+    defect of this setup: Codeface's own integration test lists that table under <code>ignore_tables</code>
+    with the comment <code># TODO: Check if these should be filled</code>. Every table upstream
+    <em>does</em> expect is populated.
+  </p>
+</section>
+
+<section>
+  <h2>Reproducing</h2>
+<pre><code><span class="cmd">git clone https://github.com/siemens/codeface.git</span>
+<span class="cmd">mkdir -p work/git-repos work/res</span>
+<span class="cmd">git -C work/git-repos clone https://github.com/pallets/flask.git</span>
+
+<span class="cmd">./docker/up.sh</span>                                    <span class="dim"># build image + bootstrap services</span>
+<span class="cmd">docker exec -e JOBS=4 codeface \
+    bash /scripts/run_analysis.sh conf/flask.conf</span>
+<span class="cmd">docker exec codeface bash /scripts/collect_evidence.sh flask</span>
+
+<span class="cmd">docker exec -d codeface bash /scripts/serve_frontend.sh</span>   <span class="dim"># → localhost:8081/apps/projects/</span></code></pre>
+</section>
+
+<section>
+  <h2>Limitations</h2>
+  <ul class="prose">
+    <li><strong>Mailing-list analysis</strong> (<code>codeface ml</code>) was not attempted — it needs
+      <code>snatm</code> and <code>tm.plugin.mail</code> from GitHub forks. Flask coordinates on GitHub,
+      so there was nothing to analyse, and <code>codeface run</code> doesn't touch this path.</li>
+    <li><strong>Feature tagging is permanently unavailable</strong> — srcML's download host is dead.</li>
+    <li><strong>The web frontend runs, but not by the documented route</strong> — the shiny-server path
+      in <code>docs/webserver.md</code> is dead.</li>
+    <li><strong>Conway analysis</strong> requires a JIRA tracker and Titan jars — not applicable to Flask.</li>
+    <li>The container runs as root, so files it writes into the bind mount are root-owned on the host.</li>
+  </ul>
+</section>
+
+<footer>
+  Lab 07 · Adaptive Maintenance of a Legacy System · siemens/codeface @ e6640c93 · 2026-08-11
+</footer>
+
+</div>

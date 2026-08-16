@@ -1,0 +1,2103 @@
+..DEVINFO:codeface.configuration:Loading global configuration file '/tmp/does_not_exist_42_42'
+2026-08-11 10:47:52 [codeface.configuration] MainProcess ERROR: Could not open configuration file '/tmp/does_not_exist_42_42'
+Traceback (most recent call last):
+  File "/codeface/codeface/configuration.py", line 88, in _load
+    return yaml.load(open(filename))
+IOError: [Errno 2] No such file or directory: '/tmp/does_not_exist_42_42'
+ERROR:codeface.configuration:Could not open configuration file '/tmp/does_not_exist_42_42'
+Traceback (most recent call last):
+  File "/codeface/codeface/configuration.py", line 88, in _load
+    return yaml.load(open(filename))
+IOError: [Errno 2] No such file or directory: '/tmp/does_not_exist_42_42'
+DEVINFO:codeface.configuration:Loading global configuration file '/tmp/tmpTlYZ08'
+/codeface/codeface/configuration.py:88: YAMLLoadWarning: calling yaml.load() without Loader=... is deprecated, as the default Loader is unsafe. Please read https://msg.pyyaml.org/load for full details.
+  return yaml.load(open(filename))
+DEVINFO:codeface.configuration:Loading project configuration file '/tmp/tmpJg_WOG'
+2026-08-11 10:47:52 [codeface.configuration] MainProcess ERROR: Could not parse configuration file '/tmp/tmpJg_WOG'
+Traceback (most recent call last):
+  File "/codeface/codeface/configuration.py", line 88, in _load
+    return yaml.load(open(filename))
+  File "/usr/local/lib/python2.7/dist-packages/yaml/__init__.py", line 114, in load
+    return loader.get_single_data()
+  File "/usr/local/lib/python2.7/dist-packages/yaml/constructor.py", line 80, in get_single_data
+    node = self.get_single_node()
+  File "/usr/local/lib/python2.7/dist-packages/yaml/composer.py", line 36, in get_single_node
+    document = self.compose_document()
+  File "/usr/local/lib/python2.7/dist-packages/yaml/composer.py", line 55, in compose_document
+    node = self.compose_node(None, None)
+  File "/usr/local/lib/python2.7/dist-packages/yaml/composer.py", line 84, in compose_node
+    node = self.compose_mapping_node(anchor)
+  File "/usr/local/lib/python2.7/dist-packages/yaml/composer.py", line 127, in compose_mapping_node
+    while not self.check_event(MappingEndEvent):
+  File "/usr/local/lib/python2.7/dist-packages/yaml/parser.py", line 98, in check_event
+    self.current_event = self.state()
+  File "/usr/local/lib/python2.7/dist-packages/yaml/parser.py", line 428, in parse_block_mapping_key
+    if self.check_token(KeyToken):
+  File "/usr/local/lib/python2.7/dist-packages/yaml/scanner.py", line 115, in check_token
+    while self.need_more_tokens():
+  File "/usr/local/lib/python2.7/dist-packages/yaml/scanner.py", line 152, in need_more_tokens
+    self.stale_possible_simple_keys()
+  File "/usr/local/lib/python2.7/dist-packages/yaml/scanner.py", line 292, in stale_possible_simple_keys
+    "could not find expected ':'", self.get_mark())
+ScannerError: while scanning a simple key
+  in "/tmp/tmpJg_WOG", line 6, column 1
+could not find expected ':'
+  in "/tmp/tmpJg_WOG", line 7, column 1
+ERROR:codeface.configuration:Could not parse configuration file '/tmp/tmpJg_WOG'
+Traceback (most recent call last):
+  File "/codeface/codeface/configuration.py", line 88, in _load
+    return yaml.load(open(filename))
+  File "/usr/local/lib/python2.7/dist-packages/yaml/__init__.py", line 114, in load
+    return loader.get_single_data()
+  File "/usr/local/lib/python2.7/dist-packages/yaml/constructor.py", line 80, in get_single_data
+    node = self.get_single_node()
+  File "/usr/local/lib/python2.7/dist-packages/yaml/composer.py", line 36, in get_single_node
+    document = self.compose_document()
+  File "/usr/local/lib/python2.7/dist-packages/yaml/composer.py", line 55, in compose_document
+    node = self.compose_node(None, None)
+  File "/usr/local/lib/python2.7/dist-packages/yaml/composer.py", line 84, in compose_node
+    node = self.compose_mapping_node(anchor)
+  File "/usr/local/lib/python2.7/dist-packages/yaml/composer.py", line 127, in compose_mapping_node
+    while not self.check_event(MappingEndEvent):
+  File "/usr/local/lib/python2.7/dist-packages/yaml/parser.py", line 98, in check_event
+    self.current_event = self.state()
+  File "/usr/local/lib/python2.7/dist-packages/yaml/parser.py", line 428, in parse_block_mapping_key
+    if self.check_token(KeyToken):
+  File "/usr/local/lib/python2.7/dist-packages/yaml/scanner.py", line 115, in check_token
+    while self.need_more_tokens():
+  File "/usr/local/lib/python2.7/dist-packages/yaml/scanner.py", line 152, in need_more_tokens
+    self.stale_possible_simple_keys()
+  File "/usr/local/lib/python2.7/dist-packages/yaml/scanner.py", line 292, in stale_possible_simple_keys
+    "could not find expected ':'", self.get_mark())
+ScannerError: while scanning a simple key
+  in "/tmp/tmpJg_WOG", line 6, column 1
+could not find expected ':'
+  in "/tmp/tmpJg_WOG", line 7, column 1
+DEVINFO:codeface.configuration:Loading global configuration file '/tmp/tmpTlYZ08'
+DEVINFO:codeface.configuration:Loading project configuration file '/tmp/tmpBJwPoU'
+2026-08-11 10:47:52 [codeface.configuration] MainProcess CRITICAL: Malformed configuration: revision and rcs list lengths differ! Found 5 revisions and 4 release candidates.
+CRITICAL:codeface.configuration:Malformed configuration: revision and rcs list lengths differ! Found 5 revisions and 4 release candidates.
+.DEVINFO:codeface.configuration:Loading global configuration file '/tmp/tmpBFYmdP'
+DEVINFO:codeface.configuration:Loading project configuration file '/tmp/tmpGF2KvS'
+2026-08-11 10:47:52 [codeface.configuration] MainProcess WARNING: Unknown key 'new_tag' in configuration.
+WARNING:codeface.configuration:Unknown key 'new_tag' in configuration.
+DEVINFO:codeface.configuration:Loading global configuration file '/tmp/tmpMxDNQx'
+DEVINFO:codeface.configuration:Not loading project configuration file!
+2026-08-11 10:47:52 [codeface.configuration] MainProcess WARNING: Unknown key 'new_tag' in configuration.
+WARNING:codeface.configuration:Unknown key 'new_tag' in configuration.
+..DEBUG:codeface.util:Running command: /usr/bin/env cppstats --kind featurelocations --file /tmp/tmpk59ECc.c /tmp/tmpPLLmGX.csv
+2026-08-11 10:47:52 [codeface.util] MainProcess INFO: Command '/usr/bin/env cppstats --kind featurelocations --file /tmp/tmpk59ECc.c /tmp/tmpPLLmGX.csv' stdout:
+INFO:codeface.util:Command '/usr/bin/env cppstats --kind featurelocations --file /tmp/tmpk59ECc.c /tmp/tmpPLLmGX.csv' stdout:
+2026-08-11 10:47:52 [codeface.util] MainProcess INFO: Command '/usr/bin/env cppstats --kind featurelocations --file /tmp/tmpk59ECc.c /tmp/tmpPLLmGX.csv' stderr:
+INFO:codeface.util:Command '/usr/bin/env cppstats --kind featurelocations --file /tmp/tmpk59ECc.c /tmp/tmpPLLmGX.csv' stderr:
+2026-08-11 10:47:52 [codeface.util] MainProcess INFO: /usr/bin/env: ‘cppstats’: No such file or directory
+INFO:codeface.util:/usr/bin/env: ‘cppstats’: No such file or directory
+2026-08-11 10:47:52 [codeface.util] MainProcess ERROR: Command '/usr/bin/env cppstats --kind featurelocations --file /tmp/tmpk59ECc.c /tmp/tmpPLLmGX.csv' failed with exit code 127. 
+(stdout: 
+stderr: /usr/bin/env: ‘cppstats’: No such file or directory
+)
+ERROR:codeface.util:Command '/usr/bin/env cppstats --kind featurelocations --file /tmp/tmpk59ECc.c /tmp/tmpPLLmGX.csv' failed with exit code 127. 
+(stdout: 
+stderr: /usr/bin/env: ‘cppstats’: No such file or directory
+)
+2026-08-11 10:47:52 [codeface.VCS] MainProcess WARNING: IGNORING cppstats failure (<type 'exceptions.Exception'>, Command '/usr/bin/env cppstats --kind featurelocations --file /tmp/tmpk59ECc.c /tmp/tmpPLLmGX.csv' failed with exit code 127. 
+(stdout: 
+stderr: /usr/bin/env: ‘cppstats’: No such file or directory
+)), project file "unittest.c" is left as temp file (/tmp/tmpk59ECc.c) for inspection!
+WARNING:codeface.VCS:IGNORING cppstats failure (<type 'exceptions.Exception'>, Command '/usr/bin/env cppstats --kind featurelocations --file /tmp/tmpk59ECc.c /tmp/tmpPLLmGX.csv' failed with exit code 127. 
+(stdout: 
+stderr: /usr/bin/env: ‘cppstats’: No such file or directory
+)), project file "unittest.c" is left as temp file (/tmp/tmpk59ECc.c) for inspection!
+DEBUG:codeface.VCS:Trace of previous error: <traceback object at 0x71b15be78500>
+F................
+===== running unittests =====
+
+--- # global codeface configuration
+idServiceHostname: '127.0.0.1'
+idServicePort: 8080
+# codeface project configuration
+DEBUG:codeface.util:Starting job id 1
+DEBUG:codeface.util:Starting job id 2
+DEBUG:codeface.util:Starting job id 3
+DEBUG:codeface.util:Starting job id 4
+DEBUG:codeface.util:Starting job id 6
+DEBUG:codeface.util:Starting job id 7
+DEBUG:codeface.util:Starting job id 5
+DEBUG:codeface.util:Starting job id 8
+DEBUG:codeface.util:Starting job id 9
+DEBUG:codeface.util:Starting job id 10
+2026-08-11 10:47:52 [codeface.test.unit.batchjob] Process-7 INFO: 6
+INFO:codeface.test.unit.batchjob:6
+DEBUG:codeface.util:Finished work id 7
+DEBUG:codeface.util:Job 7 has finished!
+2026-08-11 10:47:52 [codeface.test.unit.batchjob] Process-2 INFO: 1
+INFO:codeface.test.unit.batchjob:1
+DEBUG:codeface.util:Finished work id 2
+2026-08-11 10:47:52 [codeface.test.unit.batchjob] Process-5 INFO: 4
+INFO:codeface.test.unit.batchjob:4
+DEBUG:codeface.util:Finished work id 5
+2026-08-11 10:47:52 [codeface.test.unit.batchjob] Process-4 INFO: 3
+INFO:codeface.test.unit.batchjob:3
+DEBUG:codeface.util:Finished work id 4
+DEBUG:codeface.util:Job 2 has finished!
+DEBUG:codeface.util:Job 4 has finished!
+DEBUG:codeface.util:Job 5 has finished!
+2026-08-11 10:47:52 [codeface.test.unit.batchjob] Process-10 INFO: 9
+INFO:codeface.test.unit.batchjob:9
+DEBUG:codeface.util:Finished work id 10
+2026-08-11 10:47:52 [codeface.test.unit.batchjob] Process-8 INFO: 7
+INFO:codeface.test.unit.batchjob:7
+DEBUG:codeface.util:Finished work id 8
+2026-08-11 10:47:52 [codeface.test.unit.batchjob] Process-9 INFO: 8
+INFO:codeface.test.unit.batchjob:8
+DEBUG:codeface.util:Finished work id 9
+2026-08-11 10:47:52 [codeface.test.unit.batchjob] Process-6 INFO: 5
+INFO:codeface.test.unit.batchjob:5
+DEBUG:codeface.util:Finished work id 6
+DEBUG:codeface.util:Job 6 has finished!
+DEBUG:codeface.util:Job 8 has finished!
+DEBUG:codeface.util:Job 9 has finished!
+DEBUG:codeface.util:Job 10 has finished!
+2026-08-11 10:47:52 [codeface.test.unit.batchjob] Process-3 INFO: 2
+INFO:codeface.test.unit.batchjob:2
+DEBUG:codeface.util:Finished work id 3
+2026-08-11 10:47:52 [codeface.test.unit.batchjob] Process-1 INFO: 0
+INFO:codeface.test.unit.batchjob:0
+DEBUG:codeface.util:Finished work id 1
+DEBUG:codeface.util:Job 1 has finished!
+DEBUG:codeface.util:Job 3 has finished!
+DEVINFO:codeface.util:Terminating workers...
+DEVINFO:codeface.util:Workers terminated.
+.DEBUG:codeface.util:Starting job id 1
+2026-08-11 10:47:52 [codeface.test.unit.batchjob] Process-25 INFO: 0
+INFO:codeface.test.unit.batchjob:0
+DEBUG:codeface.util:Finished work id 1
+DEBUG:codeface.util:Job 1 has finished!
+DEBUG:codeface.util:Starting job id 2
+2026-08-11 10:47:52 [codeface.test.unit.batchjob] Process-26 INFO: 1
+INFO:codeface.test.unit.batchjob:1
+DEBUG:codeface.util:Finished work id 2
+DEBUG:codeface.util:Job 2 has finished!
+DEBUG:codeface.util:Starting job id 3
+2026-08-11 10:47:52 [codeface.test.unit.batchjob] Process-27 INFO: 2
+INFO:codeface.test.unit.batchjob:2
+DEBUG:codeface.util:Finished work id 3
+DEBUG:codeface.util:Job 3 has finished!
+DEBUG:codeface.util:Starting job id 4
+2026-08-11 10:47:52 [codeface.test.unit.batchjob] Process-28 INFO: 3
+INFO:codeface.test.unit.batchjob:3
+DEBUG:codeface.util:Finished work id 4
+DEBUG:codeface.util:Job 4 has finished!
+DEBUG:codeface.util:Starting job id 5
+2026-08-11 10:47:52 [codeface.test.unit.batchjob] Process-29 INFO: 4
+INFO:codeface.test.unit.batchjob:4
+DEBUG:codeface.util:Finished work id 5
+DEBUG:codeface.util:Job 5 has finished!
+DEBUG:codeface.util:Starting job id 6
+2026-08-11 10:47:52 [codeface.test.unit.batchjob] Process-30 INFO: 5
+INFO:codeface.test.unit.batchjob:5
+DEBUG:codeface.util:Finished work id 6
+DEBUG:codeface.util:Job 6 has finished!
+DEBUG:codeface.util:Starting job id 7
+2026-08-11 10:47:52 [codeface.test.unit.batchjob] Process-31 INFO: 6
+INFO:codeface.test.unit.batchjob:6
+DEBUG:codeface.util:Finished work id 7
+DEBUG:codeface.util:Job 7 has finished!
+DEBUG:codeface.util:Starting job id 8
+2026-08-11 10:47:52 [codeface.test.unit.batchjob] Process-32 INFO: 7
+INFO:codeface.test.unit.batchjob:7
+DEBUG:codeface.util:Finished work id 8
+DEBUG:codeface.util:Job 8 has finished!
+DEBUG:codeface.util:Starting job id 9
+2026-08-11 10:47:52 [codeface.test.unit.batchjob] Process-33 INFO: 8
+INFO:codeface.test.unit.batchjob:8
+DEBUG:codeface.util:Finished work id 9
+DEBUG:codeface.util:Job 9 has finished!
+DEBUG:codeface.util:Starting job id 10
+2026-08-11 10:47:52 [codeface.test.unit.batchjob] Process-34 INFO: 9
+INFO:codeface.test.unit.batchjob:9
+DEBUG:codeface.util:Finished work id 10
+DEBUG:codeface.util:Job 10 has finished!
+DEVINFO:codeface.util:Terminating workers...
+DEVINFO:codeface.util:Workers terminated.
+.DEBUG:codeface.util:Starting job id 1
+DEBUG:codeface.util:Starting job id 2
+DEBUG:codeface.util:Finished work id 1
+DEBUG:codeface.util:Finished work id 2
+DEBUG:codeface.util:Starting job id 3
+DEBUG:codeface.util:Finished work id 3
+DEBUG:codeface.util:Starting job id 4
+DEBUG:codeface.util:Finished work id 4
+DEBUG:codeface.util:Starting job id 5
+DEBUG:codeface.util:Finished work id 5
+DEBUG:codeface.util:Starting job id 6
+DEBUG:codeface.util:Starting job id 7
+DEBUG:codeface.util:Finished work id 6
+DEBUG:codeface.util:Finished work id 7
+DEBUG:codeface.util:Starting job id 8
+DEBUG:codeface.util:Finished work id 8
+DEBUG:codeface.util:Starting job id 10
+DEBUG:codeface.util:Finished work id 10
+DEBUG:codeface.util:Starting job id 9
+DEBUG:codeface.util:Starting job id 12
+DEBUG:codeface.util:Finished work id 9
+DEBUG:codeface.util:Finished work id 12
+DEBUG:codeface.util:Starting job id 11
+DEBUG:codeface.util:Finished work id 11
+DEBUG:codeface.util:Starting job id 13
+DEBUG:codeface.util:Starting job id 14
+DEBUG:codeface.util:Finished work id 13
+DEBUG:codeface.util:Finished work id 14
+DEBUG:codeface.util:Job 1 has finished!
+DEBUG:codeface.util:Starting job id 15
+DEBUG:codeface.util:Starting job id 16
+DEBUG:codeface.util:Job 2 has finished!
+DEBUG:codeface.util:Finished work id 15
+DEBUG:codeface.util:Job 3 has finished!
+DEBUG:codeface.util:Finished work id 16
+DEBUG:codeface.util:Starting job id 17
+DEBUG:codeface.util:Job 4 has finished!
+DEBUG:codeface.util:Starting job id 20
+DEBUG:codeface.util:Finished work id 20
+DEBUG:codeface.util:Job 5 has finished!
+DEBUG:codeface.util:Starting job id 18
+DEBUG:codeface.util:Job 6 has finished!
+DEBUG:codeface.util:Finished work id 17
+DEBUG:codeface.util:Finished work id 18
+DEBUG:codeface.util:Starting job id 19
+DEBUG:codeface.util:Job 8 has finished!
+DEBUG:codeface.util:Job 9 has finished!
+DEBUG:codeface.util:Starting job id 23
+DEBUG:codeface.util:Starting job id 24
+DEBUG:codeface.util:Finished work id 19
+DEBUG:codeface.util:Job 11 has finished!
+DEBUG:codeface.util:Finished work id 24
+DEBUG:codeface.util:Finished work id 23
+DEBUG:codeface.util:Starting job id 25
+DEBUG:codeface.util:Finished work id 25
+DEBUG:codeface.util:Starting job id 21
+DEBUG:codeface.util:Starting job id 27
+DEBUG:codeface.util:Finished work id 27
+DEBUG:codeface.util:Starting job id 28
+DEBUG:codeface.util:Finished work id 21
+DEBUG:codeface.util:Starting job id 22
+DEBUG:codeface.util:Finished work id 28
+DEBUG:codeface.util:Finished work id 22
+DEBUG:codeface.util:Starting job id 30
+DEBUG:codeface.util:Finished work id 30
+DEBUG:codeface.util:Starting job id 26
+DEBUG:codeface.util:Finished work id 26
+DEBUG:codeface.util:Starting job id 32
+DEBUG:codeface.util:Starting job id 33
+DEBUG:codeface.util:Finished work id 32
+DEBUG:codeface.util:Finished work id 33
+DEBUG:codeface.util:Starting job id 29
+DEBUG:codeface.util:Starting job id 37
+DEBUG:codeface.util:Starting job id 35
+DEBUG:codeface.util:Starting job id 36
+DEBUG:codeface.util:Finished work id 29
+DEBUG:codeface.util:Finished work id 37
+DEBUG:codeface.util:Finished work id 35
+DEBUG:codeface.util:Finished work id 36
+DEBUG:codeface.util:Starting job id 31
+DEBUG:codeface.util:Starting job id 39
+DEBUG:codeface.util:Finished work id 39
+DEBUG:codeface.util:Starting job id 38
+DEBUG:codeface.util:Starting job id 40
+DEBUG:codeface.util:Finished work id 38
+DEBUG:codeface.util:Finished work id 31
+DEBUG:codeface.util:Starting job id 42
+DEBUG:codeface.util:Finished work id 40
+DEBUG:codeface.util:Finished work id 42
+DEBUG:codeface.util:Starting job id 44
+DEBUG:codeface.util:Finished work id 44
+DEBUG:codeface.util:Starting job id 46
+DEBUG:codeface.util:Starting job id 47
+DEBUG:codeface.util:Finished work id 46
+DEBUG:codeface.util:Starting job id 45
+DEBUG:codeface.util:Starting job id 48
+DEBUG:codeface.util:Finished work id 47
+DEBUG:codeface.util:Finished work id 45
+DEBUG:codeface.util:Finished work id 48
+DEBUG:codeface.util:Starting job id 50
+DEBUG:codeface.util:Starting job id 51
+DEBUG:codeface.util:Starting job id 43
+DEBUG:codeface.util:Starting job id 41
+DEBUG:codeface.util:Finished work id 50
+DEBUG:codeface.util:Starting job id 52
+DEBUG:codeface.util:Finished work id 51
+DEBUG:codeface.util:Starting job id 53
+DEBUG:codeface.util:Starting job id 54
+DEBUG:codeface.util:Finished work id 43
+DEBUG:codeface.util:Finished work id 41
+DEBUG:codeface.util:Finished work id 54
+DEBUG:codeface.util:Finished work id 52
+DEBUG:codeface.util:Starting job id 57
+DEBUG:codeface.util:Finished work id 53
+DEBUG:codeface.util:Finished work id 57
+DEBUG:codeface.util:Starting job id 58
+DEBUG:codeface.util:Starting job id 56
+DEBUG:codeface.util:Finished work id 58
+DEBUG:codeface.util:Starting job id 59
+DEBUG:codeface.util:Starting job id 49
+DEBUG:codeface.util:Starting job id 60
+DEBUG:codeface.util:Finished work id 59
+DEBUG:codeface.util:Finished work id 49
+DEBUG:codeface.util:Finished work id 60
+DEBUG:codeface.util:Starting job id 34
+DEBUG:codeface.util:Starting job id 55
+DEBUG:codeface.util:Starting job id 61
+DEBUG:codeface.util:Finished work id 55
+DEBUG:codeface.util:Starting job id 62
+DEBUG:codeface.util:Finished work id 61
+DEBUG:codeface.util:Finished work id 56
+DEBUG:codeface.util:Finished work id 34
+DEBUG:codeface.util:Finished work id 62
+DEBUG:codeface.util:Starting job id 63
+DEBUG:codeface.util:Finished work id 63
+DEBUG:codeface.util:Starting job id 65
+DEBUG:codeface.util:Starting job id 64
+DEBUG:codeface.util:Starting job id 66
+DEBUG:codeface.util:Finished work id 65
+DEBUG:codeface.util:Starting job id 67
+DEBUG:codeface.util:Finished work id 64
+DEBUG:codeface.util:Starting job id 68
+DEBUG:codeface.util:Finished work id 66
+DEBUG:codeface.util:Finished work id 67
+DEBUG:codeface.util:Finished work id 68
+DEBUG:codeface.util:Starting job id 70
+DEBUG:codeface.util:Starting job id 69
+DEBUG:codeface.util:Finished work id 70
+DEBUG:codeface.util:Finished work id 69
+DEBUG:codeface.util:Starting job id 71
+DEBUG:codeface.util:Starting job id 73
+DEBUG:codeface.util:Starting job id 72
+DEBUG:codeface.util:Starting job id 74
+DEBUG:codeface.util:Finished work id 73
+DEBUG:codeface.util:Finished work id 72
+DEBUG:codeface.util:Finished work id 74
+DEBUG:codeface.util:Starting job id 75
+DEBUG:codeface.util:Finished work id 71
+DEBUG:codeface.util:Starting job id 76
+DEBUG:codeface.util:Starting job id 77
+DEBUG:codeface.util:Finished work id 75
+DEBUG:codeface.util:Finished work id 76
+DEBUG:codeface.util:Finished work id 77
+DEBUG:codeface.util:Starting job id 78
+DEBUG:codeface.util:Starting job id 81
+DEBUG:codeface.util:Finished work id 78
+DEBUG:codeface.util:Starting job id 79
+DEBUG:codeface.util:Finished work id 81
+DEBUG:codeface.util:Starting job id 82
+DEBUG:codeface.util:Finished work id 79
+DEBUG:codeface.util:Starting job id 83
+DEBUG:codeface.util:Starting job id 85
+DEBUG:codeface.util:Finished work id 82
+DEBUG:codeface.util:Starting job id 84
+DEBUG:codeface.util:Finished work id 83
+DEBUG:codeface.util:Finished work id 84
+DEBUG:codeface.util:Starting job id 80
+DEBUG:codeface.util:Starting job id 86
+DEBUG:codeface.util:Starting job id 87
+DEBUG:codeface.util:Finished work id 80
+DEBUG:codeface.util:Starting job id 88
+DEBUG:codeface.util:Finished work id 86
+DEBUG:codeface.util:Finished work id 87
+DEBUG:codeface.util:Starting job id 89
+DEBUG:codeface.util:Starting job id 90
+DEBUG:codeface.util:Finished work id 88
+DEBUG:codeface.util:Starting job id 92
+DEBUG:codeface.util:Finished work id 90
+DEBUG:codeface.util:Starting job id 91
+DEBUG:codeface.util:Finished work id 89
+DEBUG:codeface.util:Finished work id 92
+DEBUG:codeface.util:Finished work id 85
+DEBUG:codeface.util:Starting job id 93
+DEBUG:codeface.util:Finished work id 91
+DEBUG:codeface.util:Starting job id 94
+DEBUG:codeface.util:Starting job id 96
+DEBUG:codeface.util:Finished work id 93
+DEBUG:codeface.util:Finished work id 96
+DEBUG:codeface.util:Starting job id 95
+DEBUG:codeface.util:Starting job id 98
+DEBUG:codeface.util:Finished work id 94
+DEBUG:codeface.util:Finished work id 95
+DEBUG:codeface.util:Starting job id 97
+DEBUG:codeface.util:Finished work id 98
+DEBUG:codeface.util:Finished work id 97
+DEBUG:codeface.util:Starting job id 103
+DEBUG:codeface.util:Starting job id 102
+DEBUG:codeface.util:Starting job id 100
+DEBUG:codeface.util:Finished work id 102
+DEBUG:codeface.util:Starting job id 104
+DEBUG:codeface.util:Starting job id 105
+DEBUG:codeface.util:Finished work id 103
+DEBUG:codeface.util:Finished work id 100
+DEBUG:codeface.util:Finished work id 104
+DEBUG:codeface.util:Finished work id 105
+DEBUG:codeface.util:Starting job id 106
+DEBUG:codeface.util:Starting job id 107
+DEBUG:codeface.util:Finished work id 106
+DEBUG:codeface.util:Finished work id 107
+DEBUG:codeface.util:Starting job id 110
+DEBUG:codeface.util:Starting job id 108
+DEBUG:codeface.util:Starting job id 109
+DEBUG:codeface.util:Starting job id 101
+DEBUG:codeface.util:Starting job id 111
+DEBUG:codeface.util:Finished work id 108
+DEBUG:codeface.util:Starting job id 99
+DEBUG:codeface.util:Finished work id 109
+DEBUG:codeface.util:Finished work id 111
+DEBUG:codeface.util:Starting job id 113
+DEBUG:codeface.util:Finished work id 101
+DEBUG:codeface.util:Starting job id 112
+DEBUG:codeface.util:Finished work id 113
+DEBUG:codeface.util:Finished work id 99
+DEBUG:codeface.util:Starting job id 115
+DEBUG:codeface.util:Finished work id 112
+DEBUG:codeface.util:Starting job id 116
+DEBUG:codeface.util:Finished work id 110
+DEBUG:codeface.util:Finished work id 115
+DEBUG:codeface.util:Starting job id 117
+DEBUG:codeface.util:Starting job id 114
+DEBUG:codeface.util:Starting job id 118
+DEBUG:codeface.util:Finished work id 117
+DEBUG:codeface.util:Finished work id 114
+DEBUG:codeface.util:Starting job id 119
+DEBUG:codeface.util:Finished work id 118
+DEBUG:codeface.util:Starting job id 120
+DEBUG:codeface.util:Finished work id 119
+DEBUG:codeface.util:Finished work id 120
+DEBUG:codeface.util:Starting job id 121
+DEBUG:codeface.util:Starting job id 122
+DEBUG:codeface.util:Starting job id 123
+DEBUG:codeface.util:Finished work id 121
+DEBUG:codeface.util:Starting job id 125
+DEBUG:codeface.util:Finished work id 122
+DEBUG:codeface.util:Finished work id 123
+DEBUG:codeface.util:Starting job id 124
+DEBUG:codeface.util:Finished work id 125
+DEBUG:codeface.util:Starting job id 126
+DEBUG:codeface.util:Finished work id 116
+DEBUG:codeface.util:Finished work id 124
+DEBUG:codeface.util:Starting job id 128
+DEBUG:codeface.util:Starting job id 127
+DEBUG:codeface.util:Finished work id 126
+DEBUG:codeface.util:Finished work id 128
+DEBUG:codeface.util:Finished work id 127
+DEBUG:codeface.util:Starting job id 130
+DEBUG:codeface.util:Starting job id 131
+DEBUG:codeface.util:Starting job id 129
+DEBUG:codeface.util:Finished work id 130
+DEBUG:codeface.util:Finished work id 131
+DEBUG:codeface.util:Finished work id 129
+DEBUG:codeface.util:Starting job id 133
+DEBUG:codeface.util:Starting job id 134
+DEBUG:codeface.util:Starting job id 132
+DEBUG:codeface.util:Finished work id 133
+DEBUG:codeface.util:Finished work id 134
+DEBUG:codeface.util:Finished work id 132
+DEBUG:codeface.util:Starting job id 135
+DEBUG:codeface.util:Finished work id 135
+DEBUG:codeface.util:Starting job id 136
+DEBUG:codeface.util:Starting job id 137
+DEBUG:codeface.util:Finished work id 137
+DEBUG:codeface.util:Finished work id 136
+DEBUG:codeface.util:Starting job id 138
+DEBUG:codeface.util:Starting job id 139
+DEBUG:codeface.util:Finished work id 138
+DEBUG:codeface.util:Starting job id 141
+DEBUG:codeface.util:Starting job id 140
+DEBUG:codeface.util:Finished work id 139
+DEBUG:codeface.util:Finished work id 141
+DEBUG:codeface.util:Finished work id 140
+DEBUG:codeface.util:Starting job id 142
+DEBUG:codeface.util:Starting job id 143
+DEBUG:codeface.util:Starting job id 144
+DEBUG:codeface.util:Finished work id 142
+DEBUG:codeface.util:Finished work id 143
+DEBUG:codeface.util:Starting job id 145
+DEBUG:codeface.util:Finished work id 144
+DEBUG:codeface.util:Starting job id 146
+DEBUG:codeface.util:Starting job id 148
+DEBUG:codeface.util:Starting job id 147
+DEBUG:codeface.util:Finished work id 145
+DEBUG:codeface.util:Finished work id 146
+DEBUG:codeface.util:Finished work id 148
+DEBUG:codeface.util:Starting job id 149
+DEBUG:codeface.util:Finished work id 147
+DEBUG:codeface.util:Starting job id 150
+DEBUG:codeface.util:Finished work id 149
+DEBUG:codeface.util:Starting job id 152
+DEBUG:codeface.util:Starting job id 153
+DEBUG:codeface.util:Finished work id 150
+DEBUG:codeface.util:Finished work id 153
+DEBUG:codeface.util:Starting job id 154
+DEBUG:codeface.util:Starting job id 155
+DEBUG:codeface.util:Finished work id 152
+DEBUG:codeface.util:Finished work id 154
+DEBUG:codeface.util:Finished work id 155
+DEBUG:codeface.util:Starting job id 156
+DEBUG:codeface.util:Starting job id 159
+DEBUG:codeface.util:Starting job id 158
+DEBUG:codeface.util:Finished work id 156
+DEBUG:codeface.util:Starting job id 151
+DEBUG:codeface.util:Finished work id 158
+DEBUG:codeface.util:Finished work id 159
+DEBUG:codeface.util:Starting job id 157
+DEBUG:codeface.util:Starting job id 160
+DEBUG:codeface.util:Finished work id 151
+DEBUG:codeface.util:Finished work id 157
+DEBUG:codeface.util:Finished work id 160
+DEBUG:codeface.util:Starting job id 161
+DEBUG:codeface.util:Starting job id 162
+DEBUG:codeface.util:Starting job id 163
+DEBUG:codeface.util:Finished work id 161
+DEBUG:codeface.util:Finished work id 162
+DEBUG:codeface.util:Starting job id 164
+DEBUG:codeface.util:Starting job id 165
+DEBUG:codeface.util:Finished work id 163
+DEBUG:codeface.util:Finished work id 164
+DEBUG:codeface.util:Finished work id 165
+DEBUG:codeface.util:Starting job id 166
+DEBUG:codeface.util:Starting job id 169
+DEBUG:codeface.util:Finished work id 166
+DEBUG:codeface.util:Starting job id 170
+DEBUG:codeface.util:Starting job id 167
+DEBUG:codeface.util:Starting job id 168
+DEBUG:codeface.util:Finished work id 169
+DEBUG:codeface.util:Finished work id 168
+DEBUG:codeface.util:Finished work id 167
+DEBUG:codeface.util:Finished work id 170
+DEBUG:codeface.util:Starting job id 173
+DEBUG:codeface.util:Starting job id 172
+DEBUG:codeface.util:Finished work id 173
+DEBUG:codeface.util:Starting job id 174
+DEBUG:codeface.util:Starting job id 176
+DEBUG:codeface.util:Finished work id 172
+DEBUG:codeface.util:Starting job id 175
+DEBUG:codeface.util:Finished work id 176
+DEBUG:codeface.util:Finished work id 174
+DEBUG:codeface.util:Starting job id 177
+DEBUG:codeface.util:Starting job id 178
+DEBUG:codeface.util:Starting job id 171
+DEBUG:codeface.util:Starting job id 179
+DEBUG:codeface.util:Finished work id 177
+DEBUG:codeface.util:Finished work id 175
+DEBUG:codeface.util:Finished work id 171
+DEBUG:codeface.util:Finished work id 179
+DEBUG:codeface.util:Starting job id 180
+DEBUG:codeface.util:Finished work id 178
+DEBUG:codeface.util:Starting job id 181
+DEBUG:codeface.util:Starting job id 184
+DEBUG:codeface.util:Starting job id 183
+DEBUG:codeface.util:Finished work id 180
+DEBUG:codeface.util:Finished work id 181
+DEBUG:codeface.util:Starting job id 182
+DEBUG:codeface.util:Finished work id 184
+DEBUG:codeface.util:Finished work id 183
+DEBUG:codeface.util:Finished work id 182
+DEBUG:codeface.util:Starting job id 185
+DEBUG:codeface.util:Starting job id 187
+DEBUG:codeface.util:Finished work id 185
+DEBUG:codeface.util:Starting job id 186
+DEBUG:codeface.util:Finished work id 186
+DEBUG:codeface.util:Starting job id 189
+DEBUG:codeface.util:Starting job id 188
+DEBUG:codeface.util:Finished work id 187
+DEBUG:codeface.util:Finished work id 189
+DEBUG:codeface.util:Finished work id 188
+DEBUG:codeface.util:Starting job id 190
+DEBUG:codeface.util:Starting job id 191
+DEBUG:codeface.util:Finished work id 190
+DEBUG:codeface.util:Starting job id 192
+DEBUG:codeface.util:Finished work id 191
+DEBUG:codeface.util:Starting job id 193
+DEBUG:codeface.util:Finished work id 192
+DEBUG:codeface.util:Starting job id 195
+DEBUG:codeface.util:Finished work id 193
+DEBUG:codeface.util:Starting job id 194
+DEBUG:codeface.util:Starting job id 196
+DEBUG:codeface.util:Starting job id 197
+DEBUG:codeface.util:Finished work id 196
+DEBUG:codeface.util:Finished work id 194
+DEBUG:codeface.util:Starting job id 198
+DEBUG:codeface.util:Starting job id 200
+DEBUG:codeface.util:Finished work id 197
+DEBUG:codeface.util:Starting job id 199
+DEBUG:codeface.util:Finished work id 198
+DEBUG:codeface.util:Finished work id 200
+DEBUG:codeface.util:Finished work id 199
+DEBUG:codeface.util:Starting job id 201
+DEBUG:codeface.util:Starting job id 203
+DEBUG:codeface.util:Starting job id 202
+DEBUG:codeface.util:Starting job id 204
+DEBUG:codeface.util:Finished work id 203
+DEBUG:codeface.util:Finished work id 201
+DEBUG:codeface.util:Finished work id 204
+DEBUG:codeface.util:Finished work id 202
+DEBUG:codeface.util:Starting job id 207
+DEBUG:codeface.util:Starting job id 206
+DEBUG:codeface.util:Starting job id 205
+DEBUG:codeface.util:Finished work id 195
+DEBUG:codeface.util:Finished work id 207
+DEBUG:codeface.util:Finished work id 206
+DEBUG:codeface.util:Starting job id 210
+DEBUG:codeface.util:Starting job id 209
+DEBUG:codeface.util:Finished work id 205
+DEBUG:codeface.util:Starting job id 211
+DEBUG:codeface.util:Finished work id 210
+DEBUG:codeface.util:Finished work id 209
+DEBUG:codeface.util:Finished work id 211
+DEBUG:codeface.util:Starting job id 212
+DEBUG:codeface.util:Starting job id 213
+DEBUG:codeface.util:Finished work id 212
+DEBUG:codeface.util:Finished work id 213
+DEBUG:codeface.util:Starting job id 215
+DEBUG:codeface.util:Starting job id 214
+DEBUG:codeface.util:Starting job id 217
+DEBUG:codeface.util:Finished work id 215
+DEBUG:codeface.util:Finished work id 217
+DEBUG:codeface.util:Finished work id 214
+DEBUG:codeface.util:Starting job id 218
+DEBUG:codeface.util:Starting job id 208
+DEBUG:codeface.util:Starting job id 219
+DEBUG:codeface.util:Finished work id 218
+DEBUG:codeface.util:Finished work id 208
+DEBUG:codeface.util:Starting job id 222
+DEBUG:codeface.util:Finished work id 219
+DEBUG:codeface.util:Starting job id 221
+DEBUG:codeface.util:Starting job id 224
+DEBUG:codeface.util:Starting job id 220
+DEBUG:codeface.util:Starting job id 223
+DEBUG:codeface.util:Finished work id 222
+DEBUG:codeface.util:Finished work id 221
+DEBUG:codeface.util:Finished work id 224
+DEBUG:codeface.util:Starting job id 225
+DEBUG:codeface.util:Finished work id 220
+DEBUG:codeface.util:Finished work id 223
+DEBUG:codeface.util:Finished work id 225
+DEBUG:codeface.util:Starting job id 228
+DEBUG:codeface.util:Starting job id 227
+DEBUG:codeface.util:Starting job id 229
+DEBUG:codeface.util:Finished work id 228
+DEBUG:codeface.util:Finished work id 227
+DEBUG:codeface.util:Starting job id 230
+DEBUG:codeface.util:Starting job id 231
+DEBUG:codeface.util:Finished work id 229
+DEBUG:codeface.util:Starting job id 233
+DEBUG:codeface.util:Finished work id 231
+DEBUG:codeface.util:Starting job id 232
+DEBUG:codeface.util:Finished work id 230
+DEBUG:codeface.util:Starting job id 235
+DEBUG:codeface.util:Starting job id 234
+DEBUG:codeface.util:Finished work id 232
+DEBUG:codeface.util:Finished work id 235
+DEBUG:codeface.util:Starting job id 236
+DEBUG:codeface.util:Finished work id 234
+DEBUG:codeface.util:Starting job id 238
+DEBUG:codeface.util:Finished work id 233
+DEBUG:codeface.util:Starting job id 237
+DEBUG:codeface.util:Finished work id 236
+DEBUG:codeface.util:Finished work id 238
+DEBUG:codeface.util:Finished work id 237
+DEBUG:codeface.util:Starting job id 239
+DEBUG:codeface.util:Starting job id 240
+DEBUG:codeface.util:Starting job id 216
+DEBUG:codeface.util:Finished work id 240
+DEBUG:codeface.util:Finished work id 239
+DEBUG:codeface.util:Finished work id 216
+DEBUG:codeface.util:Job 25 has finished!
+DEBUG:codeface.util:Job 7 has finished!
+DEBUG:codeface.util:Job 27 has finished!
+DEBUG:codeface.util:Job 28 has finished!
+DEBUG:codeface.util:Job 10 has finished!
+DEBUG:codeface.util:Starting job id 226
+DEBUG:codeface.util:Job 30 has finished!
+DEBUG:codeface.util:Finished work id 226
+DEBUG:codeface.util:Job 41 has finished!
+DEBUG:codeface.util:Job 33 has finished!
+DEBUG:codeface.util:Job 35 has finished!
+DEBUG:codeface.util:Job 34 has finished!
+DEBUG:codeface.util:Job 20 has finished!
+DEBUG:codeface.util:Job 13 has finished!
+DEBUG:codeface.util:Job 31 has finished!
+DEBUG:codeface.util:Job 14 has finished!
+DEBUG:codeface.util:Job 15 has finished!
+DEBUG:codeface.util:Job 16 has finished!
+DEBUG:codeface.util:Job 17 has finished!
+DEBUG:codeface.util:Job 18 has finished!
+DEBUG:codeface.util:Job 19 has finished!
+DEBUG:codeface.util:Job 22 has finished!
+DEBUG:codeface.util:Job 21 has finished!
+DEBUG:codeface.util:Job 43 has finished!
+DEBUG:codeface.util:Job 26 has finished!
+DEBUG:codeface.util:Job 29 has finished!
+DEBUG:codeface.util:Job 44 has finished!
+DEBUG:codeface.util:Job 56 has finished!
+DEBUG:codeface.util:Job 69 has finished!
+DEBUG:codeface.util:Job 42 has finished!
+DEBUG:codeface.util:Job 12 has finished!
+DEBUG:codeface.util:Job 47 has finished!
+DEBUG:codeface.util:Job 84 has finished!
+DEBUG:codeface.util:Job 37 has finished!
+DEBUG:codeface.util:Job 63 has finished!
+DEBUG:codeface.util:Job 106 has finished!
+DEBUG:codeface.util:Job 24 has finished!
+DEBUG:codeface.util:Job 23 has finished!
+DEBUG:codeface.util:Job 61 has finished!
+DEBUG:codeface.util:Job 38 has finished!
+DEBUG:codeface.util:Job 48 has finished!
+DEBUG:codeface.util:Job 50 has finished!
+DEBUG:codeface.util:Job 97 has finished!
+DEBUG:codeface.util:Job 100 has finished!
+DEBUG:codeface.util:Job 46 has finished!
+DEBUG:codeface.util:Job 71 has finished!
+DEBUG:codeface.util:Job 45 has finished!
+DEBUG:codeface.util:Job 76 has finished!
+DEBUG:codeface.util:Job 79 has finished!
+DEBUG:codeface.util:Job 66 has finished!
+DEBUG:codeface.util:Job 49 has finished!
+DEBUG:codeface.util:Job 95 has finished!
+DEBUG:codeface.util:Job 74 has finished!
+DEBUG:codeface.util:Job 86 has finished!
+DEBUG:codeface.util:Job 32 has finished!
+DEBUG:codeface.util:Job 52 has finished!
+DEBUG:codeface.util:Job 89 has finished!
+DEBUG:codeface.util:Job 39 has finished!
+DEBUG:codeface.util:Job 65 has finished!
+DEBUG:codeface.util:Job 145 has finished!
+DEBUG:codeface.util:Job 36 has finished!
+DEBUG:codeface.util:Job 55 has finished!
+DEBUG:codeface.util:Job 93 has finished!
+DEBUG:codeface.util:Job 75 has finished!
+DEBUG:codeface.util:Job 82 has finished!
+DEBUG:codeface.util:Job 54 has finished!
+DEBUG:codeface.util:Job 156 has finished!
+DEBUG:codeface.util:Job 109 has finished!
+DEBUG:codeface.util:Job 51 has finished!
+DEBUG:codeface.util:Job 120 has finished!
+DEBUG:codeface.util:Job 53 has finished!
+DEBUG:codeface.util:Job 129 has finished!
+DEBUG:codeface.util:Job 104 has finished!
+DEBUG:codeface.util:Job 88 has finished!
+DEBUG:codeface.util:Job 83 has finished!
+DEBUG:codeface.util:Job 118 has finished!
+DEBUG:codeface.util:Job 94 has finished!
+DEBUG:codeface.util:Job 142 has finished!
+DEBUG:codeface.util:Job 67 has finished!
+DEBUG:codeface.util:Job 59 has finished!
+DEBUG:codeface.util:Job 112 has finished!
+DEBUG:codeface.util:Job 87 has finished!
+DEBUG:codeface.util:Job 70 has finished!
+DEBUG:codeface.util:Job 171 has finished!
+DEBUG:codeface.util:Job 40 has finished!
+DEBUG:codeface.util:Job 64 has finished!
+DEBUG:codeface.util:Job 135 has finished!
+DEBUG:codeface.util:Job 99 has finished!
+DEBUG:codeface.util:Job 122 has finished!
+DEBUG:codeface.util:Job 57 has finished!
+DEBUG:codeface.util:Job 179 has finished!
+DEBUG:codeface.util:Job 115 has finished!
+DEBUG:codeface.util:Job 58 has finished!
+DEBUG:codeface.util:Job 125 has finished!
+DEBUG:codeface.util:Job 60 has finished!
+DEBUG:codeface.util:Job 190 has finished!
+DEBUG:codeface.util:Job 126 has finished!
+DEBUG:codeface.util:Job 111 has finished!
+DEBUG:codeface.util:Job 121 has finished!
+DEBUG:codeface.util:Job 123 has finished!
+DEBUG:codeface.util:Job 101 has finished!
+DEBUG:codeface.util:Job 165 has finished!
+DEBUG:codeface.util:Job 108 has finished!
+DEBUG:codeface.util:Job 62 has finished!
+DEBUG:codeface.util:Job 119 has finished!
+DEBUG:codeface.util:Job 98 has finished!
+DEBUG:codeface.util:Job 73 has finished!
+DEBUG:codeface.util:Job 183 has finished!
+DEBUG:codeface.util:Job 72 has finished!
+DEBUG:codeface.util:Job 105 has finished!
+DEBUG:codeface.util:Job 180 has finished!
+DEBUG:codeface.util:Job 132 has finished!
+DEBUG:codeface.util:Job 128 has finished!
+DEBUG:codeface.util:Job 68 has finished!
+DEBUG:codeface.util:Job 184 has finished!
+DEBUG:codeface.util:Job 133 has finished!
+DEBUG:codeface.util:Job 78 has finished!
+DEBUG:codeface.util:Job 143 has finished!
+DEBUG:codeface.util:Job 91 has finished!
+DEBUG:codeface.util:Job 195 has finished!
+DEBUG:codeface.util:Job 130 has finished!
+DEBUG:codeface.util:Job 116 has finished!
+DEBUG:codeface.util:Job 161 has finished!
+DEBUG:codeface.util:Job 149 has finished!
+DEBUG:codeface.util:Job 131 has finished!
+DEBUG:codeface.util:Job 170 has finished!
+DEBUG:codeface.util:Job 151 has finished!
+DEBUG:codeface.util:Job 80 has finished!
+DEBUG:codeface.util:Job 160 has finished!
+DEBUG:codeface.util:Job 103 has finished!
+DEBUG:codeface.util:Job 124 has finished!
+DEBUG:codeface.util:Job 206 has finished!
+DEBUG:codeface.util:Job 77 has finished!
+DEBUG:codeface.util:Job 110 has finished!
+DEBUG:codeface.util:Job 158 has finished!
+DEBUG:codeface.util:Job 167 has finished!
+DEBUG:codeface.util:Job 90 has finished!
+DEBUG:codeface.util:Job 187 has finished!
+DEBUG:codeface.util:Job 137 has finished!
+DEBUG:codeface.util:Job 102 has finished!
+DEBUG:codeface.util:Job 148 has finished!
+DEBUG:codeface.util:Job 114 has finished!
+DEBUG:codeface.util:Job 212 has finished!
+DEBUG:codeface.util:Job 134 has finished!
+DEBUG:codeface.util:Job 146 has finished!
+DEBUG:codeface.util:Job 185 has finished!
+DEBUG:codeface.util:Job 193 has finished!
+DEBUG:codeface.util:Job 172 has finished!
+DEBUG:codeface.util:Job 176 has finished!
+DEBUG:codeface.util:Job 182 has finished!
+DEBUG:codeface.util:Job 92 has finished!
+DEBUG:codeface.util:Job 201 has finished!
+DEBUG:codeface.util:Job 205 has finished!
+DEBUG:codeface.util:Job 166 has finished!
+DEBUG:codeface.util:Job 232 has finished!
+DEBUG:codeface.util:Job 81 has finished!
+DEBUG:codeface.util:Job 155 has finished!
+DEBUG:codeface.util:Job 218 has finished!
+DEBUG:codeface.util:Job 177 has finished!
+DEBUG:codeface.util:Job 127 has finished!
+DEBUG:codeface.util:Job 227 has finished!
+DEBUG:codeface.util:Job 140 has finished!
+DEBUG:codeface.util:Job 107 has finished!
+DEBUG:codeface.util:Job 153 has finished!
+DEBUG:codeface.util:Job 139 has finished!
+DEBUG:codeface.util:Job 217 has finished!
+DEBUG:codeface.util:Job 157 has finished!
+DEBUG:codeface.util:Job 152 has finished!
+DEBUG:codeface.util:Job 189 has finished!
+DEBUG:codeface.util:Job 200 has finished!
+DEBUG:codeface.util:Job 234 has finished!
+DEBUG:codeface.util:Job 197 has finished!
+DEBUG:codeface.util:Job 209 has finished!
+DEBUG:codeface.util:Job 96 has finished!
+DEBUG:codeface.util:Job 208 has finished!
+DEBUG:codeface.util:Job 173 has finished!
+DEBUG:codeface.util:Job 85 has finished!
+DEBUG:codeface.util:Job 194 has finished!
+DEBUG:codeface.util:Job 239 has finished!
+DEBUG:codeface.util:Job 199 has finished!
+DEBUG:codeface.util:Job 188 has finished!
+DEBUG:codeface.util:Job 164 has finished!
+DEBUG:codeface.util:Job 136 has finished!
+DEBUG:codeface.util:Job 175 has finished!
+DEBUG:codeface.util:Job 144 has finished!
+DEBUG:codeface.util:Job 236 has finished!
+DEBUG:codeface.util:Job 223 has finished!
+DEBUG:codeface.util:Job 211 has finished!
+DEBUG:codeface.util:Job 222 has finished!
+DEBUG:codeface.util:Job 203 has finished!
+DEBUG:codeface.util:Job 215 has finished!
+DEBUG:codeface.util:Job 147 has finished!
+DEBUG:codeface.util:Job 224 has finished!
+DEBUG:codeface.util:Job 178 has finished!
+DEBUG:codeface.util:Job 113 has finished!
+DEBUG:codeface.util:Job 202 has finished!
+DEBUG:codeface.util:Job 221 has finished!
+DEBUG:codeface.util:Job 214 has finished!
+DEBUG:codeface.util:Job 169 has finished!
+DEBUG:codeface.util:Job 141 has finished!
+DEBUG:codeface.util:Job 198 has finished!
+DEBUG:codeface.util:Job 150 has finished!
+DEBUG:codeface.util:Job 230 has finished!
+DEBUG:codeface.util:Job 229 has finished!
+DEBUG:codeface.util:Job 207 has finished!
+DEBUG:codeface.util:Job 220 has finished!
+DEBUG:codeface.util:Job 154 has finished!
+DEBUG:codeface.util:Job 228 has finished!
+DEBUG:codeface.util:Job 186 has finished!
+DEBUG:codeface.util:Job 117 has finished!
+DEBUG:codeface.util:Job 225 has finished!
+DEBUG:codeface.util:Job 191 has finished!
+DEBUG:codeface.util:Job 163 has finished!
+DEBUG:codeface.util:Job 226 has finished!
+DEBUG:codeface.util:Job 174 has finished!
+DEBUG:codeface.util:Job 238 has finished!
+DEBUG:codeface.util:Job 235 has finished!
+DEBUG:codeface.util:Job 231 has finished!
+DEBUG:codeface.util:Job 159 has finished!
+DEBUG:codeface.util:Job 233 has finished!
+DEBUG:codeface.util:Job 192 has finished!
+DEBUG:codeface.util:Job 138 has finished!
+DEBUG:codeface.util:Job 213 has finished!
+DEBUG:codeface.util:Job 168 has finished!
+DEBUG:codeface.util:Job 219 has finished!
+DEBUG:codeface.util:Job 237 has finished!
+DEBUG:codeface.util:Job 181 has finished!
+DEBUG:codeface.util:Job 162 has finished!
+DEBUG:codeface.util:Job 196 has finished!
+DEBUG:codeface.util:Job 240 has finished!
+DEBUG:codeface.util:Job 204 has finished!
+DEBUG:codeface.util:Job 216 has finished!
+DEBUG:codeface.util:Job 210 has finished!
+DEVINFO:codeface.util:Terminating workers...
+DEVINFO:codeface.util:Workers terminated.
+.DEBUG:codeface.util:Starting job id 1
+DEBUG:codeface.util:Failed work id 1
+2026-08-11 10:47:53 [codeface.util] MainProcess CRITICAL: Uncaught exception in worker thread:
+CRITICAL:codeface.util:Uncaught exception in worker thread:
+DEVINFO:codeface.util:Terminating workers...
+DEVINFO:codeface.util:Workers terminated.
+.DEBUG:codeface.util:Starting job id 1
+DEBUG:codeface.util:Failed work id 1
+2026-08-11 10:47:53 [codeface.util] MainProcess CRITICAL: Uncaught exception in worker thread:
+CRITICAL:codeface.util:Uncaught exception in worker thread:
+DEVINFO:codeface.util:Terminating workers...
+DEVINFO:codeface.util:Workers terminated.
+.DEBUG:codeface.util:Starting job id 1
+DEBUG:codeface.util:Failed work id 1
+2026-08-11 10:47:53 [codeface.util] MainProcess CRITICAL: Uncaught exception in worker thread:
+CRITICAL:codeface.util:Uncaught exception in worker thread:
+DEVINFO:codeface.util:Terminating workers...
+DEVINFO:codeface.util:Workers terminated.
+.DEBUG:codeface.util:Running command: Rscript do_test.r
+✔ |  OK F W S | Context
+TESTS=====
+
+projects list from database  id  name
+1  2 flask
+R data structure[[1]]
+[[1]]$label
+[1] "Codeface projects"
+
+[[1]]$url
+[1] "../dashboard/"
+
+[[1]]$active
+[1] FALSE
+
+[[1]]$children
+[[1]]$children[[1]]
+[[1]]$children[[1]]$label
+[1] "flask"
+
+[[1]]$children[[1]]$url
+[1] "../dashboard/?projectid=2"
+
+
+
+
+[[2]]
+[[2]]$label
+character(0)
+
+[[2]]$url
+[1] "../dashboard/?projectid=4"
+
+[[2]]$active
+[1] FALSE
+
+[[2]]$children
+[[2]]$children[[1]]
+[[2]]$children[[1]]$label
+<div style="font-family: symbola; display: inline; font-weight: 500;">&#128129</div>
+Basics
+
+[[2]]$children[[1]]$url
+[1] "../dashboard/?projectid=4&topic=basics&widget="
+
+
+[[2]]$children[[2]]
+[[2]]$children[[2]]$label
+<div style="font-family: symbola; display: inline; font-weight: 500;">&#128491</div>
+Communication
+
+[[2]]$children[[2]]$url
+[1] "../dashboard/?projectid=4&topic=communication&widget="
+
+
+[[2]]$children[[3]]
+[[2]]$children[[3]]$label
+<div style="font-family: symbola; display: inline; font-weight: 500;">&#128296</div>
+Construction
+
+[[2]]$children[[3]]$url
+[1] "../dashboard/?projectid=4&topic=construction&widget="
+
+
+[[2]]$children[[4]]
+[[2]]$children[[4]]$label
+<div style="font-family: symbola; display: inline; font-weight: 500;">&#127983</div>
+Complexity
+
+[[2]]$children[[4]]$url
+[1] "../dashboard/?projectid=4&topic=complexity&widget="
+
+
+[[2]]$children[[5]]
+[[2]]$children[[5]]$label
+<div style="font-family: symbola; display: inline; font-weight: 500;">&#128101</div>
+Collaboration
+
+[[2]]$children[[5]]$url
+[1] "../dashboard/?projectid=4&topic=collaboration&widget="
+
+
+
+
+[[3]]
+[[3]]$label
+<div style="font-family: symbola; display: inline; font-weight: 500;">&#128129</div>
+Basics
+
+[[3]]$url
+[1] "../dashboard/?projectid=4&widget="
+
+[[3]]$active
+[1] FALSE
+
+[[3]]$children
+[[3]]$children[[1]]
+[[3]]$children[[1]]$label
+[1] "Commit Information"
+
+[[3]]$children[[1]]$url
+[1] "../details?projectid=4&topic=basics&widget=widget.commit.info.splom,widget.commit.info.corrgram,widget.commit.doc"
+
+
+[[3]]$children[[2]]
+[[3]]$children[[2]]$label
+[1] "Authors / Contributions"
+
+[[3]]$children[[2]]$url
+[1] "../details?projectid=4&topic=basics&widget=widget.contributions.overview,widget.contributions.multiCycles,widget.contributions.authorsPerCycle"
+
+
+[[3]]$children[[3]]
+[[3]]$children[[3]]$label
+[1] "Authors / Pagerank"
+
+[[3]]$children[[3]]$url
+[1] "../details?projectid=4&topic=basics&widget=widget.contributors.pagerank,widget.contributors.pagerank.transposed,widget.contributors.commits,widget.contributors.changes"
+
+
+[[3]]$children[[4]]
+[[3]]$children[[4]]$label
+[1] "Show Time Series"
+
+[[3]]$children[[4]]$url
+[1] "../details?projectid=4&topic=basics&widget=widget.timeseries.plots"
+
+
+[[3]]$children[[5]]
+[[3]]$children[[5]]$label
+[1] "Developer commit timezones"
+
+[[3]]$children[[5]]$url
+[1] "../details?projectid=4&topic=basics&widget=widget.timezones.commits"
+
+
+[[3]]$children[[6]]
+[[3]]$children[[6]]$label
+[1] "Authors / Time of Activity"
+
+[[3]]$children[[6]]$url
+[1] "../details?projectid=4&topic=basics&widget=widget.weekend.fraction,widget.weekend.fraction.type,widget.punchcard"
+
+
+
+
+[[4]]
+[[4]]$label
+[1] "Details"
+
+[[4]]$url
+[1] "../details?projectid=4"
+
+[[4]]$active
+[1] TRUE
+
+[[4]]$children
+list()
+
+
+
+JSON data structure[
+	{
+		"label" : "Codeface projects",
+		"url" : "../dashboard/",
+		"active" : false,
+		"children" : [
+			{
+				"label" : "flask",
+				"url" : "../dashboard/?projectid=2"
+			}
+		]
+	},
+	{
+		"label" : [],
+		"url" : "../dashboard/?projectid=4",
+		"active" : false,
+		"children" : [
+			{
+				"label" : {
+					"" : {
+						"name" : "div",
+						"attribs" : {
+							"style" : "font-family: symbola; display: inline; font-weight: 500;"
+						},
+						"children" : [
+							"&#128129"
+						]
+					},
+					"" : "Basics"
+				},
+				"url" : "../dashboard/?projectid=4&topic=basics&widget="
+			},
+			{
+				"label" : {
+					"" : {
+						"name" : "div",
+						"attribs" : {
+							"style" : "font-family: symbola; display: inline; font-weight: 500;"
+						},
+						"children" : [
+							"&#128491"
+						]
+					},
+					"" : "Communication"
+				},
+				"url" : "../dashboard/?projectid=4&topic=communication&widget="
+			},
+			{
+				"label" : {
+					"" : {
+						"name" : "div",
+						"attribs" : {
+							"style" : "font-family: symbola; display: inline; font-weight: 500;"
+						},
+						"children" : [
+							"&#128296"
+						]
+					},
+					"" : "Construction"
+				},
+				"url" : "../dashboard/?projectid=4&topic=construction&widget="
+			},
+			{
+				"label" : {
+					"" : {
+						"name" : "div",
+						"attribs" : {
+							"style" : "font-family: symbola; display: inline; font-weight: 500;"
+						},
+						"children" : [
+							"&#127983"
+						]
+					},
+					"" : "Complexity"
+				},
+				"url" : "../dashboard/?projectid=4&topic=complexity&widget="
+			},
+			{
+				"label" : {
+					"" : {
+						"name" : "div",
+						"attribs" : {
+							"style" : "font-family: symbola; display: inline; font-weight: 500;"
+						},
+						"children" : [
+							"&#128101"
+						]
+					},
+					"" : "Collaboration"
+				},
+				"url" : "../dashboard/?projectid=4&topic=collaboration&widget="
+			}
+		]
+	},
+	{
+		"label" : {
+			"" : {
+				"name" : "div",
+				"attribs" : {
+					"style" : "font-family: symbola; display: inline; font-weight: 500;"
+				},
+				"children" : [
+					"&#128129"
+				]
+			},
+			"" : "Basics"
+		},
+		"url" : "../dashboard/?projectid=4&widget=",
+		"active" : false,
+		"children" : [
+			{
+				"label" : "Commit Information",
+				"url" : "../details?projectid=4&topic=basics&widget=widget.commit.info.splom,widget.commit.info.corrgram,widget.commit.doc"
+			},
+			{
+				"label" : "Authors / Contributions",
+				"url" : "../details?projectid=4&topic=basics&widget=widget.contributions.overview,widget.contributions.multiCycles,widget.contributions.authorsPerCycle"
+			},
+			{
+				"label" : "Authors / Pagerank",
+				"url" : "../details?projectid=4&topic=basics&widget=widget.contributors.pagerank,widget.contributors.pagerank.transposed,widget.contributors.commits,widget.contributors.changes"
+			},
+			{
+				"label" : "Show Time Series",
+				"url" : "../details?projectid=4&topic=basics&widget=widget.timeseries.plots"
+			},
+			{
+				"label" : "Developer commit timezones",
+				"url" : "../details?projectid=4&topic=basics&widget=widget.timezones.commits"
+			},
+			{
+				"label" : "Authors / Time of Activity",
+				"url" : "../details?projectid=4&topic=basics&widget=widget.weekend.fraction,widget.weekend.fraction.type,widget.punchcard"
+			}
+		]
+	},
+	{
+		"label" : "Details",
+		"url" : "../details?projectid=4",
+		"active" : true,
+		"children" : []
+	}
+]
+Bootstrap Html code<ul class="breadcrumb">
+  <li class="dropdown">
+    <a data-target="#" href="../dashboard/">Codeface projects</a>
+    <b class="dropdown-toggle caret" data-toggle="dropdown"></b>
+    <ul class="dropdown-menu" role="menu">
+      <li role="presentation" style="display:inline;">
+        <a href="../dashboard/?projectid=2" tabindex="-1" role="menuitem">flask</a>
+      </li>
+    </ul>
+    <span class="divider">/</span>
+  </li>
+  <li class="dropdown">
+    <a data-target="#" href="../dashboard/?projectid=4"></a>
+    <b class="dropdown-toggle caret" data-toggle="dropdown"></b>
+    <ul class="dropdown-menu" role="menu">
+      <li role="presentation" style="display:inline;">
+        <a href="../dashboard/?projectid=4&amp;topic=basics&amp;widget=" tabindex="-1" role="menuitem">&lt;div style="font-family: symbola; display: inline; font-weight: 500;"&gt;&amp;#128129&lt;/div&gt;
+Basics</a>
+      </li>
+      <li role="presentation" style="display:inline;">
+        <a href="../dashboard/?projectid=4&amp;topic=communication&amp;widget=" tabindex="-1" role="menuitem">&lt;div style="font-family: symbola; display: inline; font-weight: 500;"&gt;&amp;#128491&lt;/div&gt;
+Communication</a>
+      </li>
+      <li role="presentation" style="display:inline;">
+        <a href="../dashboard/?projectid=4&amp;topic=construction&amp;widget=" tabindex="-1" role="menuitem">&lt;div style="font-family: symbola; display: inline; font-weight: 500;"&gt;&amp;#128296&lt;/div&gt;
+Construction</a>
+      </li>
+      <li role="presentation" style="display:inline;">
+        <a href="../dashboard/?projectid=4&amp;topic=complexity&amp;widget=" tabindex="-1" role="menuitem">&lt;div style="font-family: symbola; display: inline; font-weight: 500;"&gt;&amp;#127983&lt;/div&gt;
+Complexity</a>
+      </li>
+      <li role="presentation" style="display:inline;">
+        <a href="../dashboard/?projectid=4&amp;topic=collaboration&amp;widget=" tabindex="-1" role="menuitem">&lt;div style="font-family: symbola; display: inline; font-weight: 500;"&gt;&amp;#128101&lt;/div&gt;
+Collaboration</a>
+      </li>
+    </ul>
+    <span class="divider">/</span>
+  </li>
+  <li class="dropdown">
+    <a data-target="#" href="../dashboard/?projectid=4&amp;widget=">&lt;div style="font-family: symbola; display: inline; font-weight: 500;"&gt;&amp;#128129&lt;/div&gt;
+Basics</a>
+    <b class="dropdown-toggle caret" data-toggle="dropdown"></b>
+    <ul class="dropdown-menu" role="menu">
+      <li role="presentation" style="display:inline;">
+        <a href="../details?projectid=4&amp;topic=basics&amp;widget=widget.commit.info.splom,widget.commit.info.corrgram,widget.commit.doc" tabindex="-1" role="menuitem">Commit Information</a>
+      </li>
+      <li role="presentation" style="display:inline;">
+        <a href="../details?projectid=4&amp;topic=basics&amp;widget=widget.contributions.overview,widget.contributions.multiCycles,widget.contributions.authorsPerCycle" tabindex="-1" role="menuitem">Authors / Contributions</a>
+      </li>
+      <li role="presentation" style="display:inline;">
+        <a href="../details?projectid=4&amp;topic=basics&amp;widget=widget.contributors.pagerank,widget.contributors.pagerank.transposed,widget.contributors.commits,widget.contributors.changes" tabindex="-1" role="menuitem">Authors / Pagerank</a>
+      </li>
+      <li role="presentation" style="display:inline;">
+        <a href="../details?projectid=4&amp;topic=basics&amp;widget=widget.timeseries.plots" tabindex="-1" role="menuitem">Show Time Series</a>
+      </li>
+      <li role="presentation" style="display:inline;">
+        <a href="../details?projectid=4&amp;topic=basics&amp;widget=widget.timezones.commits" tabindex="-1" role="menuitem">Developer commit timezones</a>
+      </li>
+      <li role="presentation" style="display:inline;">
+        <a href="../details?projectid=4&amp;topic=basics&amp;widget=widget.weekend.fraction,widget.weekend.fraction.type,widget.punchcard" tabindex="-1" role="menuitem">Authors / Time of Activity</a>
+      </li>
+    </ul>
+    <span class="divider">/</span>
+  </li>
+  <li class="dropdown">
+    <b>Details</b>
+    <span></span>
+  </li>
+</ul>⠏ |   0       | test_developer_classification⠹ |   2 1     | test_developer_classification✖ |   2 1     | test_developer_classification [0.1 s]
+────────────────────────────────────────────────────────────────────────────────
+test_developer_classification.r:67: error: compare.classification returns expected values
+argument "source" is missing, with no default
+Backtrace:
+ 1. testthat::expect_true(compare.classification.test()) /test_developer_classification.r:67:6
+ 4. compare.classification.test()
+ 5. global::get.developer.class.centrality(edgelist, vertex.ids) /test_developer_classification.r:51:2
+ 6. base::paste(source, metric, sep = " ")
+────────────────────────────────────────────────────────────────────────────────
+⠏ |   0       | test_network_stream2026-08-11 10:47:58 [codeface.R] INFO: Computing person edgelist
+2026-08-11 10:47:58 INFO::Computing person edgelist
+⠙ |   0   2   | test_network_stream2026-08-11 10:47:59 [codeface.R] INFO: Computing person edgelist
+2026-08-11 10:47:59 INFO::Computing person edgelist
+2026-08-11 10:47:59 [codeface.R] INFO: Computing semantic simlarity for 4 entities
+2026-08-11 10:47:59 INFO::Computing semantic simlarity for 4 entities
+⠹ |   0   3   | test_network_stream2026-08-11 10:47:59 [codeface.R.network_stream] ERROR: Row index mismatch, terminating execution
+2026-08-11 10:47:59 ERROR:network_stream:Row index mismatch, terminating execution
+✖ |   0 1 3   | test_network_stream [0.8 s]
+────────────────────────────────────────────────────────────────────────────────
+test_network_stream.R:118: warning: Edgelist construction functions correctly
+Column 'impl' does not exist to remove
+
+test_network_stream.R:118: warning: Edgelist construction functions correctly
+Column 'impl' does not exist to remove
+
+test_network_stream.R:118: warning: Edgelist construction functions correctly
+[lsa] - there are singular values which are zero.
+
+test_network_stream.R:118: error: Edgelist construction functions correctly
+Row index mismatch, terminating execution
+Backtrace:
+ 1. testthat::expect_true(test.construct.edgelist()) /test_network_stream.R:118:6
+ 4. test.construct.edgelist()
+ 5. global::construct.edgelist(...) /test_network_stream.R:88:2
+ 6. global::add.entity.relation(...)
+────────────────────────────────────────────────────────────────────────────────
+⠏ |   0       | test_utils⠼ |   5       | test_utils✔ |   5       | test_utils [0.2 s]
+⠏ |   0       | test_widgets2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.commit.info.splom
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.commit.info.splom
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.commit.info.splom
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.commit.info.corrgram
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.commit.info.corrgram
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.commit.info.corrgram
+⠴ |   0     6 | test_widgets2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.commit.doc
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.commit.doc
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.commit.doc
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.commit.structure.mds
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.commit.structure.mds
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.commit.structure.mds
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.commit.structure.princomp
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.commit.structure.princomp
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.commit.structure.princomp
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.contributions.multiCycles
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.contributions.multiCycles
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.contributions.multiCycles
+⠧ |   0     18 | test_widgets2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.contributions.authorsPerCycle
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.contributions.authorsPerCycle
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.contributions.authorsPerCycle
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.contributions.overview
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.contributions.overview
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.contributions.overview
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.contributors.pagerank
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.contributors.pagerank
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.contributors.pagerank
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.contributors.pagerank.transposed
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.contributors.pagerank.transposed
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.contributors.pagerank.transposed
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.contributors.commits
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.contributors.commits
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.contributors.commits
+⠹ |   0     33 | test_widgets2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.contributors.changes
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.contributors.changes
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.contributors.changes
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.complexity.loc.per.author.summary
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.complexity.loc.per.author.summary
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.complexity.loc.per.author.summary
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.complexity.loc.per.author.weighted
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.complexity.loc.per.author.weighted
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.complexity.loc.per.author.weighted
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.complexity.loc
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.complexity.loc
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.complexity.loc
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.complexity.diff.size
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.complexity.diff.size
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.complexity.diff.size
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.complexity.relative.diff.size
+⠇ |   0     49 | test_widgets2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.complexity.relative.diff.size
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.complexity.relative.diff.size
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.general.info.overview
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.general.info.overview
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.general.info.overview
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.gauge.commits
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.gauge.commits
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.gauge.commits
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.gauge.commitspeed
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.gauge.commitspeed
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.gauge.commitspeed
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.gauge.current.cycle
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.gauge.current.cycle
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.gauge.current.cycle
+⠹ |   0     63 | test_widgets2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.gauge.commits.per.cycle
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.gauge.commits.per.cycle
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.gauge.commits.per.cycle
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.overview.processing
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.overview.processing
+2026-08-11 10:48:00 [codeface.R] INFO: newWidget: widget.overview.processing
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.overview.project
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.overview.project
+⠋ |   0     71 | test_widgets2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.overview.project
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.overview.communication
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.overview.communication
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.overview.communication
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.overview.collaboration
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.overview.collaboration
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.overview.collaboration
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.overview.complexity
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.overview.complexity
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.overview.complexity
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.overview.construction
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.overview.construction
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.overview.construction
+⠸ |   0     84 | test_widgets2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.timeseries.plots
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.timeseries.plots
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.timeseries.plots
+⠦ |   0     87 | test_widgets2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.punchcard.ml
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.punchcard.ml
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.punchcard.ml
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.punchcard
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.punchcard
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.punchcard
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.release.distance
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.release.distance
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.release.distance
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.tagcloud.mlsubjects
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.tagcloud.mlsubjects
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.tagcloud.mlsubjects
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.timeseries.messages.per.day
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.timeseries.messages.per.day
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.timeseries.messages.per.day
+⠙ |   0     102 | test_widgets2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.timezones.test1
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.timezones.test1
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.timezones.test1
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.timezones.test2
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.timezones.test2
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.timezones.test2
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.timezones.commits
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.timezones.commits
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.timezones.commits
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.clusters.clusters
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.clusters.clusters
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.clusters.clusters
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.clusters.correlations
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.clusters.correlations
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.clusters.correlations
+⠦ |   0     117 | test_widgets2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.clusters.summary
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.clusters.summary
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.clusters.summary
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.weekend.fraction
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.weekend.fraction
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.weekend.fraction
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.weekend.fraction.type
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.weekend.fraction.type
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.weekend.fraction.type
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.ir
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.ir
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.ir
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.ir.details.receiving
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.ir.details.receiving
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.ir.details.receiving
+⠙ |   0     132 | test_widgets2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.ir.details.writing
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.ir.details.writing
+2026-08-11 10:48:01 [codeface.R] INFO: newWidget: widget.ir.details.writing
+✔ |   0     135 | test_widgets [1.4 s]
+────────────────────────────────────────────────────────────────────────────────
+test_widgets.r:33: skip: widget.commit.info.splom can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.commit.info.splom can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.commit.info.splom can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.commit.info.corrgram can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.commit.info.corrgram can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.commit.info.corrgram can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.commit.doc can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.commit.doc can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.commit.doc can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.commit.structure.mds can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.commit.structure.mds can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.commit.structure.mds can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.commit.structure.princomp can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.commit.structure.princomp can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.commit.structure.princomp can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.contributions.multiCycles can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.contributions.multiCycles can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.contributions.multiCycles can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.contributions.authorsPerCycle can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.contributions.authorsPerCycle can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.contributions.authorsPerCycle can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.contributions.overview can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.contributions.overview can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.contributions.overview can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.contributors.pagerank can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.contributors.pagerank can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.contributors.pagerank can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.contributors.pagerank.transposed can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.contributors.pagerank.transposed can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.contributors.pagerank.transposed can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.contributors.commits can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.contributors.commits can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.contributors.commits can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.contributors.changes can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.contributors.changes can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.contributors.changes can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.complexity.loc.per.author.summary can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.complexity.loc.per.author.summary can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.complexity.loc.per.author.summary can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.complexity.loc.per.author.weighted can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.complexity.loc.per.author.weighted can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.complexity.loc.per.author.weighted can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.complexity.loc can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.complexity.loc can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.complexity.loc can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.complexity.diff.size can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.complexity.diff.size can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.complexity.diff.size can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.complexity.relative.diff.size can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.complexity.relative.diff.size can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.complexity.relative.diff.size can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.general.info.overview can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.general.info.overview can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.general.info.overview can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.gauge.commits can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.gauge.commits can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.gauge.commits can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.gauge.commitspeed can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.gauge.commitspeed can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.gauge.commitspeed can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.gauge.current.cycle can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.gauge.current.cycle can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.gauge.current.cycle can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.gauge.commits.per.cycle can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.gauge.commits.per.cycle can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.gauge.commits.per.cycle can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.overview.processing can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.overview.processing can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.overview.processing can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.overview.project can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.overview.project can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.overview.project can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.overview.communication can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.overview.communication can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.overview.communication can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.overview.collaboration can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.overview.collaboration can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.overview.collaboration can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.overview.complexity can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.overview.complexity can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.overview.complexity can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.overview.construction can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.overview.construction can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.overview.construction can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.timeseries.plots can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.timeseries.plots can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.timeseries.plots can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.punchcard.ml can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.punchcard.ml can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.punchcard.ml can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.punchcard can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.punchcard can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.punchcard can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.release.distance can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.release.distance can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.release.distance can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.tagcloud.mlsubjects can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.tagcloud.mlsubjects can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.tagcloud.mlsubjects can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.timeseries.messages.per.day can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.timeseries.messages.per.day can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.timeseries.messages.per.day can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.timezones.test1 can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.timezones.test1 can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.timezones.test1 can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.timezones.test2 can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.timezones.test2 can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.timezones.test2 can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.timezones.commits can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.timezones.commits can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.timezones.commits can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.clusters.clusters can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.clusters.clusters can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.clusters.clusters can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.clusters.correlations can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.clusters.correlations can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.clusters.correlations can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.clusters.summary can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.clusters.summary can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.clusters.summary can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.weekend.fraction can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.weekend.fraction can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.weekend.fraction can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.weekend.fraction.type can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.weekend.fraction.type can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.weekend.fraction.type can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.ir can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.ir can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.ir can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.ir.details.receiving can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.ir.details.receiving can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.ir.details.receiving can be listed for project 2
+Reason: empty test
+
+test_widgets.r:33: skip: widget.ir.details.writing can be created for project 2
+Reason: empty test
+
+test_widgets.r:36: skip: widget.ir.details.writing can be initialized for project 2
+Reason: empty test
+
+test_widgets.r:39: skip: widget.ir.details.writing can be listed for project 2
+Reason: empty test
+────────────────────────────────────────────────────────────────────────────────
+
+══ Results ═════════════════════════════════════════════════════════════════════
+Duration: 7.3 s
+
+OK:       7
+Failed:   2
+Warnings: 3
+Skipped:  135
+✔ |  OK F W S | Context
+⠏ |   0       | test_community_metrics✔ |   1       | test_community_metrics
+⠏ |   0       | test_graph_comparison⠏ |   0   10   | test_graph_comparison[1] "Test Failed"
+✖ |   0 1 38   | test_graph_comparison [0.2 s]
+────────────────────────────────────────────────────────────────────────────────
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+no non-missing arguments to max; returning -Inf
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+no non-missing arguments to min; returning Inf
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+length of NULL cannot be changed
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+no non-missing arguments to max; returning -Inf
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+no non-missing arguments to min; returning Inf
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+length of NULL cannot be changed
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: warning: graph.comparison returns expected values
+Combining vertex/edge sequences from different graphs.
+This will not work in future igraph versions
+
+test_graph_comparison.r:59: failure: graph.comparison returns expected values
+`x` not equal to `expected`.
+1/1 mismatches
+[1] 1 - 0 == 1
+────────────────────────────────────────────────────────────────────────────────
+
+══ Results ═════════════════════════════════════════════════════════════════════
+Duration: 0.4 s
+
+OK:       1
+Failed:   1
+Warnings: 38
+Skipped:  0
+.
+======================================================================
+FAIL: test_simple_analysis (unit.test_cppstats_works.TestCppStatsWorks)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/codeface/codeface/test/unit/test_cppstats_works.py", line 72, in test_simple_analysis
+    self.assertSetEqual(feature_dict.get_line_info(1), set(["Base_Feature"]))
+AssertionError: Items in the second set but not the first:
+'Base_Feature'
+
+----------------------------------------------------------------------
+Ran 29 tests in 10.259s
+
+FAILED (failures=1)
+
+===== unit tests failed :( =====

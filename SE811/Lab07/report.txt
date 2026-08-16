@@ -1,0 +1,227 @@
+===============================================================================
+ HOW TO RUN CODEFACE LOCALLY ON THIS MACHINE
+ Lab 07 - Adaptive Maintenance of a Legacy System
+ Machine: habib-IdeaPad-Slim-3-15IAH8, Ubuntu 24.04.2 LTS, Docker 28.3.3
+ Project directory: /home/habib/Desktop/Lab07
+===============================================================================
+
+Everything runs inside a Docker container. Nothing is installed on your host
+except Docker itself, which is already present. You do NOT need Python 2, R, or
+MySQL on the host - they live in the container.
+
+
+-------------------------------------------------------------------------------
+ 0. THE ONE THING THAT USUALLY GOES WRONG
+-------------------------------------------------------------------------------
+
+The web frontend is NOT at http://localhost:8081/
+
+It is at:
+
+        http://localhost:8081/apps/projects/
+
+The root URL only shows a directory listing, because Shiny Server mounts each
+app under its own path. A redirect has been added, so the root should now bounce
+you to the right place - but if you ever see a bare file listing, that is why.
+Go to /apps/projects/ directly.
+
+
+-------------------------------------------------------------------------------
+ 1. QUICK START  (everything is already built - use this day to day)
+-------------------------------------------------------------------------------
+
+Open a terminal and run:
+
+    cd /home/habib/Desktop/Lab07
+    docker start codeface
+    docker exec -d codeface bash /scripts/serve_frontend.sh
+
+Wait about 10 seconds, then open in your browser:
+
+    http://localhost:8081/apps/projects/
+
+You should see "Open Source Projects" with "flask" listed. Click it to drill in.
+
+NOTE: the first click on a project takes a few seconds - Shiny starts a fresh R
+process per app and it loads igraph, ggplot2 and friends before rendering.
+
+
+-------------------------------------------------------------------------------
+ 2. CHECK IT IS ACTUALLY WORKING (without a browser)
+-------------------------------------------------------------------------------
+
+    curl -o /dev/null -s -w "%{http_code}\n" http://localhost:8081/apps/projects/
+
+Expected output:  200
+
+To see every app at once:
+
+    for a in projects dashboard details plots timeseries timezones; do
+        printf "%-12s " "$a"
+        curl -o /dev/null -s -w "%{http_code}\n" "http://localhost:8081/apps/$a/"
+    done
+
+All six should print 200.
+
+
+-------------------------------------------------------------------------------
+ 3. SEE THE ANALYSIS RESULTS IN THE TERMINAL
+-------------------------------------------------------------------------------
+
+This does not need the browser at all, and is the quickest proof that the
+analysis worked:
+
+    docker exec codeface bash /scripts/collect_evidence.sh flask
+
+That prints ~11 report sections: row counts, release ranges, top developers,
+collaboration clusters, PageRank centrality, commit activity, sloccount COCOMO
+estimates and time series.
+
+To page through it:
+
+    docker exec codeface bash /scripts/collect_evidence.sh flask | less
+
+To save it to a file:
+
+    docker exec codeface bash /scripts/collect_evidence.sh flask > logs/evidence_flask.txt
+
+Ad-hoc SQL, if you want to poke around yourself:
+
+    docker exec -it codeface mysql -ucodeface -pcodeface codeface
+
+    -- then, at the mysql> prompt, for example:
+    SELECT name, COUNT(*) FROM commit c JOIN person p ON p.id=c.author
+    GROUP BY p.id ORDER BY 2 DESC LIMIT 10;
+
+
+-------------------------------------------------------------------------------
+ 4. RUN THE ANALYSIS AGAIN
+-------------------------------------------------------------------------------
+
+The results are already in the database, so you only need this if you want to
+re-run it (for a screenshot of a live run, or to analyse a different project).
+
+Full 7-range Flask analysis (takes about 2 minutes):
+
+    docker exec -e JOBS=4 codeface bash /scripts/run_analysis.sh conf/flask.conf
+
+Fast single-range smoke test (about 45 seconds):
+
+    docker exec -e JOBS=2 codeface bash /scripts/run_analysis.sh \
+        conf/flask-smoke.conf --recreate
+
+A successful run ends with the line:
+
+    => Codeface run complete!
+
+JOBS controls parallelism. JOBS=4 suits this laptop.
+
+
+-------------------------------------------------------------------------------
+ 5. COLD START  (after a reboot, or if the container is gone)
+-------------------------------------------------------------------------------
+
+If "docker start codeface" says "No such container", rebuild everything:
+
+    cd /home/habib/Desktop/Lab07
+    ./docker/up.sh
+
+That builds the image if needed, creates the container, starts MySQL, loads the
+database schema, installs the Node ID service dependencies and installs the
+codeface Python package. First build takes roughly 20-25 minutes because the R
+packages have to be fetched; afterwards it is cached and takes seconds.
+
+Then re-run the analysis (section 4) - a fresh container has an empty database -
+and start the frontend (section 1).
+
+
+-------------------------------------------------------------------------------
+ 6. STOPPING THINGS
+-------------------------------------------------------------------------------
+
+Stop the web frontend but leave the container running:
+
+    docker exec codeface bash -c \
+      'ps -eo pid,args | grep "[s]hiny-server/lib/main.js" | awk "{print \$1}" | xargs -r kill'
+
+Stop the whole container (results are kept - they live in the container's MySQL):
+
+    docker stop codeface
+
+Start it again later:
+
+    docker start codeface
+
+Delete it completely and start over (THIS ERASES THE DATABASE):
+
+    docker rm -f codeface
+
+
+-------------------------------------------------------------------------------
+ 7. WHERE THE OUTPUT FILES ARE
+-------------------------------------------------------------------------------
+
+On the host, directly browsable in your file manager:
+
+    /home/habib/Desktop/Lab07/work/res/flask/proximity/
+
+    001--1.0-1.1.0/ ... 007--3.0.0-3.1.0/   one directory per release range
+      report-<from>_<to>.pdf                compiled PDF report for that range
+      sg_*.pdf  /  sg_*.dot                 sociograms (developer networks)
+      adjacencyMatrix.txt                   collaboration matrix
+      top20.*.txt / .tex                    top-20 developer tables
+
+    graphs/                                 project-wide plots
+      ts.pdf, ts_commits.pdf                commit time series
+      cluster_prank_ts.pdf                  PageRank over time
+
+Open a PDF, for example:
+
+    xdg-open /home/habib/Desktop/Lab07/work/res/flask/proximity/graphs/ts_commits.pdf
+
+
+-------------------------------------------------------------------------------
+ 8. TROUBLESHOOTING
+-------------------------------------------------------------------------------
+
+Blank page / directory listing at localhost:8081
+    You are on the wrong URL. Use http://localhost:8081/apps/projects/
+
+Browser cannot connect at all
+    Is the container up?          docker ps | grep codeface
+    Is the frontend up?           docker exec codeface ss -tlnp | grep 8081
+    Restart it:                   docker exec -d codeface bash /scripts/serve_frontend.sh
+
+Page loads but stays empty
+    Shiny renders over a websocket after the page loads, so give it a few
+    seconds. If it stays empty, read the app log:
+        docker exec codeface bash -c 'tail -30 /var/log/shiny-server/*.log'
+
+HTTP 500 from an app
+    Same log as above. Logs are preserved on purpose (preserve_logs true);
+    without that setting Shiny Server deletes them and failures look silent.
+
+"port is already allocated"
+    Something else on the host holds 8081:   sudo ss -tlnp | grep 8081
+
+Frontend shows no projects
+    The database is empty - re-run the analysis, section 4.
+
+See the full debugging story in REPORT.md / report.html.
+
+
+-------------------------------------------------------------------------------
+ 9. COMMAND SUMMARY
+-------------------------------------------------------------------------------
+
+    cd /home/habib/Desktop/Lab07
+
+    docker start codeface                                        # start
+    docker exec -d codeface bash /scripts/serve_frontend.sh      # web UI
+    ->  http://localhost:8081/apps/projects/
+
+    docker exec codeface bash /scripts/collect_evidence.sh flask # results
+    docker exec -e JOBS=4 codeface bash /scripts/run_analysis.sh conf/flask.conf
+    docker exec -it codeface bash                                # shell inside
+
+===============================================================================

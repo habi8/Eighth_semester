@@ -1,0 +1,13 @@
+# The Codeface checkout is deliberately not committed: it is upstream
+# siemens/codeface @ e6640c93 plus patches/lab07-modernisation.patch.
+# REPORT.md §8 recreates it in two commands.
+codeface/
+
+# Analysis working data: the cloned target repo (work/git-repos) and the
+# generated results (work/res). Both are recreated by the analysis run.
+work/
+
+# Editor / OS noise
+*.swp
+*~
+.DS_Store

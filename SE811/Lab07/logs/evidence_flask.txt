@@ -1,0 +1,155 @@
+===========================================================
+ Codeface database evidence  --  project: flask
+ generated: 2026-08-11 15:56:13 UTC
+===========================================================
+
+### Analysed projects
++----+-------+----------------+--------------+
+| id | name  | analysisMethod | analysisTime |
++----+-------+----------------+--------------+
+|  2 | flask | proximity      | NULL         |
++----+-------+----------------+--------------+
+
+### Row counts across the populated tables
++------------------------+-------+
+| tbl                    | rows_ |
++------------------------+-------+
+| commit_dependency      |  2942 |
+| timeseries             |  1824 |
+| commit                 |  1223 |
+| edgelist               |   808 |
+| pagerank_matrix        |   724 |
+| cluster_user_mapping   |   395 |
+| author_commit_stats    |   362 |
+| person                 |   315 |
+| sloccount_ts           |   234 |
+| cluster                |    40 |
+| release_timeline       |    15 |
+| pagerank               |    14 |
+| plots                  |    10 |
+| release_range          |     7 |
+| per_cluster_statistics |     0 |
++------------------------+-------+
+
+### Release ranges analysed
++----------+-----------+---------+---------+
+| range_id | start_tag | end_tag | commits |
++----------+-----------+---------+---------+
+|        1 | 1.0       | 1.1.0   |     257 |
+|        2 | 1.1.0     | 2.0.0   |     312 |
+|        3 | 2.0.0     | 2.1.0   |     201 |
+|        4 | 2.1.0     | 2.2.0   |     118 |
+|        5 | 2.2.0     | 2.3.0   |     127 |
+|        6 | 2.3.0     | 3.0.0   |      85 |
+|        7 | 3.0.0     | 3.1.0   |     123 |
++----------+-----------+---------+---------+
+
+### Top 15 developers by commit count
++-----------------------+---------------------------------------------------------+---------+
+| name                  | email1                                                  | commits |
++-----------------------+---------------------------------------------------------+---------+
+| David Lord            | davidism@gmail.com                                      |     552 |
+| dependabotbot         | 49699333+dependabotbot@users.noreply.github.com         |      60 |
+| Phil Jones            | philip.graham.jones@googlemail.com                      |      52 |
+| dependabot-previewbot | 27856297+dependabot-previewbot@users.noreply.github.com |      51 |
+| Grey Li               | withlihui@gmail.com                                     |      50 |
+| pre-commit-cibot      | 66853113+pre-commit-cibot@users.noreply.github.com      |      39 |
+| Matt Cooper           | mattc@xbox.com                                          |       9 |
+| garenchan             | 1412950785@qq.com                                       |       9 |
+| Adrian                | adrian@planetcoding.net                                 |       8 |
+| Frank Yu              | withyuxiaoy@gmail.com                                   |       7 |
+| Joshua Bronson        | jab@users.noreply.github.com                            |       7 |
+| Daniel Pope           | mauve@mauveweb.co.uk                                    |       6 |
+| Armin Ronacher        | armin.ronacher@active-4.com                             |       5 |
+| Maxim G. Ivanov       | ivanovmg@gmail.com                                      |       5 |
+| EtiennePelletier      | etpelletier93@hotmail.com                               |       4 |
++-----------------------+---------------------------------------------------------+---------+
+
+### Developer collaboration clusters per range (proximity tagging)
++----------+----------+---------------------+---------------------+
+| range_id | clusters | cluster_memberships | distinct_developers |
++----------+----------+---------------------+---------------------+
+|        1 |        6 |                 122 |                  32 |
+|        2 |        4 |                  68 |                  23 |
+|        3 |       13 |                  91 |                  24 |
+|        4 |        5 |                  57 |                  19 |
+|        5 |        6 |                  28 |                   7 |
+|        6 |        3 |                   6 |                   2 |
+|        7 |        3 |                  23 |                   8 |
++----------+----------+---------------------+---------------------+
+
+### Most central developers by PageRank (top 10)
++----------------+-----------+----------+----------+
+| name           | technique | range_id | pagerank |
++----------------+-----------+----------+----------+
+| David Lord     |         0 |        4 | 0.349550 |
+| David Lord     |         0 |        7 | 0.307705 |
+| Phil Jones     |         0 |        4 | 0.307588 |
+| David Lord     |         0 |        5 | 0.282925 |
+| David Lord     |         0 |        1 | 0.264780 |
+| Phil Jones     |         0 |        2 | 0.261008 |
+| David Lord     |         0 |        2 | 0.234716 |
+| David Lord     |         0 |        3 | 0.217261 |
+| bre-17387639   |         0 |        7 | 0.201028 |
+| David Baumgold |         0 |        1 | 0.195005 |
++----------------+-----------+----------+----------+
+
+### Commit activity over time (per range)
++----------+---------+------------------+---------------------+---------------------+-------+---------+
+| range_id | commits | distinct_authors | first_commit        | last_commit         | added | deleted |
++----------+---------+------------------+---------------------+---------------------+-------+---------+
+|        1 |     257 |              112 | 2018-04-26 19:28:26 | 2019-07-04 23:04:42 |  9208 |    7856 |
+|        2 |     312 |               86 | 2019-07-07 15:25:52 | 2021-05-11 21:41:52 |  8830 |    9009 |
+|        3 |     201 |               52 | 2021-05-11 21:48:08 | 2022-03-28 19:09:35 |  3072 |    2266 |
+|        4 |     118 |               33 | 2022-03-28 19:17:25 | 2022-08-02 00:09:49 |  5717 |    5071 |
+|        5 |     127 |               35 | 2022-08-02 00:46:38 | 2023-04-25 18:35:06 |  2899 |    3995 |
+|        6 |      85 |               13 | 2023-04-25 19:48:16 | 2023-09-30 14:26:06 |  2299 |    2209 |
+|        7 |     123 |               23 | 2023-09-30 14:37:24 | 2024-11-13 18:20:07 |  2862 |    2025 |
++----------+---------+------------------+---------------------+---------------------+-------+---------+
+
+### Time series recorded
++---------------------------------------+----------+--------+
+| plot                                  | range_id | points |
++---------------------------------------+----------+--------+
+| Progress TS [Cumulative]              |     NULL |   1213 |
+| Progress TS [Averaged (small window)] |     NULL |    244 |
+| Progress TS [Averaged (large window)] |     NULL |     77 |
+| sloccount (avg.devel)                 |     NULL |     71 |
+| sloccount (person.months)             |     NULL |     71 |
+| sloccount (schedule.months)           |     NULL |     71 |
+| sloccount (total.cost)                |     NULL |     71 |
+| Release TS distance                   |     NULL |      6 |
+| understand_raw                        |     NULL |      0 |
+| sloccount                             |     NULL |      0 |
++---------------------------------------+----------+--------+
+
+### Complexity analysis: sloccount COCOMO estimates over time (latest 10)
++------------+---------------+----------+--------------+----------+
+| snapshot   | person_months | est_cost | sched_months | avg_devs |
++------------+---------------+----------+--------------+----------+
+| 2024-11-13 |          27.2 | $325,890 |          8.8 |     3.10 |
+| 2024-11-13 |          27.2 | $325,822 |          8.8 |     3.10 |
+| 2024-11-08 |          27.0 | $324,091 |          8.8 |     3.09 |
+| 2024-11-06 |          26.7 | $320,394 |          8.7 |     3.07 |
+| 2024-11-02 |          26.7 | $320,394 |          8.7 |     3.07 |
+| 2024-11-01 |          26.9 | $322,666 |          8.7 |     3.08 |
+| 2024-10-31 |          26.7 | $320,902 |          8.7 |     3.07 |
+| 2024-10-24 |          26.8 | $321,072 |          8.7 |     3.07 |
+| 2024-10-22 |          26.7 | $320,326 |          8.7 |     3.07 |
+| 2024-10-18 |          26.8 | $321,072 |          8.7 |     3.07 |
++------------+---------------+----------+--------------+----------+
+
+### Largest developer collaboration clusters
++----------+---------+---------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| range_id | cluster | members | developers                                                                                                                                                                                                                                                                                                                      |
++----------+---------+---------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|        1 |       0 |      24 | Adrian, cslecrone, David Baumgold, David Lord, Dilan Coss, Elad Moshe, EtiennePelletier, Fantix King, Frankie Liu, garenchan, Grey Li, icreatedanaccount, Ignasi Bosch, Jimmy Jia, John Zeringue, Jon S. Stumpf, Karthikeyan Singaravelan, LeeW, Matt Robenolt, Phil Jones, Rohan Talip, Ryan Thielke, Scott Crosby, shidenggui |
+|        1 |       0 |      20 | Adrian, cslecrone, David Baumgold, David Lord, Dilan Coss, Elad Moshe, Eruvanos, EtiennePelletier, garenchan, Grey Li, icreatedanaccount, Ignasi Bosch, Jimmy Jia, John Zeringue, Jon S. Stumpf, Matt Robenolt, Phil Jones, Scott Crosby, shidenggui, vorelq                                                                    |
+|        4 |       0 |      13 | DailyDreaming, Dan Mirsky, David Lord, dzcode, Evgeny Prigorodov, Grey Li, Ivan Sushkov, James Warne, Kevin Kirsche, Phil Jones, Stanislav Bushuev, Ties Jan Hefting, Tim Hoagland                                                                                                                                              |
+|        2 |       0 |      13 | Arnav Borborah, Christopher Nguyen, David Lord, Doron Horwitz, Frost Ming, Grey Li, huimingz, jackwardell, Joshua Bronson, kevinanew, Nils Philippsen, ongopongo, Sebastian Höffner                                                                                                                                             |
+|        2 |       1 |       9 | Adrian, Bogdan Opanchuk, Chris Zimmerman, Jeenu Viswambharan, Jochen Kupperschmidt, Marc Hernandez Cabot, Mathurshan Vimalesvaran, Phil Jones, yk396                                                                                                                                                                            |
++----------+---------+---------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+### Per-cluster statistics
+
+===========================================================

@@ -1,0 +1,1477 @@
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.000s
+
+OK
+Initialized empty Git repository in /tmp/codeface_test_project4bqqeb/.git/
+[master (root-commit) 9eaa63b] Commit 0
+ Date: Mon Jan 7 16:00:00 2013 +0100
+ 1 file changed, 2 insertions(+)
+ create mode 100644 README
+[master 22c535f] Commit 1
+ Date: Tue Jan 8 15:00:00 2013 +0100
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+ create mode 100644 src/code.c
+[master b5a89b4] Commit 2
+ Date: Wed Jan 9 15:30:00 2013 +0100
+ 1 file changed, 1 insertion(+)
+ create mode 100644 src/carp.c
+[master 9c20869] Commit 3
+ Date: Thu Jan 10 18:00:00 2013 +0100
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+ delete mode 100644 src/carp.c
+[master 4cfafa9] Commit 4
+ Author: Max Maintainer <max@theboss.com>
+ Date: Mon Jan 14 12:30:42 2013 +0100
+ 1 file changed, 3 insertions(+)
+ create mode 100644 src/newcode.c
+[master e853181] Commit 5
+ Date: Mon Jan 14 12:50:42 2013 +0100
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ rename src/{newcode.c => answer.c} (100%)
+[master 9c00245] Commit 6
+ Author: Clara Confident <clara@foo.org>
+ Date: Tue Jan 15 12:42:42 2013 +0100
+ 1 file changed, 2 insertions(+)
+ create mode 100644 Makefile
+[master 4198f61] Commit 7
+ Date: Mon Jan 21 12:50:42 2013 +0100
+ 2 files changed, 2 insertions(+), 3 deletions(-)
+ delete mode 100644 Makefile
+/codeface/codeface/configuration.py:88: YAMLLoadWarning: calling yaml.load() without Loader=... is deprecated, as the default Loader is unsafe. Please read https://msg.pyyaml.org/load for full details.
+  return yaml.load(open(filename))
+2026-08-11 10:49:53 [codeface] MainProcess DEVINFO: Opened logfile '/tmp/codeface_test_project4bqqeb/.git/log' with log level 'debug'
+2026-08-11 10:49:53 [codeface.configuration] MainProcess DEVINFO: Loading global configuration file '/codeface/codeface_testing.conf'
+2026-08-11 10:49:53 [codeface.configuration] MainProcess DEVINFO: Loading project configuration file '/tmp/codeface_test_project4bqqeb/.git/testproject.conf'
+2026-08-11 10:49:53 [codeface.project] MainProcess INFO: => Setting up project 'codeface_test_project4bqqeb'
+2026-08-11 10:49:53 [codeface.dbmanager] MainProcess DEVINFO: Creating new project codeface_test_project4bqqeb/committer2author
+2026-08-11 10:49:53 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_project4bqqeb/committer2author with ID 1
+2026-08-11 10:49:53 [codeface.dbmanager] MainProcess WARNING: Deleting and re-creating project codeface_test_project4bqqeb/committer2author.
+2026-08-11 10:49:53 [codeface.dbmanager] MainProcess DEVINFO: Creating new project codeface_test_project4bqqeb/committer2author
+2026-08-11 10:49:53 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_project4bqqeb/committer2author with ID 2
+2026-08-11 10:49:53 [codeface.dbmanager] MainProcess INFO: Adding 3 new releases...
+2026-08-11 10:49:53 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_project4bqqeb/committer2author with ID 2
+2026-08-11 10:49:53 [codeface.util] MainProcess INFO:   -> Revision range 1/2 (v0_release..v1_release): Analysing commits...
+2026-08-11 10:49:53 [codeface.cluster.cluster] MainProcess DEVINFO: Creating data base for v0_release..v1_release
+Pass 1/2:   0% |                                               | ETA:  --:--:--Pass 1/2: 100% |################################################| Time: 0:00:00
+2026-08-11 10:49:54 [codeface.cluster.cluster] MainProcess DEVINFO: Shelving the VCS object
+2026-08-11 10:49:54 [codeface.cluster.cluster] MainProcess DEVINFO: Finished shelving the VCS object
+2026-08-11 10:49:54 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_project4bqqeb/committer2author with ID 2
+2026-08-11 10:49:54 [codeface.cluster.cluster] MainProcess DEVINFO: Reading from data base /tmp/codeface_test_project4bqqeb/.git/results/codeface_test_project4bqqeb/committer2author/001--v0_release-v1_release/vcs_analysis.db...
+2026-08-11 10:49:54 [codeface.VCS] MainProcess DEVINFO: Using cached data to extract commit information
+2026-08-11 10:49:54 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_project4bqqeb/committer2author with ID 2
+Pass 2/2:   0% |                                               | ETA:  --:--:--Pass 2/2: 100% |################################################| Time: 0:00:00
+2026-08-11 10:49:54 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_project4bqqeb/committer2author with ID 2
+2026-08-11 10:49:54 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_project4bqqeb/committer2author with ID 2
+2026-08-11 10:49:54 [codeface.util] MainProcess INFO:   -> Revision range 1/2 (v0_release..v1_release): Commit analysis done.
+2026-08-11 10:49:54 [codeface.util] MainProcess INFO:   -> Revision range 1/2 (v0_release..v1_release): Detecting clusters...
+2026-08-11 10:49:58 [codeface.R.config] DEBUG: Set log level to 'devinfo' == 15
+2026-08-11 10:49:58 [codeface.R] DEBUG: Configuration options:
+2026-08-11 10:49:58 [codeface.R] DEBUG: dbhost : localhost
+2026-08-11 10:49:58 [codeface.R] DEBUG: dbuser : codeface
+2026-08-11 10:49:58 [codeface.R] DEBUG: dbpwd : codeface
+2026-08-11 10:49:58 [codeface.R] DEBUG: dbname : codeface_testing
+2026-08-11 10:49:58 [codeface.R] DEBUG: idServicePort : 8383
+2026-08-11 10:49:58 [codeface.R] DEBUG: idServiceHostname : localhost
+2026-08-11 10:49:58 [codeface.R] DEBUG: sleepTime : 1000
+2026-08-11 10:49:58 [codeface.R] DEBUG: proxyPort : 83
+2026-08-11 10:49:58 [codeface.R] DEBUG: dbport : 3306
+2026-08-11 10:49:58 [codeface.R] DEBUG: understand : FALSE
+2026-08-11 10:49:58 [codeface.R] DEBUG: sloccount : FALSE
+2026-08-11 10:49:58 [codeface.R] DEBUG: description : codeface_test_project4bqqeb Description
+2026-08-11 10:49:58 [codeface.R] DEBUG: mailinglists : list(list(name = "codeface_test_project4bqqeb.dev1", source = "generated", type = "dev"), list(name = "codeface_test_project4bqqeb.dev2", source = "generated", type = "dev"), list(name = "codeface_test_project4bqqeb.user1", source = "generated", type = "user"), list(name = "codeface_test_project4bqqeb.user2", source = "generated", type = "user"))
+2026-08-11 10:49:58 [codeface.R] DEBUG: project : codeface_test_project4bqqeb
+2026-08-11 10:49:58 [codeface.R] DEBUG: rcs : c("v0_rc_0", "v1_rc_1", "v2_rc_2")
+2026-08-11 10:49:58 [codeface.R] DEBUG: repo : codeface_test_project4bqqeb
+2026-08-11 10:49:58 [codeface.R] DEBUG: revisions : c("v0_release", "v1_release", "v2_release")
+2026-08-11 10:49:58 [codeface.R] DEBUG: tagging : committer2author
+2026-08-11 10:49:58 [codeface.R] DEBUG: artifactType : file
+2026-08-11 10:49:58 [codeface.R] DEBUG: dependencyType : none
+2026-08-11 10:49:58 [codeface.R] DEBUG: qualityType : corrective
+2026-08-11 10:49:58 [codeface.R] DEBUG: communicationType : mail
+2026-08-11 10:49:58 [codeface.R] DEBUG: pid : 2
+2026-08-11 10:49:58 [codeface.R] DEBUG: con : new("MySQLConnection", Id = c(0, 0))
+2026-08-11 10:49:58 [codeface.R] DEBUG: tstamps.release : list(id = c(1, 2, 4), type = c(2, 2, 2), tag = c("v0_release", "v1_release", "v2_release"), date = c(NA, NA, NA), projectId = c(2, 2, 2))
+2026-08-11 10:49:58 [codeface.R] DEBUG: tstamps.all : list(id = c(1, 2, 3, 4, 5), type = c(2, 2, 1, 2, 1), tag = c("v0_release", "v1_release", "v1_rc_1", "v2_release", "v2_rc_2"), date = c(NA, NA, NA, NA, NA), projectId = c(2, 2, 2, 2, 2))
+2026-08-11 10:49:58 [codeface.R] DEBUG: boundaries : list(date.start = c(NA, NA), date.end = c(NA, NA), date.rc.start = c(NA, NA), tag = c("v0_release", "v1_release"), cycle = c("v0_release-v1_release", "v1_release-v2_release"))
+2026-08-11 10:49:58 [codeface.R] DEBUG: resdir : /tmp/codeface_test_project4bqqeb/.git/results/codeface_test_project4bqqeb/committer2author/001--v0_release-v1_release
+2026-08-11 10:49:58 [codeface.R] DEBUG: range.id : 1
+2026-08-11 10:49:58 [codeface.R] DEBUG: profile : FALSE
+2026-08-11 10:49:58 [codeface.R] DEBUG: jobs : 1
+2026-08-11 10:49:58 [codeface.R] DEBUG: use_corpus : FALSE
+2026-08-11 10:49:58 [codeface.R] DEBUG: Decimal MySQL column 2 imported as numeric
+2026-08-11 10:49:58 [codeface.R] DEBUG: Decimal MySQL column 3 imported as numeric
+2026-08-11 10:49:58 [codeface.R] DEBUG: Decimal MySQL column 4 imported as numeric
+2026-08-11 10:49:58 [codeface.R] DEBUG: Decimal MySQL column 5 imported as numeric
+2026-08-11 10:49:58 [codeface.R] DEBUG: incomplete final line found by readTableHeader on '/tmp/codeface_test_project4bqqeb/.git/results/codeface_test_project4bqqeb/committer2author/001--v0_release-v1_release/id_subsys.txt'
+2026-08-11 10:49:58 [codeface.R.cluster.persons] INFO: Adjacency matrix empty, exiting cluster analysis
+[1] 1
+2026-08-11 10:49:58 [codeface.util] MainProcess INFO:   -> Revision range 1/2 (v0_release..v1_release): Detecting clusters done.
+2026-08-11 10:49:58 [codeface.util] MainProcess INFO:   -> Revision range 1/2 (v0_release..v1_release): Generating reports...
+2026-08-11 10:49:58 [codeface.util] MainProcess INFO:   -> Generating Reports...
+2026-08-11 10:49:58 [codeface.util] MainProcess DEVINFO:   -> Generating report
+2026-08-11 10:49:58 [codeface.util] MainProcess WARNING: Command 'lualatex -interaction=nonstopmode /tmp/codeface_test_project4bqqeb/.git/results/codeface_test_project4bqqeb/committer2author/001--v0_release-v1_release/report-v0_release_v1_release.tex' failed with exit code 1. Ignored.
+2026-08-11 10:49:58 [codeface.util] MainProcess WARNING: Could not copy report PDF (missing input data?)
+2026-08-11 10:49:58 [codeface.util] MainProcess INFO:   -> Revision range 1/2 (v0_release..v1_release): Report generation done.
+2026-08-11 10:49:58 [codeface.util] MainProcess INFO:   -> Revision range 2/2 (v1_release..v2_release): Analysing commits...
+2026-08-11 10:49:58 [codeface.cluster.cluster] MainProcess DEVINFO: Creating data base for v1_release..v2_release
+Pass 1/2:   0% |                                               | ETA:  --:--:--Pass 1/2: 100% |################################################| Time: 0:00:00
+2026-08-11 10:49:59 [codeface.cluster.cluster] MainProcess DEVINFO: Shelving the VCS object
+2026-08-11 10:49:59 [codeface.cluster.cluster] MainProcess DEVINFO: Finished shelving the VCS object
+2026-08-11 10:49:59 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_project4bqqeb/committer2author with ID 2
+2026-08-11 10:49:59 [codeface.cluster.cluster] MainProcess DEVINFO: Reading from data base /tmp/codeface_test_project4bqqeb/.git/results/codeface_test_project4bqqeb/committer2author/002--v1_release-v2_release/vcs_analysis.db...
+2026-08-11 10:49:59 [codeface.VCS] MainProcess DEVINFO: Using cached data to extract commit information
+2026-08-11 10:49:59 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_project4bqqeb/committer2author with ID 2
+Pass 2/2:   0% |                                               | ETA:  --:--:--Pass 2/2: 100% |################################################| Time: 0:00:00
+2026-08-11 10:49:59 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_project4bqqeb/committer2author with ID 2
+2026-08-11 10:49:59 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_project4bqqeb/committer2author with ID 2
+2026-08-11 10:49:59 [codeface.util] MainProcess INFO:   -> Revision range 2/2 (v1_release..v2_release): Commit analysis done.
+2026-08-11 10:49:59 [codeface.util] MainProcess INFO:   -> Revision range 2/2 (v1_release..v2_release): Detecting clusters...
+2026-08-11 10:50:02 [codeface.R.config] DEBUG: Set log level to 'devinfo' == 15
+2026-08-11 10:50:02 [codeface.R] DEBUG: Configuration options:
+2026-08-11 10:50:02 [codeface.R] DEBUG: dbhost : localhost
+2026-08-11 10:50:02 [codeface.R] DEBUG: dbuser : codeface
+2026-08-11 10:50:02 [codeface.R] DEBUG: dbpwd : codeface
+2026-08-11 10:50:02 [codeface.R] DEBUG: dbname : codeface_testing
+2026-08-11 10:50:02 [codeface.R] DEBUG: idServicePort : 8383
+2026-08-11 10:50:02 [codeface.R] DEBUG: idServiceHostname : localhost
+2026-08-11 10:50:02 [codeface.R] DEBUG: sleepTime : 1000
+2026-08-11 10:50:02 [codeface.R] DEBUG: proxyPort : 83
+2026-08-11 10:50:02 [codeface.R] DEBUG: dbport : 3306
+2026-08-11 10:50:02 [codeface.R] DEBUG: understand : FALSE
+2026-08-11 10:50:02 [codeface.R] DEBUG: sloccount : FALSE
+2026-08-11 10:50:02 [codeface.R] DEBUG: description : codeface_test_project4bqqeb Description
+2026-08-11 10:50:02 [codeface.R] DEBUG: mailinglists : list(list(name = "codeface_test_project4bqqeb.dev1", source = "generated", type = "dev"), list(name = "codeface_test_project4bqqeb.dev2", source = "generated", type = "dev"), list(name = "codeface_test_project4bqqeb.user1", source = "generated", type = "user"), list(name = "codeface_test_project4bqqeb.user2", source = "generated", type = "user"))
+2026-08-11 10:50:02 [codeface.R] DEBUG: project : codeface_test_project4bqqeb
+2026-08-11 10:50:02 [codeface.R] DEBUG: rcs : c("v0_rc_0", "v1_rc_1", "v2_rc_2")
+2026-08-11 10:50:02 [codeface.R] DEBUG: repo : codeface_test_project4bqqeb
+2026-08-11 10:50:02 [codeface.R] DEBUG: revisions : c("v0_release", "v1_release", "v2_release")
+2026-08-11 10:50:02 [codeface.R] DEBUG: tagging : committer2author
+2026-08-11 10:50:02 [codeface.R] DEBUG: artifactType : file
+2026-08-11 10:50:02 [codeface.R] DEBUG: dependencyType : none
+2026-08-11 10:50:02 [codeface.R] DEBUG: qualityType : corrective
+2026-08-11 10:50:02 [codeface.R] DEBUG: communicationType : mail
+2026-08-11 10:50:02 [codeface.R] DEBUG: pid : 2
+2026-08-11 10:50:02 [codeface.R] DEBUG: con : new("MySQLConnection", Id = c(0, 0))
+2026-08-11 10:50:02 [codeface.R] DEBUG: tstamps.release : list(id = c(1, 2, 4), type = c(2, 2, 2), tag = c("v0_release", "v1_release", "v2_release"), date = c(NA, NA, NA), projectId = c(2, 2, 2))
+2026-08-11 10:50:02 [codeface.R] DEBUG: tstamps.all : list(id = c(1, 2, 3, 4, 5), type = c(2, 2, 1, 2, 1), tag = c("v0_release", "v1_release", "v1_rc_1", "v2_release", "v2_rc_2"), date = c(NA, NA, NA, NA, NA), projectId = c(2, 2, 2, 2, 2))
+2026-08-11 10:50:02 [codeface.R] DEBUG: boundaries : list(date.start = c(NA, NA), date.end = c(NA, NA), date.rc.start = c(NA, NA), tag = c("v0_release", "v1_release"), cycle = c("v0_release-v1_release", "v1_release-v2_release"))
+2026-08-11 10:50:02 [codeface.R] DEBUG: resdir : /tmp/codeface_test_project4bqqeb/.git/results/codeface_test_project4bqqeb/committer2author/002--v1_release-v2_release
+2026-08-11 10:50:02 [codeface.R] DEBUG: range.id : 2
+2026-08-11 10:50:02 [codeface.R] DEBUG: profile : FALSE
+2026-08-11 10:50:02 [codeface.R] DEBUG: jobs : 1
+2026-08-11 10:50:02 [codeface.R] DEBUG: use_corpus : FALSE
+2026-08-11 10:50:02 [codeface.R] DEBUG: Decimal MySQL column 2 imported as numeric
+2026-08-11 10:50:02 [codeface.R] DEBUG: Decimal MySQL column 3 imported as numeric
+2026-08-11 10:50:02 [codeface.R] DEBUG: Decimal MySQL column 4 imported as numeric
+2026-08-11 10:50:02 [codeface.R] DEBUG: Decimal MySQL column 5 imported as numeric
+2026-08-11 10:50:02 [codeface.R] DEBUG: incomplete final line found by readTableHeader on '/tmp/codeface_test_project4bqqeb/.git/results/codeface_test_project4bqqeb/committer2author/002--v1_release-v2_release/id_subsys.txt'
+2026-08-11 10:50:03 [codeface.R] DEBUG: no non-missing arguments to max; returning -Inf
+2026-08-11 10:50:03 [codeface.R] DEBUG: no non-missing arguments to min; returning Inf
+2026-08-11 10:50:03 [codeface.R] DEBUG: length of NULL cannot be changed
+2026-08-11 10:50:03 [codeface.R] DEBUG: no non-missing arguments to max; returning -Inf
+2026-08-11 10:50:03 [codeface.R] DEBUG: no non-missing arguments to min; returning Inf
+2026-08-11 10:50:03 [codeface.R] DEBUG: length of NULL cannot be changed
+NULL
+2026-08-11 10:50:04 [codeface.util] MainProcess INFO:   -> Revision range 2/2 (v1_release..v2_release): Detecting clusters done.
+2026-08-11 10:50:04 [codeface.util] MainProcess INFO:   -> Revision range 2/2 (v1_release..v2_release): Generating reports...
+2026-08-11 10:50:04 [codeface.util] MainProcess INFO:   -> Generating Reports...
+2026-08-11 10:50:04 [codeface.util] MainProcess DEVINFO:   -> Generating report
+2026-08-11 10:50:04 [codeface.util] MainProcess WARNING: Command 'lualatex -interaction=nonstopmode /tmp/codeface_test_project4bqqeb/.git/results/codeface_test_project4bqqeb/committer2author/002--v1_release-v2_release/report-v1_release_v2_release.tex' failed with exit code 1. Ignored.
+2026-08-11 10:50:04 [codeface.util] MainProcess INFO:   -> Revision range 2/2 (v1_release..v2_release): Report generation done.
+2026-08-11 10:50:04 [codeface.util] MainProcess DEVINFO: Terminating workers...
+2026-08-11 10:50:04 [codeface.util] MainProcess DEVINFO: Workers terminated.
+2026-08-11 10:50:04 [codeface.project] MainProcess INFO: => Preparing time series data
+2026-08-11 10:50:04 [codeface.VCS] MainProcess DEVINFO: Using cached data to extract commit information
+2026-08-11 10:50:04 [codeface.VCS] MainProcess DEVINFO: Using cached data to extract commit information
+2026-08-11 10:50:04 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_project4bqqeb/committer2author with ID 2
+2026-08-11 10:50:04 [codeface.project] MainProcess INFO: => Performing complexity analysis
+2026-08-11 10:50:04 [codeface.project] MainProcess INFO:   -> Analysing range 1
+2026-08-11 10:50:05 [codeface.R.config] DEBUG: Set log level to 'devinfo' == 15
+2026-08-11 10:50:05 [codeface.R] DEBUG: Configuration options:
+2026-08-11 10:50:05 [codeface.R] DEBUG: dbhost : localhost
+2026-08-11 10:50:05 [codeface.R] DEBUG: dbuser : codeface
+2026-08-11 10:50:05 [codeface.R] DEBUG: dbpwd : codeface
+2026-08-11 10:50:05 [codeface.R] DEBUG: dbname : codeface_testing
+2026-08-11 10:50:05 [codeface.R] DEBUG: idServicePort : 8383
+2026-08-11 10:50:05 [codeface.R] DEBUG: idServiceHostname : localhost
+2026-08-11 10:50:05 [codeface.R] DEBUG: sleepTime : 1000
+2026-08-11 10:50:05 [codeface.R] DEBUG: proxyPort : 83
+2026-08-11 10:50:05 [codeface.R] DEBUG: dbport : 3306
+2026-08-11 10:50:05 [codeface.R] DEBUG: understand : FALSE
+2026-08-11 10:50:05 [codeface.R] DEBUG: sloccount : FALSE
+2026-08-11 10:50:05 [codeface.R] DEBUG: description : codeface_test_project4bqqeb Description
+2026-08-11 10:50:05 [codeface.R] DEBUG: mailinglists : list(list(name = "codeface_test_project4bqqeb.dev1", source = "generated", type = "dev"), list(name = "codeface_test_project4bqqeb.dev2", source = "generated", type = "dev"), list(name = "codeface_test_project4bqqeb.user1", source = "generated", type = "user"), list(name = "codeface_test_project4bqqeb.user2", source = "generated", type = "user"))
+2026-08-11 10:50:05 [codeface.R] DEBUG: project : codeface_test_project4bqqeb
+2026-08-11 10:50:05 [codeface.R] DEBUG: rcs : c("v0_rc_0", "v1_rc_1", "v2_rc_2")
+2026-08-11 10:50:05 [codeface.R] DEBUG: repo : codeface_test_project4bqqeb
+2026-08-11 10:50:05 [codeface.R] DEBUG: revisions : c("v0_release", "v1_release", "v2_release")
+2026-08-11 10:50:05 [codeface.R] DEBUG: tagging : committer2author
+2026-08-11 10:50:05 [codeface.R] DEBUG: artifactType : file
+2026-08-11 10:50:05 [codeface.R] DEBUG: dependencyType : none
+2026-08-11 10:50:05 [codeface.R] DEBUG: qualityType : corrective
+2026-08-11 10:50:05 [codeface.R] DEBUG: communicationType : mail
+2026-08-11 10:50:05 [codeface.R] DEBUG: pid : 2
+2026-08-11 10:50:05 [codeface.R] DEBUG: con : new("MySQLConnection", Id = c(0, 0))
+2026-08-11 10:50:05 [codeface.R] DEBUG: tstamps.release : list(id = c(1, 2, 4), type = c(2, 2, 2), tag = c("v0_release", "v1_release", "v2_release"), date = c(1357570800, 1357837200, 1358769042), projectId = c(2, 2, 2))
+2026-08-11 10:50:05 [codeface.R] DEBUG: tstamps.all : list(id = c(1, 2, 3, 4, 5), type = c(2, 2, 1, 2, 1), tag = c("v0_release", "v1_release", "v1_rc_1", "v2_release", "v2_rc_2"), date = c(1357570800, 1357837200, 1357653600, 1358769042, 1358250162), projectId = c(2, 2, 2, 2, 2))
+2026-08-11 10:50:05 [codeface.R] DEBUG: boundaries : list(date.start = c(1357570800, 1357837200), date.end = c(1357837200, 1358769042), date.rc.start = c(1357653600, 1358250162), tag = c("v0_release", "v1_release"), cycle = c("v0_release-v1_release", "v1_release-v2_release"))
+2026-08-11 10:50:05 [codeface.R] DEBUG: repodir : /tmp/codeface_test_project4bqqeb/.git
+2026-08-11 10:50:05 [codeface.R] DEBUG: range.id : 1
+2026-08-11 10:50:05 [codeface.R] DEBUG: profile : FALSE
+2026-08-11 10:50:05 [codeface.R] DEBUG: jobs : 1
+2026-08-11 10:50:05 [codeface.R] DEBUG: use_corpus : FALSE
+2026-08-11 10:50:05 [codeface.R.complexity] INFO: Using 1 jobs
+
+NULL
+2026-08-11 10:50:06 [codeface.project] MainProcess INFO:   -> Analysing range 2
+2026-08-11 10:50:06 [codeface.R.config] DEBUG: Set log level to 'devinfo' == 15
+2026-08-11 10:50:06 [codeface.R] DEBUG: Configuration options:
+2026-08-11 10:50:07 [codeface.R] DEBUG: dbhost : localhost
+2026-08-11 10:50:07 [codeface.R] DEBUG: dbuser : codeface
+2026-08-11 10:50:07 [codeface.R] DEBUG: dbpwd : codeface
+2026-08-11 10:50:07 [codeface.R] DEBUG: dbname : codeface_testing
+2026-08-11 10:50:07 [codeface.R] DEBUG: idServicePort : 8383
+2026-08-11 10:50:07 [codeface.R] DEBUG: idServiceHostname : localhost
+2026-08-11 10:50:07 [codeface.R] DEBUG: sleepTime : 1000
+2026-08-11 10:50:07 [codeface.R] DEBUG: proxyPort : 83
+2026-08-11 10:50:07 [codeface.R] DEBUG: dbport : 3306
+2026-08-11 10:50:07 [codeface.R] DEBUG: understand : FALSE
+2026-08-11 10:50:07 [codeface.R] DEBUG: sloccount : FALSE
+2026-08-11 10:50:07 [codeface.R] DEBUG: description : codeface_test_project4bqqeb Description
+2026-08-11 10:50:07 [codeface.R] DEBUG: mailinglists : list(list(name = "codeface_test_project4bqqeb.dev1", source = "generated", type = "dev"), list(name = "codeface_test_project4bqqeb.dev2", source = "generated", type = "dev"), list(name = "codeface_test_project4bqqeb.user1", source = "generated", type = "user"), list(name = "codeface_test_project4bqqeb.user2", source = "generated", type = "user"))
+2026-08-11 10:50:07 [codeface.R] DEBUG: project : codeface_test_project4bqqeb
+2026-08-11 10:50:07 [codeface.R] DEBUG: rcs : c("v0_rc_0", "v1_rc_1", "v2_rc_2")
+2026-08-11 10:50:07 [codeface.R] DEBUG: repo : codeface_test_project4bqqeb
+2026-08-11 10:50:07 [codeface.R] DEBUG: revisions : c("v0_release", "v1_release", "v2_release")
+2026-08-11 10:50:07 [codeface.R] DEBUG: tagging : committer2author
+2026-08-11 10:50:07 [codeface.R] DEBUG: artifactType : file
+2026-08-11 10:50:07 [codeface.R] DEBUG: dependencyType : none
+2026-08-11 10:50:07 [codeface.R] DEBUG: qualityType : corrective
+2026-08-11 10:50:07 [codeface.R] DEBUG: communicationType : mail
+2026-08-11 10:50:07 [codeface.R] DEBUG: pid : 2
+2026-08-11 10:50:07 [codeface.R] DEBUG: con : new("MySQLConnection", Id = c(0, 0))
+2026-08-11 10:50:07 [codeface.R] DEBUG: tstamps.release : list(id = c(1, 2, 4), type = c(2, 2, 2), tag = c("v0_release", "v1_release", "v2_release"), date = c(1357570800, 1357837200, 1358769042), projectId = c(2, 2, 2))
+2026-08-11 10:50:07 [codeface.R] DEBUG: tstamps.all : list(id = c(1, 2, 3, 4, 5), type = c(2, 2, 1, 2, 1), tag = c("v0_release", "v1_release", "v1_rc_1", "v2_release", "v2_rc_2"), date = c(1357570800, 1357837200, 1357653600, 1358769042, 1358250162), projectId = c(2, 2, 2, 2, 2))
+2026-08-11 10:50:07 [codeface.R] DEBUG: boundaries : list(date.start = c(1357570800, 1357837200), date.end = c(1357837200, 1358769042), date.rc.start = c(1357653600, 1358250162), tag = c("v0_release", "v1_release"), cycle = c("v0_release-v1_release", "v1_release-v2_release"))
+2026-08-11 10:50:07 [codeface.R] DEBUG: repodir : /tmp/codeface_test_project4bqqeb/.git
+2026-08-11 10:50:07 [codeface.R] DEBUG: range.id : 2
+2026-08-11 10:50:07 [codeface.R] DEBUG: profile : FALSE
+2026-08-11 10:50:07 [codeface.R] DEBUG: jobs : 1
+2026-08-11 10:50:07 [codeface.R] DEBUG: use_corpus : FALSE
+2026-08-11 10:50:07 [codeface.R.complexity] INFO: Using 1 jobs
+
+NULL
+2026-08-11 10:50:07 [codeface.project] MainProcess INFO: => Analysing time series
+2026-08-11 10:50:08 [codeface.R.config] DEBUG: Set log level to 'devinfo' == 15
+2026-08-11 10:50:08 [codeface.R] DEBUG: Configuration options:
+2026-08-11 10:50:08 [codeface.R] DEBUG: dbhost : localhost
+2026-08-11 10:50:08 [codeface.R] DEBUG: dbuser : codeface
+2026-08-11 10:50:08 [codeface.R] DEBUG: dbpwd : codeface
+2026-08-11 10:50:08 [codeface.R] DEBUG: dbname : codeface_testing
+2026-08-11 10:50:08 [codeface.R] DEBUG: idServicePort : 8383
+2026-08-11 10:50:08 [codeface.R] DEBUG: idServiceHostname : localhost
+2026-08-11 10:50:08 [codeface.R] DEBUG: sleepTime : 1000
+2026-08-11 10:50:08 [codeface.R] DEBUG: proxyPort : 83
+2026-08-11 10:50:08 [codeface.R] DEBUG: dbport : 3306
+2026-08-11 10:50:08 [codeface.R] DEBUG: understand : FALSE
+2026-08-11 10:50:08 [codeface.R] DEBUG: sloccount : FALSE
+2026-08-11 10:50:08 [codeface.R] DEBUG: description : codeface_test_project4bqqeb Description
+2026-08-11 10:50:08 [codeface.R] DEBUG: mailinglists : list(list(name = "codeface_test_project4bqqeb.dev1", source = "generated", type = "dev"), list(name = "codeface_test_project4bqqeb.dev2", source = "generated", type = "dev"), list(name = "codeface_test_project4bqqeb.user1", source = "generated", type = "user"), list(name = "codeface_test_project4bqqeb.user2", source = "generated", type = "user"))
+2026-08-11 10:50:08 [codeface.R] DEBUG: project : codeface_test_project4bqqeb
+2026-08-11 10:50:08 [codeface.R] DEBUG: rcs : c("v0_rc_0", "v1_rc_1", "v2_rc_2")
+2026-08-11 10:50:08 [codeface.R] DEBUG: repo : codeface_test_project4bqqeb
+2026-08-11 10:50:08 [codeface.R] DEBUG: revisions : c("v0_release", "v1_release", "v2_release")
+2026-08-11 10:50:08 [codeface.R] DEBUG: tagging : committer2author
+2026-08-11 10:50:08 [codeface.R] DEBUG: artifactType : file
+2026-08-11 10:50:08 [codeface.R] DEBUG: dependencyType : none
+2026-08-11 10:50:08 [codeface.R] DEBUG: qualityType : corrective
+2026-08-11 10:50:08 [codeface.R] DEBUG: communicationType : mail
+2026-08-11 10:50:08 [codeface.R] DEBUG: pid : 2
+2026-08-11 10:50:08 [codeface.R] DEBUG: con : new("MySQLConnection", Id = c(0, 0))
+2026-08-11 10:50:08 [codeface.R] DEBUG: tstamps.release : list(id = c(1, 2, 4), type = c(2, 2, 2), tag = c("v0_release", "v1_release", "v2_release"), date = c(1357570800, 1357837200, 1358769042), projectId = c(2, 2, 2))
+2026-08-11 10:50:08 [codeface.R] DEBUG: tstamps.all : list(id = c(1, 2, 3, 4, 5), type = c(2, 2, 1, 2, 1), tag = c("v0_release", "v1_release", "v1_rc_1", "v2_release", "v2_rc_2"), date = c(1357570800, 1357837200, 1357653600, 1358769042, 1358250162), projectId = c(2, 2, 2, 2, 2))
+2026-08-11 10:50:08 [codeface.R] DEBUG: boundaries : list(date.start = c(1357570800, 1357837200), date.end = c(1357837200, 1358769042), date.rc.start = c(1357653600, 1358250162), tag = c("v0_release", "v1_release"), cycle = c("v0_release-v1_release", "v1_release-v2_release"))
+2026-08-11 10:50:08 [codeface.R] DEBUG: resdir : /tmp/codeface_test_project4bqqeb/.git/results/codeface_test_project4bqqeb/committer2author
+2026-08-11 10:50:08 [codeface.R] DEBUG: profile : FALSE
+2026-08-11 10:50:08 [codeface.R] DEBUG: jobs : 1
+2026-08-11 10:50:08 [codeface.R] DEBUG: use_corpus : FALSE
+2026-08-11 10:50:08 [codeface.R] DEBUG: row names were found from a short variable and have been discarded
+2026-08-11 10:50:08 [codeface.R] DEBUG: row names were found from a short variable and have been discarded
+2026-08-11 10:50:08 [codeface.R] DEBUG: row names were found from a short variable and have been discarded
+geom_path: Each group consists of only one observation. Do you need to adjust
+the group aesthetic?
+geom_path: Each group consists of only one observation. Do you need to adjust
+the group aesthetic?
+2026-08-11 10:50:09 [codeface.R] DEBUG: Transformation introduced infinite values in continuous y-axis
+2026-08-11 10:50:09 [codeface.R] DEBUG: Removed 3 rows containing non-finite values (stat_boxplot).
+2026-08-11 10:50:10 [codeface.R] DEBUG: Transformation introduced infinite values in continuous y-axis
+2026-08-11 10:50:10 [codeface.R] DEBUG: Removed 3 rows containing non-finite values (stat_boxplot).
+2026-08-11 10:50:10 [codeface.R] DEBUG: Transformation introduced infinite values in continuous y-axis
+2026-08-11 10:50:10 [codeface.R] DEBUG: Removed 3 rows containing non-finite values (stat_boxplot).
+2026-08-11 10:50:11 [codeface.R] DEBUG: Decimal MySQL column 3 imported as numeric
+2026-08-11 10:50:11 [codeface.R] DEBUG: Decimal MySQL column 4 imported as numeric
+2026-08-11 10:50:11 [codeface.R] DEBUG: Decimal MySQL column 5 imported as numeric
+2026-08-11 10:50:11 [codeface.R] DEBUG: Decimal MySQL column 6 imported as numeric
+2026-08-11 10:50:12 [codeface.project] MainProcess INFO: => Codeface run complete!
+2026-08-11 10:50:12 [codeface.configuration] MainProcess DEVINFO: Loading global configuration file '/codeface/codeface_testing.conf'
+2026-08-11 10:50:12 [codeface.configuration] MainProcess DEVINFO: Loading project configuration file '/tmp/codeface_test_project4bqqeb/.git/testproject.conf'
+2026-08-11 10:50:12 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_project4bqqeb/committer2author with ID 2
+2026-08-11 10:50:12 [codeface.configuration] MainProcess DEVINFO: Loading global configuration file '/codeface/codeface_testing.conf'
+2026-08-11 10:50:12 [codeface.configuration] MainProcess DEVINFO: Loading project configuration file '/tmp/codeface_test_project4bqqeb/.git/testproject.conf'
+2026-08-11 10:50:12 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_project4bqqeb/committer2author with ID 2
+.Initialized empty Git repository in /tmp/codeface_test_projectexdJUI/.git/
+[master (root-commit) 9eaa63b] Commit 0
+ Date: Mon Jan 7 16:00:00 2013 +0100
+ 1 file changed, 2 insertions(+)
+ create mode 100644 README
+[master 22c535f] Commit 1
+ Date: Tue Jan 8 15:00:00 2013 +0100
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+ create mode 100644 src/code.c
+[master b5a89b4] Commit 2
+ Date: Wed Jan 9 15:30:00 2013 +0100
+ 1 file changed, 1 insertion(+)
+ create mode 100644 src/carp.c
+[master 9c20869] Commit 3
+ Date: Thu Jan 10 18:00:00 2013 +0100
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+ delete mode 100644 src/carp.c
+[master 4cfafa9] Commit 4
+ Author: Max Maintainer <max@theboss.com>
+ Date: Mon Jan 14 12:30:42 2013 +0100
+ 1 file changed, 3 insertions(+)
+ create mode 100644 src/newcode.c
+[master e853181] Commit 5
+ Date: Mon Jan 14 12:50:42 2013 +0100
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ rename src/{newcode.c => answer.c} (100%)
+[master 9c00245] Commit 6
+ Author: Clara Confident <clara@foo.org>
+ Date: Tue Jan 15 12:42:42 2013 +0100
+ 1 file changed, 2 insertions(+)
+ create mode 100644 Makefile
+[master 4198f61] Commit 7
+ Date: Mon Jan 21 12:50:42 2013 +0100
+ 2 files changed, 2 insertions(+), 3 deletions(-)
+ delete mode 100644 Makefile
+2026-08-11 10:50:12 [codeface.configuration] MainProcess DEVINFO: Loading global configuration file '/codeface/codeface_testing.conf'
+2026-08-11 10:50:12 [codeface.configuration] MainProcess DEVINFO: Loading project configuration file '/tmp/codeface_test_projectexdJUI/.git/testproject.conf'
+2026-08-11 10:50:12 [codeface] MainProcess DEVINFO: Opened logfile '/tmp/codeface_test_projectexdJUI/.git/log' with log level 'debug'
+2026-08-11 10:50:12 [codeface.configuration] MainProcess DEVINFO: Loading global configuration file '/codeface/codeface_testing.conf'
+2026-08-11 10:50:12 [codeface.configuration] MainProcess DEVINFO: Loading project configuration file '/tmp/codeface_test_projectexdJUI/.git/testproject.conf'
+2026-08-11 10:50:12 [codeface.project] MainProcess INFO: => Setting up project 'codeface_test_projectexdJUI'
+2026-08-11 10:50:12 [codeface.dbmanager] MainProcess DEVINFO: Creating new project codeface_test_projectexdJUI/tag
+2026-08-11 10:50:12 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectexdJUI/tag with ID 3
+2026-08-11 10:50:12 [codeface.dbmanager] MainProcess WARNING: Deleting and re-creating project codeface_test_projectexdJUI/tag.
+2026-08-11 10:50:12 [codeface.dbmanager] MainProcess DEVINFO: Creating new project codeface_test_projectexdJUI/tag
+2026-08-11 10:50:12 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectexdJUI/tag with ID 4
+2026-08-11 10:50:12 [codeface.dbmanager] MainProcess INFO: Adding 3 new releases...
+2026-08-11 10:50:12 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectexdJUI/tag with ID 4
+2026-08-11 10:50:12 [codeface.util] MainProcess INFO:   -> Revision range 1/2 (v0_release..v1_release): Analysing commits...
+2026-08-11 10:50:12 [codeface.cluster.cluster] MainProcess DEVINFO: Creating data base for v0_release..v1_release
+Pass 1/2:   0% |                                               | ETA:  --:--:--Pass 1/2: 100% |################################################| Time: 0:00:00
+2026-08-11 10:50:12 [codeface.cluster.cluster] MainProcess DEVINFO: Shelving the VCS object
+2026-08-11 10:50:12 [codeface.cluster.cluster] MainProcess DEVINFO: Finished shelving the VCS object
+2026-08-11 10:50:12 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectexdJUI/tag with ID 4
+2026-08-11 10:50:12 [codeface.cluster.cluster] MainProcess DEVINFO: Reading from data base /tmp/codeface_test_projectexdJUI/.git/results/codeface_test_projectexdJUI/tag/001--v0_release-v1_release/vcs_analysis.db...
+2026-08-11 10:50:12 [codeface.VCS] MainProcess DEVINFO: Using cached data to extract commit information
+2026-08-11 10:50:12 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectexdJUI/tag with ID 4
+Pass 2/2:   0% |                                               | ETA:  --:--:--Pass 2/2: 100% |################################################| Time: 0:00:00
+2026-08-11 10:50:12 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectexdJUI/tag with ID 4
+2026-08-11 10:50:12 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectexdJUI/tag with ID 4
+2026-08-11 10:50:12 [codeface.util] MainProcess INFO:   -> Revision range 1/2 (v0_release..v1_release): Commit analysis done.
+2026-08-11 10:50:12 [codeface.util] MainProcess INFO:   -> Revision range 1/2 (v0_release..v1_release): Detecting clusters...
+2026-08-11 10:50:16 [codeface.R.config] DEBUG: Set log level to 'devinfo' == 15
+2026-08-11 10:50:16 [codeface.R] DEBUG: Configuration options:
+2026-08-11 10:50:16 [codeface.R] DEBUG: dbhost : localhost
+2026-08-11 10:50:16 [codeface.R] DEBUG: dbuser : codeface
+2026-08-11 10:50:16 [codeface.R] DEBUG: dbpwd : codeface
+2026-08-11 10:50:16 [codeface.R] DEBUG: dbname : codeface_testing
+2026-08-11 10:50:16 [codeface.R] DEBUG: idServicePort : 8383
+2026-08-11 10:50:16 [codeface.R] DEBUG: idServiceHostname : localhost
+2026-08-11 10:50:16 [codeface.R] DEBUG: sleepTime : 1000
+2026-08-11 10:50:16 [codeface.R] DEBUG: proxyPort : 83
+2026-08-11 10:50:16 [codeface.R] DEBUG: dbport : 3306
+2026-08-11 10:50:16 [codeface.R] DEBUG: understand : FALSE
+2026-08-11 10:50:16 [codeface.R] DEBUG: sloccount : FALSE
+2026-08-11 10:50:16 [codeface.R] DEBUG: description : codeface_test_projectexdJUI Description
+2026-08-11 10:50:16 [codeface.R] DEBUG: mailinglists : list(list(name = "codeface_test_projectexdJUI.dev1", source = "generated", type = "dev"), list(name = "codeface_test_projectexdJUI.dev2", source = "generated", type = "dev"), list(name = "codeface_test_projectexdJUI.user1", source = "generated", type = "user"), list(name = "codeface_test_projectexdJUI.user2", source = "generated", type = "user"))
+2026-08-11 10:50:16 [codeface.R] DEBUG: project : codeface_test_projectexdJUI
+2026-08-11 10:50:16 [codeface.R] DEBUG: rcs : c("v0_rc_0", "v1_rc_1", "v2_rc_2")
+2026-08-11 10:50:16 [codeface.R] DEBUG: repo : codeface_test_projectexdJUI
+2026-08-11 10:50:16 [codeface.R] DEBUG: revisions : c("v0_release", "v1_release", "v2_release")
+2026-08-11 10:50:16 [codeface.R] DEBUG: tagging : tag
+2026-08-11 10:50:16 [codeface.R] DEBUG: artifactType : file
+2026-08-11 10:50:16 [codeface.R] DEBUG: dependencyType : none
+2026-08-11 10:50:16 [codeface.R] DEBUG: qualityType : corrective
+2026-08-11 10:50:16 [codeface.R] DEBUG: communicationType : mail
+2026-08-11 10:50:16 [codeface.R] DEBUG: pid : 4
+2026-08-11 10:50:16 [codeface.R] DEBUG: con : new("MySQLConnection", Id = c(0, 0))
+2026-08-11 10:50:16 [codeface.R] DEBUG: tstamps.release : list(id = c(6, 7, 9), type = c(2, 2, 2), tag = c("v0_release", "v1_release", "v2_release"), date = c(NA, NA, NA), projectId = c(4, 4, 4))
+2026-08-11 10:50:16 [codeface.R] DEBUG: tstamps.all : list(id = c(6, 7, 8, 9, 10), type = c(2, 2, 1, 2, 1), tag = c("v0_release", "v1_release", "v1_rc_1", "v2_release", "v2_rc_2"), date = c(NA, NA, NA, NA, NA), projectId = c(4, 4, 4, 4, 4))
+2026-08-11 10:50:16 [codeface.R] DEBUG: boundaries : list(date.start = c(NA, NA), date.end = c(NA, NA), date.rc.start = c(NA, NA), tag = c("v0_release", "v1_release"), cycle = c("v0_release-v1_release", "v1_release-v2_release"))
+2026-08-11 10:50:16 [codeface.R] DEBUG: resdir : /tmp/codeface_test_projectexdJUI/.git/results/codeface_test_projectexdJUI/tag/001--v0_release-v1_release
+2026-08-11 10:50:16 [codeface.R] DEBUG: range.id : 3
+2026-08-11 10:50:16 [codeface.R] DEBUG: profile : FALSE
+2026-08-11 10:50:16 [codeface.R] DEBUG: jobs : 1
+2026-08-11 10:50:16 [codeface.R] DEBUG: use_corpus : FALSE
+2026-08-11 10:50:16 [codeface.R] DEBUG: Decimal MySQL column 2 imported as numeric
+2026-08-11 10:50:16 [codeface.R] DEBUG: Decimal MySQL column 3 imported as numeric
+2026-08-11 10:50:16 [codeface.R] DEBUG: Decimal MySQL column 4 imported as numeric
+2026-08-11 10:50:16 [codeface.R] DEBUG: Decimal MySQL column 5 imported as numeric
+2026-08-11 10:50:16 [codeface.R] DEBUG: incomplete final line found by readTableHeader on '/tmp/codeface_test_projectexdJUI/.git/results/codeface_test_projectexdJUI/tag/001--v0_release-v1_release/id_subsys.txt'
+2026-08-11 10:50:17 [codeface.R] DEBUG: no non-missing arguments to max; returning -Inf
+2026-08-11 10:50:17 [codeface.R] DEBUG: no non-missing arguments to min; returning Inf
+2026-08-11 10:50:17 [codeface.R] DEBUG: length of NULL cannot be changed
+2026-08-11 10:50:17 [codeface.R] DEBUG: no non-missing arguments to max; returning -Inf
+2026-08-11 10:50:17 [codeface.R] DEBUG: no non-missing arguments to min; returning Inf
+2026-08-11 10:50:17 [codeface.R] DEBUG: length of NULL cannot be changed
+2026-08-11 10:50:17 [codeface.R] DEBUG: no non-missing arguments to max; returning -Inf
+2026-08-11 10:50:17 [codeface.R] DEBUG: no non-missing arguments to min; returning Inf
+2026-08-11 10:50:17 [codeface.R] DEBUG: length of NULL cannot be changed
+2026-08-11 10:50:17 [codeface.R] DEBUG: no non-missing arguments to max; returning -Inf
+2026-08-11 10:50:17 [codeface.R] DEBUG: no non-missing arguments to min; returning Inf
+2026-08-11 10:50:17 [codeface.R] DEBUG: length of NULL cannot be changed
+NULL
+2026-08-11 10:50:17 [codeface.util] MainProcess INFO:   -> Revision range 1/2 (v0_release..v1_release): Detecting clusters done.
+2026-08-11 10:50:17 [codeface.util] MainProcess INFO:   -> Revision range 1/2 (v0_release..v1_release): Generating reports...
+2026-08-11 10:50:17 [codeface.util] MainProcess INFO:   -> Generating Reports...
+2026-08-11 10:50:17 [codeface.util] MainProcess DEVINFO:   -> Generating report
+2026-08-11 10:50:18 [codeface.util] MainProcess WARNING: Command 'lualatex -interaction=nonstopmode /tmp/codeface_test_projectexdJUI/.git/results/codeface_test_projectexdJUI/tag/001--v0_release-v1_release/report-v0_release_v1_release.tex' failed with exit code 1. Ignored.
+2026-08-11 10:50:18 [codeface.util] MainProcess INFO:   -> Revision range 1/2 (v0_release..v1_release): Report generation done.
+2026-08-11 10:50:18 [codeface.util] MainProcess INFO:   -> Revision range 2/2 (v1_release..v2_release): Analysing commits...
+2026-08-11 10:50:18 [codeface.cluster.cluster] MainProcess DEVINFO: Creating data base for v1_release..v2_release
+Pass 1/2:   0% |                                               | ETA:  --:--:--Pass 1/2: 100% |################################################| Time: 0:00:00
+2026-08-11 10:50:18 [codeface.cluster.cluster] MainProcess DEVINFO: Shelving the VCS object
+2026-08-11 10:50:18 [codeface.cluster.cluster] MainProcess DEVINFO: Finished shelving the VCS object
+2026-08-11 10:50:18 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectexdJUI/tag with ID 4
+2026-08-11 10:50:18 [codeface.cluster.cluster] MainProcess DEVINFO: Reading from data base /tmp/codeface_test_projectexdJUI/.git/results/codeface_test_projectexdJUI/tag/002--v1_release-v2_release/vcs_analysis.db...
+2026-08-11 10:50:18 [codeface.VCS] MainProcess DEVINFO: Using cached data to extract commit information
+2026-08-11 10:50:18 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectexdJUI/tag with ID 4
+Pass 2/2:   0% |                                               | ETA:  --:--:--Pass 2/2: 100% |################################################| Time: 0:00:00
+2026-08-11 10:50:18 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectexdJUI/tag with ID 4
+2026-08-11 10:50:18 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectexdJUI/tag with ID 4
+2026-08-11 10:50:18 [codeface.util] MainProcess INFO:   -> Revision range 2/2 (v1_release..v2_release): Commit analysis done.
+2026-08-11 10:50:18 [codeface.util] MainProcess INFO:   -> Revision range 2/2 (v1_release..v2_release): Detecting clusters...
+2026-08-11 10:50:22 [codeface.R.config] DEBUG: Set log level to 'devinfo' == 15
+2026-08-11 10:50:22 [codeface.R] DEBUG: Configuration options:
+2026-08-11 10:50:22 [codeface.R] DEBUG: dbhost : localhost
+2026-08-11 10:50:22 [codeface.R] DEBUG: dbuser : codeface
+2026-08-11 10:50:22 [codeface.R] DEBUG: dbpwd : codeface
+2026-08-11 10:50:22 [codeface.R] DEBUG: dbname : codeface_testing
+2026-08-11 10:50:22 [codeface.R] DEBUG: idServicePort : 8383
+2026-08-11 10:50:22 [codeface.R] DEBUG: idServiceHostname : localhost
+2026-08-11 10:50:22 [codeface.R] DEBUG: sleepTime : 1000
+2026-08-11 10:50:22 [codeface.R] DEBUG: proxyPort : 83
+2026-08-11 10:50:22 [codeface.R] DEBUG: dbport : 3306
+2026-08-11 10:50:22 [codeface.R] DEBUG: understand : FALSE
+2026-08-11 10:50:22 [codeface.R] DEBUG: sloccount : FALSE
+2026-08-11 10:50:22 [codeface.R] DEBUG: description : codeface_test_projectexdJUI Description
+2026-08-11 10:50:22 [codeface.R] DEBUG: mailinglists : list(list(name = "codeface_test_projectexdJUI.dev1", source = "generated", type = "dev"), list(name = "codeface_test_projectexdJUI.dev2", source = "generated", type = "dev"), list(name = "codeface_test_projectexdJUI.user1", source = "generated", type = "user"), list(name = "codeface_test_projectexdJUI.user2", source = "generated", type = "user"))
+2026-08-11 10:50:22 [codeface.R] DEBUG: project : codeface_test_projectexdJUI
+2026-08-11 10:50:22 [codeface.R] DEBUG: rcs : c("v0_rc_0", "v1_rc_1", "v2_rc_2")
+2026-08-11 10:50:22 [codeface.R] DEBUG: repo : codeface_test_projectexdJUI
+2026-08-11 10:50:22 [codeface.R] DEBUG: revisions : c("v0_release", "v1_release", "v2_release")
+2026-08-11 10:50:22 [codeface.R] DEBUG: tagging : tag
+2026-08-11 10:50:22 [codeface.R] DEBUG: artifactType : file
+2026-08-11 10:50:22 [codeface.R] DEBUG: dependencyType : none
+2026-08-11 10:50:22 [codeface.R] DEBUG: qualityType : corrective
+2026-08-11 10:50:22 [codeface.R] DEBUG: communicationType : mail
+2026-08-11 10:50:22 [codeface.R] DEBUG: pid : 4
+2026-08-11 10:50:22 [codeface.R] DEBUG: con : new("MySQLConnection", Id = c(0, 0))
+2026-08-11 10:50:22 [codeface.R] DEBUG: tstamps.release : list(id = c(6, 7, 9), type = c(2, 2, 2), tag = c("v0_release", "v1_release", "v2_release"), date = c(NA, NA, NA), projectId = c(4, 4, 4))
+2026-08-11 10:50:22 [codeface.R] DEBUG: tstamps.all : list(id = c(6, 7, 8, 9, 10), type = c(2, 2, 1, 2, 1), tag = c("v0_release", "v1_release", "v1_rc_1", "v2_release", "v2_rc_2"), date = c(NA, NA, NA, NA, NA), projectId = c(4, 4, 4, 4, 4))
+2026-08-11 10:50:22 [codeface.R] DEBUG: boundaries : list(date.start = c(NA, NA), date.end = c(NA, NA), date.rc.start = c(NA, NA), tag = c("v0_release", "v1_release"), cycle = c("v0_release-v1_release", "v1_release-v2_release"))
+2026-08-11 10:50:22 [codeface.R] DEBUG: resdir : /tmp/codeface_test_projectexdJUI/.git/results/codeface_test_projectexdJUI/tag/002--v1_release-v2_release
+2026-08-11 10:50:22 [codeface.R] DEBUG: range.id : 4
+2026-08-11 10:50:22 [codeface.R] DEBUG: profile : FALSE
+2026-08-11 10:50:22 [codeface.R] DEBUG: jobs : 1
+2026-08-11 10:50:22 [codeface.R] DEBUG: use_corpus : FALSE
+2026-08-11 10:50:22 [codeface.R] DEBUG: Decimal MySQL column 2 imported as numeric
+2026-08-11 10:50:22 [codeface.R] DEBUG: Decimal MySQL column 3 imported as numeric
+2026-08-11 10:50:22 [codeface.R] DEBUG: Decimal MySQL column 4 imported as numeric
+2026-08-11 10:50:22 [codeface.R] DEBUG: Decimal MySQL column 5 imported as numeric
+2026-08-11 10:50:22 [codeface.R] DEBUG: incomplete final line found by readTableHeader on '/tmp/codeface_test_projectexdJUI/.git/results/codeface_test_projectexdJUI/tag/002--v1_release-v2_release/id_subsys.txt'
+2026-08-11 10:50:22 [codeface.R] DEBUG: no non-missing arguments to max; returning -Inf
+2026-08-11 10:50:22 [codeface.R] DEBUG: no non-missing arguments to min; returning Inf
+2026-08-11 10:50:22 [codeface.R] DEBUG: length of NULL cannot be changed
+2026-08-11 10:50:22 [codeface.R] DEBUG: no non-missing arguments to max; returning -Inf
+2026-08-11 10:50:22 [codeface.R] DEBUG: no non-missing arguments to min; returning Inf
+2026-08-11 10:50:22 [codeface.R] DEBUG: length of NULL cannot be changed
+NULL
+2026-08-11 10:50:23 [codeface.util] MainProcess INFO:   -> Revision range 2/2 (v1_release..v2_release): Detecting clusters done.
+2026-08-11 10:50:23 [codeface.util] MainProcess INFO:   -> Revision range 2/2 (v1_release..v2_release): Generating reports...
+2026-08-11 10:50:23 [codeface.util] MainProcess INFO:   -> Generating Reports...
+2026-08-11 10:50:23 [codeface.util] MainProcess DEVINFO:   -> Generating report
+2026-08-11 10:50:24 [codeface.util] MainProcess WARNING: Command 'lualatex -interaction=nonstopmode /tmp/codeface_test_projectexdJUI/.git/results/codeface_test_projectexdJUI/tag/002--v1_release-v2_release/report-v1_release_v2_release.tex' failed with exit code 1. Ignored.
+2026-08-11 10:50:24 [codeface.util] MainProcess INFO:   -> Revision range 2/2 (v1_release..v2_release): Report generation done.
+2026-08-11 10:50:24 [codeface.util] MainProcess DEVINFO: Terminating workers...
+2026-08-11 10:50:24 [codeface.util] MainProcess DEVINFO: Workers terminated.
+2026-08-11 10:50:24 [codeface.project] MainProcess INFO: => Preparing time series data
+2026-08-11 10:50:24 [codeface.VCS] MainProcess DEVINFO: Using cached data to extract commit information
+2026-08-11 10:50:24 [codeface.VCS] MainProcess DEVINFO: Using cached data to extract commit information
+2026-08-11 10:50:24 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectexdJUI/tag with ID 4
+2026-08-11 10:50:24 [codeface.project] MainProcess INFO: => Performing complexity analysis
+2026-08-11 10:50:24 [codeface.project] MainProcess INFO:   -> Analysing range 3
+2026-08-11 10:50:25 [codeface.R.config] DEBUG: Set log level to 'devinfo' == 15
+2026-08-11 10:50:25 [codeface.R] DEBUG: Configuration options:
+2026-08-11 10:50:25 [codeface.R] DEBUG: dbhost : localhost
+2026-08-11 10:50:25 [codeface.R] DEBUG: dbuser : codeface
+2026-08-11 10:50:25 [codeface.R] DEBUG: dbpwd : codeface
+2026-08-11 10:50:25 [codeface.R] DEBUG: dbname : codeface_testing
+2026-08-11 10:50:25 [codeface.R] DEBUG: idServicePort : 8383
+2026-08-11 10:50:25 [codeface.R] DEBUG: idServiceHostname : localhost
+2026-08-11 10:50:25 [codeface.R] DEBUG: sleepTime : 1000
+2026-08-11 10:50:25 [codeface.R] DEBUG: proxyPort : 83
+2026-08-11 10:50:25 [codeface.R] DEBUG: dbport : 3306
+2026-08-11 10:50:25 [codeface.R] DEBUG: understand : FALSE
+2026-08-11 10:50:25 [codeface.R] DEBUG: sloccount : FALSE
+2026-08-11 10:50:25 [codeface.R] DEBUG: description : codeface_test_projectexdJUI Description
+2026-08-11 10:50:25 [codeface.R] DEBUG: mailinglists : list(list(name = "codeface_test_projectexdJUI.dev1", source = "generated", type = "dev"), list(name = "codeface_test_projectexdJUI.dev2", source = "generated", type = "dev"), list(name = "codeface_test_projectexdJUI.user1", source = "generated", type = "user"), list(name = "codeface_test_projectexdJUI.user2", source = "generated", type = "user"))
+2026-08-11 10:50:25 [codeface.R] DEBUG: project : codeface_test_projectexdJUI
+2026-08-11 10:50:25 [codeface.R] DEBUG: rcs : c("v0_rc_0", "v1_rc_1", "v2_rc_2")
+2026-08-11 10:50:25 [codeface.R] DEBUG: repo : codeface_test_projectexdJUI
+2026-08-11 10:50:25 [codeface.R] DEBUG: revisions : c("v0_release", "v1_release", "v2_release")
+2026-08-11 10:50:25 [codeface.R] DEBUG: tagging : tag
+2026-08-11 10:50:25 [codeface.R] DEBUG: artifactType : file
+2026-08-11 10:50:25 [codeface.R] DEBUG: dependencyType : none
+2026-08-11 10:50:25 [codeface.R] DEBUG: qualityType : corrective
+2026-08-11 10:50:25 [codeface.R] DEBUG: communicationType : mail
+2026-08-11 10:50:25 [codeface.R] DEBUG: pid : 4
+2026-08-11 10:50:25 [codeface.R] DEBUG: con : new("MySQLConnection", Id = c(0, 0))
+2026-08-11 10:50:25 [codeface.R] DEBUG: tstamps.release : list(id = c(6, 7, 9), type = c(2, 2, 2), tag = c("v0_release", "v1_release", "v2_release"), date = c(1357570800, 1357837200, 1358769042), projectId = c(4, 4, 4))
+2026-08-11 10:50:25 [codeface.R] DEBUG: tstamps.all : list(id = c(6, 7, 8, 9, 10), type = c(2, 2, 1, 2, 1), tag = c("v0_release", "v1_release", "v1_rc_1", "v2_release", "v2_rc_2"), date = c(1357570800, 1357837200, 1357653600, 1358769042, 1358250162), projectId = c(4, 4, 4, 4, 4))
+2026-08-11 10:50:25 [codeface.R] DEBUG: boundaries : list(date.start = c(1357570800, 1357837200), date.end = c(1357837200, 1358769042), date.rc.start = c(1357653600, 1358250162), tag = c("v0_release", "v1_release"), cycle = c("v0_release-v1_release", "v1_release-v2_release"))
+2026-08-11 10:50:25 [codeface.R] DEBUG: repodir : /tmp/codeface_test_projectexdJUI/.git
+2026-08-11 10:50:25 [codeface.R] DEBUG: range.id : 3
+2026-08-11 10:50:25 [codeface.R] DEBUG: profile : FALSE
+2026-08-11 10:50:25 [codeface.R] DEBUG: jobs : 1
+2026-08-11 10:50:25 [codeface.R] DEBUG: use_corpus : FALSE
+2026-08-11 10:50:25 [codeface.R.complexity] INFO: Using 1 jobs
+
+NULL
+2026-08-11 10:50:25 [codeface.project] MainProcess INFO:   -> Analysing range 4
+2026-08-11 10:50:26 [codeface.R.config] DEBUG: Set log level to 'devinfo' == 15
+2026-08-11 10:50:26 [codeface.R] DEBUG: Configuration options:
+2026-08-11 10:50:26 [codeface.R] DEBUG: dbhost : localhost
+2026-08-11 10:50:26 [codeface.R] DEBUG: dbuser : codeface
+2026-08-11 10:50:26 [codeface.R] DEBUG: dbpwd : codeface
+2026-08-11 10:50:26 [codeface.R] DEBUG: dbname : codeface_testing
+2026-08-11 10:50:26 [codeface.R] DEBUG: idServicePort : 8383
+2026-08-11 10:50:26 [codeface.R] DEBUG: idServiceHostname : localhost
+2026-08-11 10:50:26 [codeface.R] DEBUG: sleepTime : 1000
+2026-08-11 10:50:26 [codeface.R] DEBUG: proxyPort : 83
+2026-08-11 10:50:26 [codeface.R] DEBUG: dbport : 3306
+2026-08-11 10:50:26 [codeface.R] DEBUG: understand : FALSE
+2026-08-11 10:50:26 [codeface.R] DEBUG: sloccount : FALSE
+2026-08-11 10:50:26 [codeface.R] DEBUG: description : codeface_test_projectexdJUI Description
+2026-08-11 10:50:26 [codeface.R] DEBUG: mailinglists : list(list(name = "codeface_test_projectexdJUI.dev1", source = "generated", type = "dev"), list(name = "codeface_test_projectexdJUI.dev2", source = "generated", type = "dev"), list(name = "codeface_test_projectexdJUI.user1", source = "generated", type = "user"), list(name = "codeface_test_projectexdJUI.user2", source = "generated", type = "user"))
+2026-08-11 10:50:26 [codeface.R] DEBUG: project : codeface_test_projectexdJUI
+2026-08-11 10:50:26 [codeface.R] DEBUG: rcs : c("v0_rc_0", "v1_rc_1", "v2_rc_2")
+2026-08-11 10:50:26 [codeface.R] DEBUG: repo : codeface_test_projectexdJUI
+2026-08-11 10:50:26 [codeface.R] DEBUG: revisions : c("v0_release", "v1_release", "v2_release")
+2026-08-11 10:50:26 [codeface.R] DEBUG: tagging : tag
+2026-08-11 10:50:26 [codeface.R] DEBUG: artifactType : file
+2026-08-11 10:50:26 [codeface.R] DEBUG: dependencyType : none
+2026-08-11 10:50:26 [codeface.R] DEBUG: qualityType : corrective
+2026-08-11 10:50:26 [codeface.R] DEBUG: communicationType : mail
+2026-08-11 10:50:26 [codeface.R] DEBUG: pid : 4
+2026-08-11 10:50:26 [codeface.R] DEBUG: con : new("MySQLConnection", Id = c(0, 0))
+2026-08-11 10:50:26 [codeface.R] DEBUG: tstamps.release : list(id = c(6, 7, 9), type = c(2, 2, 2), tag = c("v0_release", "v1_release", "v2_release"), date = c(1357570800, 1357837200, 1358769042), projectId = c(4, 4, 4))
+2026-08-11 10:50:26 [codeface.R] DEBUG: tstamps.all : list(id = c(6, 7, 8, 9, 10), type = c(2, 2, 1, 2, 1), tag = c("v0_release", "v1_release", "v1_rc_1", "v2_release", "v2_rc_2"), date = c(1357570800, 1357837200, 1357653600, 1358769042, 1358250162), projectId = c(4, 4, 4, 4, 4))
+2026-08-11 10:50:26 [codeface.R] DEBUG: boundaries : list(date.start = c(1357570800, 1357837200), date.end = c(1357837200, 1358769042), date.rc.start = c(1357653600, 1358250162), tag = c("v0_release", "v1_release"), cycle = c("v0_release-v1_release", "v1_release-v2_release"))
+2026-08-11 10:50:26 [codeface.R] DEBUG: repodir : /tmp/codeface_test_projectexdJUI/.git
+2026-08-11 10:50:26 [codeface.R] DEBUG: range.id : 4
+2026-08-11 10:50:26 [codeface.R] DEBUG: profile : FALSE
+2026-08-11 10:50:26 [codeface.R] DEBUG: jobs : 1
+2026-08-11 10:50:26 [codeface.R] DEBUG: use_corpus : FALSE
+2026-08-11 10:50:26 [codeface.R.complexity] INFO: Using 1 jobs
+
+NULL
+2026-08-11 10:50:26 [codeface.project] MainProcess INFO: => Analysing time series
+2026-08-11 10:50:28 [codeface.R.config] DEBUG: Set log level to 'devinfo' == 15
+2026-08-11 10:50:28 [codeface.R] DEBUG: Configuration options:
+2026-08-11 10:50:28 [codeface.R] DEBUG: dbhost : localhost
+2026-08-11 10:50:28 [codeface.R] DEBUG: dbuser : codeface
+2026-08-11 10:50:28 [codeface.R] DEBUG: dbpwd : codeface
+2026-08-11 10:50:28 [codeface.R] DEBUG: dbname : codeface_testing
+2026-08-11 10:50:28 [codeface.R] DEBUG: idServicePort : 8383
+2026-08-11 10:50:28 [codeface.R] DEBUG: idServiceHostname : localhost
+2026-08-11 10:50:28 [codeface.R] DEBUG: sleepTime : 1000
+2026-08-11 10:50:28 [codeface.R] DEBUG: proxyPort : 83
+2026-08-11 10:50:28 [codeface.R] DEBUG: dbport : 3306
+2026-08-11 10:50:28 [codeface.R] DEBUG: understand : FALSE
+2026-08-11 10:50:28 [codeface.R] DEBUG: sloccount : FALSE
+2026-08-11 10:50:28 [codeface.R] DEBUG: description : codeface_test_projectexdJUI Description
+2026-08-11 10:50:28 [codeface.R] DEBUG: mailinglists : list(list(name = "codeface_test_projectexdJUI.dev1", source = "generated", type = "dev"), list(name = "codeface_test_projectexdJUI.dev2", source = "generated", type = "dev"), list(name = "codeface_test_projectexdJUI.user1", source = "generated", type = "user"), list(name = "codeface_test_projectexdJUI.user2", source = "generated", type = "user"))
+2026-08-11 10:50:28 [codeface.R] DEBUG: project : codeface_test_projectexdJUI
+2026-08-11 10:50:28 [codeface.R] DEBUG: rcs : c("v0_rc_0", "v1_rc_1", "v2_rc_2")
+2026-08-11 10:50:28 [codeface.R] DEBUG: repo : codeface_test_projectexdJUI
+2026-08-11 10:50:28 [codeface.R] DEBUG: revisions : c("v0_release", "v1_release", "v2_release")
+2026-08-11 10:50:28 [codeface.R] DEBUG: tagging : tag
+2026-08-11 10:50:28 [codeface.R] DEBUG: artifactType : file
+2026-08-11 10:50:28 [codeface.R] DEBUG: dependencyType : none
+2026-08-11 10:50:28 [codeface.R] DEBUG: qualityType : corrective
+2026-08-11 10:50:28 [codeface.R] DEBUG: communicationType : mail
+2026-08-11 10:50:28 [codeface.R] DEBUG: pid : 4
+2026-08-11 10:50:28 [codeface.R] DEBUG: con : new("MySQLConnection", Id = c(0, 0))
+2026-08-11 10:50:28 [codeface.R] DEBUG: tstamps.release : list(id = c(6, 7, 9), type = c(2, 2, 2), tag = c("v0_release", "v1_release", "v2_release"), date = c(1357570800, 1357837200, 1358769042), projectId = c(4, 4, 4))
+2026-08-11 10:50:28 [codeface.R] DEBUG: tstamps.all : list(id = c(6, 7, 8, 9, 10), type = c(2, 2, 1, 2, 1), tag = c("v0_release", "v1_release", "v1_rc_1", "v2_release", "v2_rc_2"), date = c(1357570800, 1357837200, 1357653600, 1358769042, 1358250162), projectId = c(4, 4, 4, 4, 4))
+2026-08-11 10:50:28 [codeface.R] DEBUG: boundaries : list(date.start = c(1357570800, 1357837200), date.end = c(1357837200, 1358769042), date.rc.start = c(1357653600, 1358250162), tag = c("v0_release", "v1_release"), cycle = c("v0_release-v1_release", "v1_release-v2_release"))
+2026-08-11 10:50:28 [codeface.R] DEBUG: resdir : /tmp/codeface_test_projectexdJUI/.git/results/codeface_test_projectexdJUI/tag
+2026-08-11 10:50:28 [codeface.R] DEBUG: profile : FALSE
+2026-08-11 10:50:28 [codeface.R] DEBUG: jobs : 1
+2026-08-11 10:50:28 [codeface.R] DEBUG: use_corpus : FALSE
+2026-08-11 10:50:28 [codeface.R] DEBUG: row names were found from a short variable and have been discarded
+2026-08-11 10:50:28 [codeface.R] DEBUG: row names were found from a short variable and have been discarded
+2026-08-11 10:50:28 [codeface.R] DEBUG: row names were found from a short variable and have been discarded
+geom_path: Each group consists of only one observation. Do you need to adjust
+the group aesthetic?
+geom_path: Each group consists of only one observation. Do you need to adjust
+the group aesthetic?
+2026-08-11 10:50:29 [codeface.R] DEBUG: Transformation introduced infinite values in continuous y-axis
+2026-08-11 10:50:29 [codeface.R] DEBUG: Removed 3 rows containing non-finite values (stat_boxplot).
+2026-08-11 10:50:30 [codeface.R] DEBUG: Transformation introduced infinite values in continuous y-axis
+2026-08-11 10:50:30 [codeface.R] DEBUG: Removed 3 rows containing non-finite values (stat_boxplot).
+2026-08-11 10:50:30 [codeface.R] DEBUG: Transformation introduced infinite values in continuous y-axis
+2026-08-11 10:50:30 [codeface.R] DEBUG: Removed 3 rows containing non-finite values (stat_boxplot).
+2026-08-11 10:50:31 [codeface.R] DEBUG: Decimal MySQL column 3 imported as numeric
+2026-08-11 10:50:31 [codeface.R] DEBUG: Decimal MySQL column 4 imported as numeric
+2026-08-11 10:50:31 [codeface.R] DEBUG: Decimal MySQL column 5 imported as numeric
+2026-08-11 10:50:31 [codeface.R] DEBUG: Decimal MySQL column 6 imported as numeric
+2026-08-11 10:50:31 [codeface.R] DEBUG: Decimal MySQL column 3 imported as numeric
+2026-08-11 10:50:31 [codeface.R] DEBUG: Decimal MySQL column 4 imported as numeric
+2026-08-11 10:50:31 [codeface.R] DEBUG: Decimal MySQL column 5 imported as numeric
+2026-08-11 10:50:31 [codeface.R] DEBUG: Decimal MySQL column 6 imported as numeric
+2026-08-11 10:50:31 [codeface.R] DEBUG: Decimal MySQL column 3 imported as numeric
+2026-08-11 10:50:31 [codeface.R] DEBUG: Decimal MySQL column 4 imported as numeric
+2026-08-11 10:50:31 [codeface.R] DEBUG: Decimal MySQL column 5 imported as numeric
+2026-08-11 10:50:31 [codeface.R] DEBUG: Decimal MySQL column 6 imported as numeric
+2026-08-11 10:50:31 [codeface.R] DEBUG: Transformation introduced infinite values in continuous y-axis
+2026-08-11 10:50:31 [codeface.R] DEBUG: Removed 6 rows containing non-finite values (stat_boxplot).
+2026-08-11 10:50:32 [codeface.project] MainProcess INFO: => Codeface run complete!
+2026-08-11 10:50:32 [codeface.configuration] MainProcess DEVINFO: Loading global configuration file '/codeface/codeface_testing.conf'
+2026-08-11 10:50:32 [codeface.configuration] MainProcess DEVINFO: Loading project configuration file '/tmp/codeface_test_projectexdJUI/.git/testproject.conf'
+2026-08-11 10:50:32 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectexdJUI/tag with ID 4
+2026-08-11 10:50:32 [codeface.configuration] MainProcess DEVINFO: Loading global configuration file '/codeface/codeface_testing.conf'
+2026-08-11 10:50:32 [codeface.configuration] MainProcess DEVINFO: Loading project configuration file '/tmp/codeface_test_projectexdJUI/.git/testproject.conf'
+2026-08-11 10:50:32 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectexdJUI/tag with ID 4
+.Initialized empty Git repository in /tmp/codeface_test_projectjRy0Bj/.git/
+[master (root-commit) 9eaa63b] Commit 0
+ Date: Mon Jan 7 16:00:00 2013 +0100
+ 1 file changed, 2 insertions(+)
+ create mode 100644 README
+[master 6fd38f3] Commit 1
+ Date: Tue Jan 8 15:00:00 2013 +0100
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+ create mode 100644 src/code.c
+[master 9b9857a] Commit 2
+ Date: Wed Jan 9 15:30:00 2013 +0100
+ 1 file changed, 3 insertions(+)
+ create mode 100644 src/carp.c
+[master 4e1f9da] Commit 3
+ Date: Tue Jan 1 15:30:00 2013 +0100
+ 1 file changed, 1 insertion(+)
+[master 43913fe] Commit 4
+ Date: Wed Jan 9 15:30:00 2013 +0100
+ 1 file changed, 1 insertion(+)
+[master 86be366] Commit 5
+ Date: Thu Jan 10 15:30:00 2013 +0100
+ 1 file changed, 1 insertion(+)
+[master 96a470c] Commit 6
+ Date: Wed Jan 9 15:31:00 2013 +0100
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+[master c31f5d8] Commit 7
+ Date: Thu Jan 10 18:00:00 2013 +0100
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+[master 19ed287] Commit 8
+ Author: Max Maintainer <max@theboss.com>
+ Date: Mon Jan 14 12:30:42 2013 +0100
+ 1 file changed, 2 insertions(+)
+[master fab5f63] Commit 9
+ Date: Mon Jan 14 12:50:42 2013 +0100
+ 1 file changed, 2 insertions(+)
+[master c9501ad] Commit 10
+ Author: Clara Confident <clara@foo.org>
+ Date: Tue Jan 15 12:42:42 2013 +0100
+ 2 files changed, 5 insertions(+)
+ create mode 100644 Makefile
+[master ceba3d5] Commit 11
+ Date: Mon Jan 21 12:50:42 2013 +0100
+ 4 files changed, 10 insertions(+), 9 deletions(-)
+ delete mode 100644 Makefile
+[master 54acd6d] Commit 12
+ Date: Mon Jan 21 12:50:42 2013 +0100
+ 1 file changed, 2 insertions(+)
+[master 4d25aab] Commit 13
+ Author: Max Maintainer <max@theboss.com>
+ Date: Wed Jan 16 12:30:42 2013 +0100
+ 4 files changed, 7 insertions(+), 20 deletions(-)
+ delete mode 100644 src/carp.c
+ create mode 100644 src/newcode.c
+[master 2d6981d] Commit 14
+ Date: Thu Jan 17 12:50:42 2013 +0100
+ 2 files changed, 1 insertion(+), 3 deletions(-)
+ rename src/{newcode.c => answer.c} (100%)
+[master 6c0f879] Commit 15
+ Author: Clara Confident <clara@foo.org>
+ Date: Fri Jan 18 12:42:42 2013 +0100
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+ create mode 100644 Makefile
+[master 88c2a52] Commit 16
+ Date: Mon Jan 21 12:50:42 2013 +0100
+ 3 files changed, 10 insertions(+), 3 deletions(-)
+ delete mode 100644 Makefile
+2026-08-11 10:50:32 [codeface.configuration] MainProcess DEVINFO: Loading global configuration file '/codeface/codeface_testing.conf'
+2026-08-11 10:50:32 [codeface.configuration] MainProcess DEVINFO: Loading project configuration file '/tmp/codeface_test_projectjRy0Bj/.git/testproject.conf'
+2026-08-11 10:50:33 [codeface] MainProcess DEVINFO: Opened logfile '/tmp/codeface_test_projectjRy0Bj/.git/log' with log level 'debug'
+2026-08-11 10:50:33 [codeface.configuration] MainProcess DEVINFO: Loading global configuration file '/codeface/codeface_testing.conf'
+2026-08-11 10:50:33 [codeface.configuration] MainProcess DEVINFO: Loading project configuration file '/tmp/codeface_test_projectjRy0Bj/.git/testproject.conf'
+2026-08-11 10:50:33 [codeface.project] MainProcess INFO: => Setting up project 'codeface_test_projectjRy0Bj'
+2026-08-11 10:50:33 [codeface.dbmanager] MainProcess DEVINFO: Creating new project codeface_test_projectjRy0Bj/proximity
+2026-08-11 10:50:33 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectjRy0Bj/proximity with ID 5
+2026-08-11 10:50:33 [codeface.dbmanager] MainProcess WARNING: Deleting and re-creating project codeface_test_projectjRy0Bj/proximity.
+2026-08-11 10:50:33 [codeface.dbmanager] MainProcess DEVINFO: Creating new project codeface_test_projectjRy0Bj/proximity
+2026-08-11 10:50:33 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectjRy0Bj/proximity with ID 6
+2026-08-11 10:50:33 [codeface.dbmanager] MainProcess INFO: Adding 3 new releases...
+2026-08-11 10:50:33 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectjRy0Bj/proximity with ID 6
+2026-08-11 10:50:33 [codeface.util] MainProcess INFO:   -> Revision range 1/2 (v0_release..v1_release): Analysing commits...
+2026-08-11 10:50:33 [codeface.cluster.cluster] MainProcess DEVINFO: Creating data base for v0_release..v1_release
+Blame Analysis:   0% |                                         | ETA:  --:--:--Blame Analysis: 100% |##########################################| Time: 0:00:00
+Pass 1/2:   0% |                                               | ETA:  --:--:--Pass 1/2: 100% |################################################| Time: 0:00:00
+2026-08-11 10:50:33 [codeface.cluster.cluster] MainProcess DEVINFO: Shelving the VCS object
+2026-08-11 10:50:33 [codeface.cluster.cluster] MainProcess DEVINFO: Finished shelving the VCS object
+2026-08-11 10:50:33 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectjRy0Bj/proximity with ID 6
+2026-08-11 10:50:33 [codeface.cluster.cluster] MainProcess DEVINFO: Reading from data base /tmp/codeface_test_projectjRy0Bj/.git/results/codeface_test_projectjRy0Bj/proximity/001--v0_release-v1_release/vcs_analysis.db...
+2026-08-11 10:50:33 [codeface.VCS] MainProcess DEVINFO: Using cached data to extract commit information
+2026-08-11 10:50:33 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectjRy0Bj/proximity with ID 6
+2026-08-11 10:50:33 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectjRy0Bj/proximity with ID 6
+2026-08-11 10:50:33 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectjRy0Bj/proximity with ID 6
+2026-08-11 10:50:33 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectjRy0Bj/proximity with ID 6
+2026-08-11 10:50:33 [codeface.util] MainProcess INFO:   -> Revision range 1/2 (v0_release..v1_release): Commit analysis done.
+2026-08-11 10:50:33 [codeface.util] MainProcess INFO:   -> Revision range 1/2 (v0_release..v1_release): Detecting clusters...
+2026-08-11 10:50:37 [codeface.R.config] DEBUG: Set log level to 'devinfo' == 15
+2026-08-11 10:50:37 [codeface.R] DEBUG: Configuration options:
+2026-08-11 10:50:37 [codeface.R] DEBUG: dbhost : localhost
+2026-08-11 10:50:37 [codeface.R] DEBUG: dbuser : codeface
+2026-08-11 10:50:37 [codeface.R] DEBUG: dbpwd : codeface
+2026-08-11 10:50:37 [codeface.R] DEBUG: dbname : codeface_testing
+2026-08-11 10:50:37 [codeface.R] DEBUG: idServicePort : 8383
+2026-08-11 10:50:37 [codeface.R] DEBUG: idServiceHostname : localhost
+2026-08-11 10:50:37 [codeface.R] DEBUG: sleepTime : 1000
+2026-08-11 10:50:37 [codeface.R] DEBUG: proxyPort : 83
+2026-08-11 10:50:37 [codeface.R] DEBUG: dbport : 3306
+2026-08-11 10:50:37 [codeface.R] DEBUG: understand : FALSE
+2026-08-11 10:50:37 [codeface.R] DEBUG: sloccount : FALSE
+2026-08-11 10:50:37 [codeface.R] DEBUG: description : codeface_test_projectjRy0Bj Description
+2026-08-11 10:50:37 [codeface.R] DEBUG: mailinglists : list(list(name = "codeface_test_projectjRy0Bj.dev1", source = "generated", type = "dev"), list(name = "codeface_test_projectjRy0Bj.dev2", source = "generated", type = "dev"), list(name = "codeface_test_projectjRy0Bj.user1", source = "generated", type = "user"), list(name = "codeface_test_projectjRy0Bj.user2", source = "generated", type = "user"))
+2026-08-11 10:50:37 [codeface.R] DEBUG: project : codeface_test_projectjRy0Bj
+2026-08-11 10:50:37 [codeface.R] DEBUG: rcs : c("v0_rc_0", "v1_rc_1", "v2_rc_3")
+2026-08-11 10:50:37 [codeface.R] DEBUG: repo : codeface_test_projectjRy0Bj
+2026-08-11 10:50:37 [codeface.R] DEBUG: revisions : c("v0_release", "v1_release", "v2_release")
+2026-08-11 10:50:37 [codeface.R] DEBUG: tagging : proximity
+2026-08-11 10:50:37 [codeface.R] DEBUG: artifactType : file
+2026-08-11 10:50:37 [codeface.R] DEBUG: dependencyType : none
+2026-08-11 10:50:37 [codeface.R] DEBUG: qualityType : corrective
+2026-08-11 10:50:37 [codeface.R] DEBUG: communicationType : mail
+2026-08-11 10:50:37 [codeface.R] DEBUG: pid : 6
+2026-08-11 10:50:37 [codeface.R] DEBUG: con : new("MySQLConnection", Id = c(0, 0))
+2026-08-11 10:50:37 [codeface.R] DEBUG: tstamps.release : list(id = c(11, 12, 14), type = c(2, 2, 2), tag = c("v0_release", "v1_release", "v2_release"), date = c(NA, NA, NA), projectId = c(6, 6, 6))
+2026-08-11 10:50:37 [codeface.R] DEBUG: tstamps.all : list(id = c(11, 12, 13, 14, 15), type = c(2, 2, 1, 2, 1), tag = c("v0_release", "v1_release", "v1_rc_1", "v2_release", "v2_rc_3"), date = c(NA, NA, NA, NA, NA), projectId = c(6, 6, 6, 6, 6))
+2026-08-11 10:50:37 [codeface.R] DEBUG: boundaries : list(date.start = c(NA, NA), date.end = c(NA, NA), date.rc.start = c(NA, NA), tag = c("v0_release", "v1_release"), cycle = c("v0_release-v1_release", "v1_release-v2_release"))
+2026-08-11 10:50:37 [codeface.R] DEBUG: resdir : /tmp/codeface_test_projectjRy0Bj/.git/results/codeface_test_projectjRy0Bj/proximity/001--v0_release-v1_release
+2026-08-11 10:50:37 [codeface.R] DEBUG: range.id : 5
+2026-08-11 10:50:37 [codeface.R] DEBUG: profile : FALSE
+2026-08-11 10:50:37 [codeface.R] DEBUG: jobs : 1
+2026-08-11 10:50:37 [codeface.R] DEBUG: use_corpus : FALSE
+2026-08-11 10:50:37 [codeface.R] DEBUG: Decimal MySQL column 2 imported as numeric
+2026-08-11 10:50:37 [codeface.R] DEBUG: Decimal MySQL column 3 imported as numeric
+2026-08-11 10:50:37 [codeface.R] DEBUG: Decimal MySQL column 4 imported as numeric
+2026-08-11 10:50:37 [codeface.R] DEBUG: Decimal MySQL column 5 imported as numeric
+2026-08-11 10:50:37 [codeface.R] DEBUG: incomplete final line found by readTableHeader on '/tmp/codeface_test_projectjRy0Bj/.git/results/codeface_test_projectjRy0Bj/proximity/001--v0_release-v1_release/id_subsys.txt'
+2026-08-11 10:50:38 [codeface.R] DEBUG: no non-missing arguments to max; returning -Inf
+2026-08-11 10:50:38 [codeface.R] DEBUG: no non-missing arguments to min; returning Inf
+2026-08-11 10:50:38 [codeface.R] DEBUG: length of NULL cannot be changed
+2026-08-11 10:50:38 [codeface.R] DEBUG: no non-missing arguments to max; returning -Inf
+2026-08-11 10:50:38 [codeface.R] DEBUG: no non-missing arguments to min; returning Inf
+2026-08-11 10:50:38 [codeface.R] DEBUG: length of NULL cannot be changed
+2026-08-11 10:50:38 [codeface.R] DEBUG: no non-missing arguments to max; returning -Inf
+2026-08-11 10:50:38 [codeface.R] DEBUG: no non-missing arguments to min; returning Inf
+2026-08-11 10:50:38 [codeface.R] DEBUG: length of NULL cannot be changed
+2026-08-11 10:50:38 [codeface.R] DEBUG: no non-missing arguments to max; returning -Inf
+2026-08-11 10:50:38 [codeface.R] DEBUG: no non-missing arguments to min; returning Inf
+2026-08-11 10:50:38 [codeface.R] DEBUG: length of NULL cannot be changed
+2026-08-11 10:50:38 [codeface.R] DEBUG: no non-missing arguments to max; returning -Inf
+2026-08-11 10:50:38 [codeface.R] DEBUG: no non-missing arguments to min; returning Inf
+2026-08-11 10:50:38 [codeface.R] DEBUG: length of NULL cannot be changed
+2026-08-11 10:50:38 [codeface.R] DEBUG: no non-missing arguments to max; returning -Inf
+2026-08-11 10:50:38 [codeface.R] DEBUG: no non-missing arguments to min; returning Inf
+2026-08-11 10:50:38 [codeface.R] DEBUG: length of NULL cannot be changed
+2026-08-11 10:50:38 [codeface.R] DEBUG: number of rows of result is not a multiple of vector length (arg 1)
+NULL
+2026-08-11 10:50:39 [codeface.util] MainProcess INFO:   -> Revision range 1/2 (v0_release..v1_release): Detecting clusters done.
+2026-08-11 10:50:39 [codeface.util] MainProcess INFO:   -> Revision range 1/2 (v0_release..v1_release): Generating reports...
+2026-08-11 10:50:39 [codeface.util] MainProcess INFO:   -> Generating Reports...
+2026-08-11 10:50:39 [codeface.util] MainProcess DEVINFO:   -> Generating report
+2026-08-11 10:50:39 [codeface.util] MainProcess WARNING: Command 'lualatex -interaction=nonstopmode /tmp/codeface_test_projectjRy0Bj/.git/results/codeface_test_projectjRy0Bj/proximity/001--v0_release-v1_release/report-v0_release_v1_release.tex' failed with exit code 1. Ignored.
+2026-08-11 10:50:39 [codeface.util] MainProcess INFO:   -> Revision range 1/2 (v0_release..v1_release): Report generation done.
+2026-08-11 10:50:39 [codeface.util] MainProcess INFO:   -> Revision range 2/2 (v1_release..v2_release): Analysing commits...
+2026-08-11 10:50:39 [codeface.cluster.cluster] MainProcess DEVINFO: Creating data base for v1_release..v2_release
+Blame Analysis:   0% |                                         | ETA:  --:--:--Blame Analysis: 100% |##########################################| Time: 0:00:00
+Pass 1/2:   0% |                                               | ETA:  --:--:--Pass 1/2: 100% |################################################| Time: 0:00:00
+2026-08-11 10:50:40 [codeface.cluster.cluster] MainProcess DEVINFO: Shelving the VCS object
+2026-08-11 10:50:40 [codeface.cluster.cluster] MainProcess DEVINFO: Finished shelving the VCS object
+2026-08-11 10:50:40 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectjRy0Bj/proximity with ID 6
+2026-08-11 10:50:40 [codeface.cluster.cluster] MainProcess DEVINFO: Reading from data base /tmp/codeface_test_projectjRy0Bj/.git/results/codeface_test_projectjRy0Bj/proximity/002--v1_release-v2_release/vcs_analysis.db...
+2026-08-11 10:50:40 [codeface.VCS] MainProcess DEVINFO: Using cached data to extract commit information
+2026-08-11 10:50:40 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectjRy0Bj/proximity with ID 6
+2026-08-11 10:50:40 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectjRy0Bj/proximity with ID 6
+2026-08-11 10:50:40 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectjRy0Bj/proximity with ID 6
+2026-08-11 10:50:40 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectjRy0Bj/proximity with ID 6
+2026-08-11 10:50:40 [codeface.util] MainProcess INFO:   -> Revision range 2/2 (v1_release..v2_release): Commit analysis done.
+2026-08-11 10:50:40 [codeface.util] MainProcess INFO:   -> Revision range 2/2 (v1_release..v2_release): Detecting clusters...
+2026-08-11 10:50:43 [codeface.R.config] DEBUG: Set log level to 'devinfo' == 15
+2026-08-11 10:50:44 [codeface.R] DEBUG: Configuration options:
+2026-08-11 10:50:44 [codeface.R] DEBUG: dbhost : localhost
+2026-08-11 10:50:44 [codeface.R] DEBUG: dbuser : codeface
+2026-08-11 10:50:44 [codeface.R] DEBUG: dbpwd : codeface
+2026-08-11 10:50:44 [codeface.R] DEBUG: dbname : codeface_testing
+2026-08-11 10:50:44 [codeface.R] DEBUG: idServicePort : 8383
+2026-08-11 10:50:44 [codeface.R] DEBUG: idServiceHostname : localhost
+2026-08-11 10:50:44 [codeface.R] DEBUG: sleepTime : 1000
+2026-08-11 10:50:44 [codeface.R] DEBUG: proxyPort : 83
+2026-08-11 10:50:44 [codeface.R] DEBUG: dbport : 3306
+2026-08-11 10:50:44 [codeface.R] DEBUG: understand : FALSE
+2026-08-11 10:50:44 [codeface.R] DEBUG: sloccount : FALSE
+2026-08-11 10:50:44 [codeface.R] DEBUG: description : codeface_test_projectjRy0Bj Description
+2026-08-11 10:50:44 [codeface.R] DEBUG: mailinglists : list(list(name = "codeface_test_projectjRy0Bj.dev1", source = "generated", type = "dev"), list(name = "codeface_test_projectjRy0Bj.dev2", source = "generated", type = "dev"), list(name = "codeface_test_projectjRy0Bj.user1", source = "generated", type = "user"), list(name = "codeface_test_projectjRy0Bj.user2", source = "generated", type = "user"))
+2026-08-11 10:50:44 [codeface.R] DEBUG: project : codeface_test_projectjRy0Bj
+2026-08-11 10:50:44 [codeface.R] DEBUG: rcs : c("v0_rc_0", "v1_rc_1", "v2_rc_3")
+2026-08-11 10:50:44 [codeface.R] DEBUG: repo : codeface_test_projectjRy0Bj
+2026-08-11 10:50:44 [codeface.R] DEBUG: revisions : c("v0_release", "v1_release", "v2_release")
+2026-08-11 10:50:44 [codeface.R] DEBUG: tagging : proximity
+2026-08-11 10:50:44 [codeface.R] DEBUG: artifactType : file
+2026-08-11 10:50:44 [codeface.R] DEBUG: dependencyType : none
+2026-08-11 10:50:44 [codeface.R] DEBUG: qualityType : corrective
+2026-08-11 10:50:44 [codeface.R] DEBUG: communicationType : mail
+2026-08-11 10:50:44 [codeface.R] DEBUG: pid : 6
+2026-08-11 10:50:44 [codeface.R] DEBUG: con : new("MySQLConnection", Id = c(0, 0))
+2026-08-11 10:50:44 [codeface.R] DEBUG: tstamps.release : list(id = c(11, 12, 14), type = c(2, 2, 2), tag = c("v0_release", "v1_release", "v2_release"), date = c(NA, NA, NA), projectId = c(6, 6, 6))
+2026-08-11 10:50:44 [codeface.R] DEBUG: tstamps.all : list(id = c(11, 12, 13, 14, 15), type = c(2, 2, 1, 2, 1), tag = c("v0_release", "v1_release", "v1_rc_1", "v2_release", "v2_rc_3"), date = c(NA, NA, NA, NA, NA), projectId = c(6, 6, 6, 6, 6))
+2026-08-11 10:50:44 [codeface.R] DEBUG: boundaries : list(date.start = c(NA, NA), date.end = c(NA, NA), date.rc.start = c(NA, NA), tag = c("v0_release", "v1_release"), cycle = c("v0_release-v1_release", "v1_release-v2_release"))
+2026-08-11 10:50:44 [codeface.R] DEBUG: resdir : /tmp/codeface_test_projectjRy0Bj/.git/results/codeface_test_projectjRy0Bj/proximity/002--v1_release-v2_release
+2026-08-11 10:50:44 [codeface.R] DEBUG: range.id : 6
+2026-08-11 10:50:44 [codeface.R] DEBUG: profile : FALSE
+2026-08-11 10:50:44 [codeface.R] DEBUG: jobs : 1
+2026-08-11 10:50:44 [codeface.R] DEBUG: use_corpus : FALSE
+2026-08-11 10:50:44 [codeface.R] DEBUG: Decimal MySQL column 2 imported as numeric
+2026-08-11 10:50:44 [codeface.R] DEBUG: Decimal MySQL column 3 imported as numeric
+2026-08-11 10:50:44 [codeface.R] DEBUG: Decimal MySQL column 4 imported as numeric
+2026-08-11 10:50:44 [codeface.R] DEBUG: Decimal MySQL column 5 imported as numeric
+2026-08-11 10:50:44 [codeface.R] DEBUG: incomplete final line found by readTableHeader on '/tmp/codeface_test_projectjRy0Bj/.git/results/codeface_test_projectjRy0Bj/proximity/002--v1_release-v2_release/id_subsys.txt'
+2026-08-11 10:50:44 [codeface.R.cluster.persons] INFO: Adjacency matrix empty, exiting cluster analysis
+[1] 1
+2026-08-11 10:50:44 [codeface.util] MainProcess INFO:   -> Revision range 2/2 (v1_release..v2_release): Detecting clusters done.
+2026-08-11 10:50:44 [codeface.util] MainProcess INFO:   -> Revision range 2/2 (v1_release..v2_release): Generating reports...
+2026-08-11 10:50:44 [codeface.util] MainProcess INFO:   -> Generating Reports...
+2026-08-11 10:50:44 [codeface.util] MainProcess DEVINFO:   -> Generating report
+2026-08-11 10:50:44 [codeface.util] MainProcess WARNING: Command 'lualatex -interaction=nonstopmode /tmp/codeface_test_projectjRy0Bj/.git/results/codeface_test_projectjRy0Bj/proximity/002--v1_release-v2_release/report-v1_release_v2_release.tex' failed with exit code 1. Ignored.
+2026-08-11 10:50:44 [codeface.util] MainProcess WARNING: Could not copy report PDF (missing input data?)
+2026-08-11 10:50:44 [codeface.util] MainProcess INFO:   -> Revision range 2/2 (v1_release..v2_release): Report generation done.
+2026-08-11 10:50:44 [codeface.util] MainProcess DEVINFO: Terminating workers...
+2026-08-11 10:50:44 [codeface.util] MainProcess DEVINFO: Workers terminated.
+2026-08-11 10:50:44 [codeface.project] MainProcess INFO: => Preparing time series data
+2026-08-11 10:50:44 [codeface.VCS] MainProcess DEVINFO: Using cached data to extract commit information
+2026-08-11 10:50:44 [codeface.VCS] MainProcess DEVINFO: Using cached data to extract commit information
+2026-08-11 10:50:44 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectjRy0Bj/proximity with ID 6
+2026-08-11 10:50:44 [codeface.project] MainProcess INFO: => Performing complexity analysis
+2026-08-11 10:50:44 [codeface.project] MainProcess INFO:   -> Analysing range 5
+2026-08-11 10:50:45 [codeface.R.config] DEBUG: Set log level to 'devinfo' == 15
+2026-08-11 10:50:45 [codeface.R] DEBUG: Configuration options:
+2026-08-11 10:50:45 [codeface.R] DEBUG: dbhost : localhost
+2026-08-11 10:50:45 [codeface.R] DEBUG: dbuser : codeface
+2026-08-11 10:50:45 [codeface.R] DEBUG: dbpwd : codeface
+2026-08-11 10:50:45 [codeface.R] DEBUG: dbname : codeface_testing
+2026-08-11 10:50:45 [codeface.R] DEBUG: idServicePort : 8383
+2026-08-11 10:50:45 [codeface.R] DEBUG: idServiceHostname : localhost
+2026-08-11 10:50:45 [codeface.R] DEBUG: sleepTime : 1000
+2026-08-11 10:50:45 [codeface.R] DEBUG: proxyPort : 83
+2026-08-11 10:50:45 [codeface.R] DEBUG: dbport : 3306
+2026-08-11 10:50:45 [codeface.R] DEBUG: understand : FALSE
+2026-08-11 10:50:45 [codeface.R] DEBUG: sloccount : FALSE
+2026-08-11 10:50:45 [codeface.R] DEBUG: description : codeface_test_projectjRy0Bj Description
+2026-08-11 10:50:45 [codeface.R] DEBUG: mailinglists : list(list(name = "codeface_test_projectjRy0Bj.dev1", source = "generated", type = "dev"), list(name = "codeface_test_projectjRy0Bj.dev2", source = "generated", type = "dev"), list(name = "codeface_test_projectjRy0Bj.user1", source = "generated", type = "user"), list(name = "codeface_test_projectjRy0Bj.user2", source = "generated", type = "user"))
+2026-08-11 10:50:45 [codeface.R] DEBUG: project : codeface_test_projectjRy0Bj
+2026-08-11 10:50:45 [codeface.R] DEBUG: rcs : c("v0_rc_0", "v1_rc_1", "v2_rc_3")
+2026-08-11 10:50:45 [codeface.R] DEBUG: repo : codeface_test_projectjRy0Bj
+2026-08-11 10:50:46 [codeface.R] DEBUG: revisions : c("v0_release", "v1_release", "v2_release")
+2026-08-11 10:50:46 [codeface.R] DEBUG: tagging : proximity
+2026-08-11 10:50:46 [codeface.R] DEBUG: artifactType : file
+2026-08-11 10:50:46 [codeface.R] DEBUG: dependencyType : none
+2026-08-11 10:50:46 [codeface.R] DEBUG: qualityType : corrective
+2026-08-11 10:50:46 [codeface.R] DEBUG: communicationType : mail
+2026-08-11 10:50:46 [codeface.R] DEBUG: pid : 6
+2026-08-11 10:50:46 [codeface.R] DEBUG: con : new("MySQLConnection", Id = c(0, 0))
+2026-08-11 10:50:46 [codeface.R] DEBUG: tstamps.release : list(id = c(11, 12, 14), type = c(2, 2, 2), tag = c("v0_release", "v1_release", "v2_release"), date = c(1357570800, 1358769042, 1358769042), projectId = c(6, 6, 6))
+2026-08-11 10:50:46 [codeface.R] DEBUG: tstamps.all : list(id = c(11, 12, 13, 14, 15), type = c(2, 2, 1, 2, 1), tag = c("v0_release", "v1_release", "v1_rc_1", "v2_release", "v2_rc_3"), date = c(1357570800, 1358769042, 1357653600, 1358769042, 1358509362), projectId = c(6, 6, 6, 6, 6))
+2026-08-11 10:50:46 [codeface.R] DEBUG: boundaries : list(date.start = c(1357570800, 1358769042), date.end = c(1358769042, 1358769042), date.rc.start = c(1357653600, 1358509362), tag = c("v0_release", "v1_release"), cycle = c("v0_release-v1_release", "v1_release-v2_release"))
+2026-08-11 10:50:46 [codeface.R] DEBUG: repodir : /tmp/codeface_test_projectjRy0Bj/.git
+2026-08-11 10:50:46 [codeface.R] DEBUG: range.id : 5
+2026-08-11 10:50:46 [codeface.R] DEBUG: profile : FALSE
+2026-08-11 10:50:46 [codeface.R] DEBUG: jobs : 1
+2026-08-11 10:50:46 [codeface.R] DEBUG: use_corpus : FALSE
+2026-08-11 10:50:46 [codeface.R.complexity] INFO: Using 1 jobs
+
+NULL
+2026-08-11 10:50:46 [codeface.project] MainProcess INFO:   -> Analysing range 6
+2026-08-11 10:50:47 [codeface.R.config] DEBUG: Set log level to 'devinfo' == 15
+2026-08-11 10:50:47 [codeface.R] DEBUG: Configuration options:
+2026-08-11 10:50:47 [codeface.R] DEBUG: dbhost : localhost
+2026-08-11 10:50:47 [codeface.R] DEBUG: dbuser : codeface
+2026-08-11 10:50:47 [codeface.R] DEBUG: dbpwd : codeface
+2026-08-11 10:50:47 [codeface.R] DEBUG: dbname : codeface_testing
+2026-08-11 10:50:47 [codeface.R] DEBUG: idServicePort : 8383
+2026-08-11 10:50:47 [codeface.R] DEBUG: idServiceHostname : localhost
+2026-08-11 10:50:47 [codeface.R] DEBUG: sleepTime : 1000
+2026-08-11 10:50:47 [codeface.R] DEBUG: proxyPort : 83
+2026-08-11 10:50:47 [codeface.R] DEBUG: dbport : 3306
+2026-08-11 10:50:47 [codeface.R] DEBUG: understand : FALSE
+2026-08-11 10:50:47 [codeface.R] DEBUG: sloccount : FALSE
+2026-08-11 10:50:47 [codeface.R] DEBUG: description : codeface_test_projectjRy0Bj Description
+2026-08-11 10:50:47 [codeface.R] DEBUG: mailinglists : list(list(name = "codeface_test_projectjRy0Bj.dev1", source = "generated", type = "dev"), list(name = "codeface_test_projectjRy0Bj.dev2", source = "generated", type = "dev"), list(name = "codeface_test_projectjRy0Bj.user1", source = "generated", type = "user"), list(name = "codeface_test_projectjRy0Bj.user2", source = "generated", type = "user"))
+2026-08-11 10:50:47 [codeface.R] DEBUG: project : codeface_test_projectjRy0Bj
+2026-08-11 10:50:47 [codeface.R] DEBUG: rcs : c("v0_rc_0", "v1_rc_1", "v2_rc_3")
+2026-08-11 10:50:47 [codeface.R] DEBUG: repo : codeface_test_projectjRy0Bj
+2026-08-11 10:50:47 [codeface.R] DEBUG: revisions : c("v0_release", "v1_release", "v2_release")
+2026-08-11 10:50:47 [codeface.R] DEBUG: tagging : proximity
+2026-08-11 10:50:47 [codeface.R] DEBUG: artifactType : file
+2026-08-11 10:50:47 [codeface.R] DEBUG: dependencyType : none
+2026-08-11 10:50:47 [codeface.R] DEBUG: qualityType : corrective
+2026-08-11 10:50:47 [codeface.R] DEBUG: communicationType : mail
+2026-08-11 10:50:47 [codeface.R] DEBUG: pid : 6
+2026-08-11 10:50:47 [codeface.R] DEBUG: con : new("MySQLConnection", Id = c(0, 0))
+2026-08-11 10:50:47 [codeface.R] DEBUG: tstamps.release : list(id = c(11, 12, 14), type = c(2, 2, 2), tag = c("v0_release", "v1_release", "v2_release"), date = c(1357570800, 1358769042, 1358769042), projectId = c(6, 6, 6))
+2026-08-11 10:50:47 [codeface.R] DEBUG: tstamps.all : list(id = c(11, 12, 13, 14, 15), type = c(2, 2, 1, 2, 1), tag = c("v0_release", "v1_release", "v1_rc_1", "v2_release", "v2_rc_3"), date = c(1357570800, 1358769042, 1357653600, 1358769042, 1358509362), projectId = c(6, 6, 6, 6, 6))
+2026-08-11 10:50:47 [codeface.R] DEBUG: boundaries : list(date.start = c(1357570800, 1358769042), date.end = c(1358769042, 1358769042), date.rc.start = c(1357653600, 1358509362), tag = c("v0_release", "v1_release"), cycle = c("v0_release-v1_release", "v1_release-v2_release"))
+2026-08-11 10:50:47 [codeface.R] DEBUG: repodir : /tmp/codeface_test_projectjRy0Bj/.git
+2026-08-11 10:50:47 [codeface.R] DEBUG: range.id : 6
+2026-08-11 10:50:47 [codeface.R] DEBUG: profile : FALSE
+2026-08-11 10:50:47 [codeface.R] DEBUG: jobs : 1
+2026-08-11 10:50:47 [codeface.R] DEBUG: use_corpus : FALSE
+2026-08-11 10:50:47 [codeface.R.complexity] INFO: Using 1 jobs
+
+NULL
+2026-08-11 10:50:47 [codeface.project] MainProcess INFO: => Analysing time series
+2026-08-11 10:50:48 [codeface.R.config] DEBUG: Set log level to 'devinfo' == 15
+2026-08-11 10:50:48 [codeface.R] DEBUG: Configuration options:
+2026-08-11 10:50:48 [codeface.R] DEBUG: dbhost : localhost
+2026-08-11 10:50:48 [codeface.R] DEBUG: dbuser : codeface
+2026-08-11 10:50:48 [codeface.R] DEBUG: dbpwd : codeface
+2026-08-11 10:50:48 [codeface.R] DEBUG: dbname : codeface_testing
+2026-08-11 10:50:48 [codeface.R] DEBUG: idServicePort : 8383
+2026-08-11 10:50:48 [codeface.R] DEBUG: idServiceHostname : localhost
+2026-08-11 10:50:48 [codeface.R] DEBUG: sleepTime : 1000
+2026-08-11 10:50:48 [codeface.R] DEBUG: proxyPort : 83
+2026-08-11 10:50:48 [codeface.R] DEBUG: dbport : 3306
+2026-08-11 10:50:48 [codeface.R] DEBUG: understand : FALSE
+2026-08-11 10:50:48 [codeface.R] DEBUG: sloccount : FALSE
+2026-08-11 10:50:48 [codeface.R] DEBUG: description : codeface_test_projectjRy0Bj Description
+2026-08-11 10:50:48 [codeface.R] DEBUG: mailinglists : list(list(name = "codeface_test_projectjRy0Bj.dev1", source = "generated", type = "dev"), list(name = "codeface_test_projectjRy0Bj.dev2", source = "generated", type = "dev"), list(name = "codeface_test_projectjRy0Bj.user1", source = "generated", type = "user"), list(name = "codeface_test_projectjRy0Bj.user2", source = "generated", type = "user"))
+2026-08-11 10:50:48 [codeface.R] DEBUG: project : codeface_test_projectjRy0Bj
+2026-08-11 10:50:48 [codeface.R] DEBUG: rcs : c("v0_rc_0", "v1_rc_1", "v2_rc_3")
+2026-08-11 10:50:48 [codeface.R] DEBUG: repo : codeface_test_projectjRy0Bj
+2026-08-11 10:50:48 [codeface.R] DEBUG: revisions : c("v0_release", "v1_release", "v2_release")
+2026-08-11 10:50:48 [codeface.R] DEBUG: tagging : proximity
+2026-08-11 10:50:48 [codeface.R] DEBUG: artifactType : file
+2026-08-11 10:50:48 [codeface.R] DEBUG: dependencyType : none
+2026-08-11 10:50:48 [codeface.R] DEBUG: qualityType : corrective
+2026-08-11 10:50:48 [codeface.R] DEBUG: communicationType : mail
+2026-08-11 10:50:48 [codeface.R] DEBUG: pid : 6
+2026-08-11 10:50:48 [codeface.R] DEBUG: con : new("MySQLConnection", Id = c(0, 0))
+2026-08-11 10:50:48 [codeface.R] DEBUG: tstamps.release : list(id = c(11, 12, 14), type = c(2, 2, 2), tag = c("v0_release", "v1_release", "v2_release"), date = c(1357570800, 1358769042, 1358769042), projectId = c(6, 6, 6))
+2026-08-11 10:50:48 [codeface.R] DEBUG: tstamps.all : list(id = c(11, 12, 13, 14, 15), type = c(2, 2, 1, 2, 1), tag = c("v0_release", "v1_release", "v1_rc_1", "v2_release", "v2_rc_3"), date = c(1357570800, 1358769042, 1357653600, 1358769042, 1358509362), projectId = c(6, 6, 6, 6, 6))
+2026-08-11 10:50:48 [codeface.R] DEBUG: boundaries : list(date.start = c(1357570800, 1358769042), date.end = c(1358769042, 1358769042), date.rc.start = c(1357653600, 1358509362), tag = c("v0_release", "v1_release"), cycle = c("v0_release-v1_release", "v1_release-v2_release"))
+2026-08-11 10:50:48 [codeface.R] DEBUG: resdir : /tmp/codeface_test_projectjRy0Bj/.git/results/codeface_test_projectjRy0Bj/proximity
+2026-08-11 10:50:48 [codeface.R] DEBUG: profile : FALSE
+2026-08-11 10:50:48 [codeface.R] DEBUG: jobs : 1
+2026-08-11 10:50:48 [codeface.R] DEBUG: use_corpus : FALSE
+2026-08-11 10:50:49 [codeface.R] DEBUG: row names were found from a short variable and have been discarded
+2026-08-11 10:50:49 [codeface.R] DEBUG: row names were found from a short variable and have been discarded
+2026-08-11 10:50:49 [codeface.R] DEBUG: row names were found from a short variable and have been discarded
+geom_path: Each group consists of only one observation. Do you need to adjust
+the group aesthetic?
+geom_path: Each group consists of only one observation. Do you need to adjust
+the group aesthetic?
+2026-08-11 10:50:50 [codeface.R] DEBUG: Removed 4 rows containing non-finite values (stat_boxplot).
+2026-08-11 10:50:50 [codeface.R] DEBUG: Removed 4 rows containing non-finite values (stat_boxplot).
+2026-08-11 10:50:51 [codeface.R] DEBUG: Removed 4 rows containing non-finite values (stat_boxplot).
+2026-08-11 10:50:51 [codeface.R] DEBUG: Decimal MySQL column 3 imported as numeric
+2026-08-11 10:50:51 [codeface.R] DEBUG: Decimal MySQL column 4 imported as numeric
+2026-08-11 10:50:51 [codeface.R] DEBUG: Decimal MySQL column 5 imported as numeric
+2026-08-11 10:50:51 [codeface.R] DEBUG: Decimal MySQL column 6 imported as numeric
+2026-08-11 10:50:51 [codeface.R] DEBUG: Decimal MySQL column 3 imported as numeric
+2026-08-11 10:50:51 [codeface.R] DEBUG: Decimal MySQL column 4 imported as numeric
+2026-08-11 10:50:51 [codeface.R] DEBUG: Decimal MySQL column 5 imported as numeric
+2026-08-11 10:50:51 [codeface.R] DEBUG: Decimal MySQL column 6 imported as numeric
+2026-08-11 10:50:52 [codeface.R] DEBUG: Decimal MySQL column 3 imported as numeric
+2026-08-11 10:50:52 [codeface.R] DEBUG: Decimal MySQL column 4 imported as numeric
+2026-08-11 10:50:52 [codeface.R] DEBUG: Decimal MySQL column 5 imported as numeric
+2026-08-11 10:50:52 [codeface.R] DEBUG: Decimal MySQL column 6 imported as numeric
+2026-08-11 10:50:52 [codeface.project] MainProcess INFO: => Codeface run complete!
+2026-08-11 10:50:52 [codeface.configuration] MainProcess DEVINFO: Loading global configuration file '/codeface/codeface_testing.conf'
+2026-08-11 10:50:52 [codeface.configuration] MainProcess DEVINFO: Loading project configuration file '/tmp/codeface_test_projectjRy0Bj/.git/testproject.conf'
+2026-08-11 10:50:52 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectjRy0Bj/proximity with ID 6
+2026-08-11 10:50:52 [codeface.configuration] MainProcess DEVINFO: Loading global configuration file '/codeface/codeface_testing.conf'
+2026-08-11 10:50:52 [codeface.configuration] MainProcess DEVINFO: Loading project configuration file '/tmp/codeface_test_projectjRy0Bj/.git/testproject.conf'
+2026-08-11 10:50:52 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectjRy0Bj/proximity with ID 6
+2026-08-11 10:50:52 [codeface.configuration] MainProcess DEVINFO: Loading global configuration file '/codeface/codeface_testing.conf'
+2026-08-11 10:50:52 [codeface.configuration] MainProcess DEVINFO: Loading project configuration file '/tmp/codeface_test_projectjRy0Bj/.git/testproject.conf'
+2026-08-11 10:50:52 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_projectjRy0Bj/proximity with ID 6
+.Initialized empty Git repository in /tmp/codeface_test_project0tUiVq/.git/
+[master (root-commit) 9eaa63b] Commit 0
+ Date: Mon Jan 7 16:00:00 2013 +0100
+ 1 file changed, 2 insertions(+)
+ create mode 100644 README
+[master 6fd38f3] Commit 1
+ Date: Tue Jan 8 15:00:00 2013 +0100
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+ create mode 100644 src/code.c
+[master 9b9857a] Commit 2
+ Date: Wed Jan 9 15:30:00 2013 +0100
+ 1 file changed, 3 insertions(+)
+ create mode 100644 src/carp.c
+[master 4e1f9da] Commit 3
+ Date: Tue Jan 1 15:30:00 2013 +0100
+ 1 file changed, 1 insertion(+)
+[master 43913fe] Commit 4
+ Date: Wed Jan 9 15:30:00 2013 +0100
+ 1 file changed, 1 insertion(+)
+[master 86be366] Commit 5
+ Date: Thu Jan 10 15:30:00 2013 +0100
+ 1 file changed, 1 insertion(+)
+[master 96a470c] Commit 6
+ Date: Wed Jan 9 15:31:00 2013 +0100
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+[master c31f5d8] Commit 7
+ Date: Thu Jan 10 18:00:00 2013 +0100
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+[master 19ed287] Commit 8
+ Author: Max Maintainer <max@theboss.com>
+ Date: Mon Jan 14 12:30:42 2013 +0100
+ 1 file changed, 2 insertions(+)
+[master fab5f63] Commit 9
+ Date: Mon Jan 14 12:50:42 2013 +0100
+ 1 file changed, 2 insertions(+)
+[master c9501ad] Commit 10
+ Author: Clara Confident <clara@foo.org>
+ Date: Tue Jan 15 12:42:42 2013 +0100
+ 2 files changed, 5 insertions(+)
+ create mode 100644 Makefile
+[master ceba3d5] Commit 11
+ Date: Mon Jan 21 12:50:42 2013 +0100
+ 4 files changed, 10 insertions(+), 9 deletions(-)
+ delete mode 100644 Makefile
+[master 54acd6d] Commit 12
+ Date: Mon Jan 21 12:50:42 2013 +0100
+ 1 file changed, 2 insertions(+)
+[master 4d25aab] Commit 13
+ Author: Max Maintainer <max@theboss.com>
+ Date: Wed Jan 16 12:30:42 2013 +0100
+ 4 files changed, 7 insertions(+), 20 deletions(-)
+ delete mode 100644 src/carp.c
+ create mode 100644 src/newcode.c
+[master 2d6981d] Commit 14
+ Date: Thu Jan 17 12:50:42 2013 +0100
+ 2 files changed, 1 insertion(+), 3 deletions(-)
+ rename src/{newcode.c => answer.c} (100%)
+[master 6c0f879] Commit 15
+ Author: Clara Confident <clara@foo.org>
+ Date: Fri Jan 18 12:42:42 2013 +0100
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+ create mode 100644 Makefile
+[master 88c2a52] Commit 16
+ Date: Mon Jan 21 12:50:42 2013 +0100
+ 3 files changed, 10 insertions(+), 3 deletions(-)
+ delete mode 100644 Makefile
+2026-08-11 10:50:53 [codeface.configuration] MainProcess DEVINFO: Loading global configuration file '/codeface/codeface_testing.conf'
+2026-08-11 10:50:53 [codeface.configuration] MainProcess DEVINFO: Loading project configuration file '/tmp/codeface_test_project0tUiVq/.git/testproject.conf'
+2026-08-11 10:50:53 [codeface] MainProcess DEVINFO: Opened logfile '/tmp/codeface_test_project0tUiVq/.git/log' with log level 'debug'
+2026-08-11 10:50:53 [codeface.configuration] MainProcess DEVINFO: Loading global configuration file '/codeface/codeface_testing.conf'
+2026-08-11 10:50:53 [codeface.configuration] MainProcess DEVINFO: Loading project configuration file '/tmp/codeface_test_project0tUiVq/.git/testproject.conf'
+2026-08-11 10:50:53 [codeface.project] MainProcess INFO: => Setting up project 'codeface_test_project0tUiVq'
+2026-08-11 10:50:53 [codeface.dbmanager] MainProcess DEVINFO: Creating new project codeface_test_project0tUiVq/tag
+2026-08-11 10:50:53 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_project0tUiVq/tag with ID 7
+2026-08-11 10:50:53 [codeface.dbmanager] MainProcess WARNING: Deleting and re-creating project codeface_test_project0tUiVq/tag.
+2026-08-11 10:50:53 [codeface.dbmanager] MainProcess DEVINFO: Creating new project codeface_test_project0tUiVq/tag
+2026-08-11 10:50:53 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_project0tUiVq/tag with ID 8
+2026-08-11 10:50:53 [codeface.dbmanager] MainProcess INFO: Adding 3 new releases...
+2026-08-11 10:50:53 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_project0tUiVq/tag with ID 8
+2026-08-11 10:50:53 [codeface.util] MainProcess INFO:   -> Revision range 1/2 (v0_release..v1_release): Analysing commits...
+2026-08-11 10:50:53 [codeface.cluster.cluster] MainProcess DEVINFO: Creating data base for v0_release..v1_release
+Pass 1/2:   0% |                                               | ETA:  --:--:--Pass 1/2: 100% |################################################| Time: 0:00:00
+2026-08-11 10:50:53 [codeface.cluster.cluster] MainProcess DEVINFO: Shelving the VCS object
+2026-08-11 10:50:53 [codeface.cluster.cluster] MainProcess DEVINFO: Finished shelving the VCS object
+2026-08-11 10:50:53 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_project0tUiVq/tag with ID 8
+2026-08-11 10:50:53 [codeface.cluster.cluster] MainProcess DEVINFO: Reading from data base /tmp/codeface_test_project0tUiVq/.git/results/codeface_test_project0tUiVq/tag/001--v0_release-v1_release/vcs_analysis.db...
+2026-08-11 10:50:53 [codeface.VCS] MainProcess DEVINFO: Using cached data to extract commit information
+2026-08-11 10:50:53 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_project0tUiVq/tag with ID 8
+Pass 2/2:   0% |                                               | ETA:  --:--:--Pass 2/2:  83% |########################################        | ETA:  0:00:00Pass 2/2: 100% |################################################| Time: 0:00:00
+2026-08-11 10:50:54 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_project0tUiVq/tag with ID 8
+2026-08-11 10:50:54 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_project0tUiVq/tag with ID 8
+2026-08-11 10:50:54 [codeface.util] MainProcess INFO:   -> Revision range 1/2 (v0_release..v1_release): Commit analysis done.
+2026-08-11 10:50:54 [codeface.util] MainProcess INFO:   -> Revision range 1/2 (v0_release..v1_release): Detecting clusters...
+2026-08-11 10:50:57 [codeface.R.config] DEBUG: Set log level to 'devinfo' == 15
+2026-08-11 10:50:57 [codeface.R] DEBUG: Configuration options:
+2026-08-11 10:50:57 [codeface.R] DEBUG: dbhost : localhost
+2026-08-11 10:50:57 [codeface.R] DEBUG: dbuser : codeface
+2026-08-11 10:50:57 [codeface.R] DEBUG: dbpwd : codeface
+2026-08-11 10:50:57 [codeface.R] DEBUG: dbname : codeface_testing
+2026-08-11 10:50:57 [codeface.R] DEBUG: idServicePort : 8383
+2026-08-11 10:50:57 [codeface.R] DEBUG: idServiceHostname : localhost
+2026-08-11 10:50:57 [codeface.R] DEBUG: sleepTime : 1000
+2026-08-11 10:50:57 [codeface.R] DEBUG: proxyPort : 83
+2026-08-11 10:50:57 [codeface.R] DEBUG: dbport : 3306
+2026-08-11 10:50:57 [codeface.R] DEBUG: understand : FALSE
+2026-08-11 10:50:57 [codeface.R] DEBUG: sloccount : FALSE
+2026-08-11 10:50:57 [codeface.R] DEBUG: description : codeface_test_project0tUiVq Description
+2026-08-11 10:50:57 [codeface.R] DEBUG: mailinglists : list(list(name = "codeface_test_project0tUiVq.dev1", source = "generated", type = "dev"), list(name = "codeface_test_project0tUiVq.dev2", source = "generated", type = "dev"), list(name = "codeface_test_project0tUiVq.user1", source = "generated", type = "user"), list(name = "codeface_test_project0tUiVq.user2", source = "generated", type = "user"))
+2026-08-11 10:50:57 [codeface.R] DEBUG: project : codeface_test_project0tUiVq
+2026-08-11 10:50:57 [codeface.R] DEBUG: rcs : c("v0_rc_0", "v1_rc_1", "v2_rc_3")
+2026-08-11 10:50:57 [codeface.R] DEBUG: repo : codeface_test_project0tUiVq
+2026-08-11 10:50:57 [codeface.R] DEBUG: revisions : c("v0_release", "v1_release", "v2_release")
+2026-08-11 10:50:57 [codeface.R] DEBUG: tagging : tag
+2026-08-11 10:50:57 [codeface.R] DEBUG: artifactType : file
+2026-08-11 10:50:57 [codeface.R] DEBUG: dependencyType : none
+2026-08-11 10:50:57 [codeface.R] DEBUG: qualityType : corrective
+2026-08-11 10:50:57 [codeface.R] DEBUG: communicationType : mail
+2026-08-11 10:50:57 [codeface.R] DEBUG: pid : 8
+2026-08-11 10:50:57 [codeface.R] DEBUG: con : new("MySQLConnection", Id = c(0, 0))
+2026-08-11 10:50:57 [codeface.R] DEBUG: tstamps.release : list(id = c(16, 17, 19), type = c(2, 2, 2), tag = c("v0_release", "v1_release", "v2_release"), date = c(NA, NA, NA), projectId = c(8, 8, 8))
+2026-08-11 10:50:57 [codeface.R] DEBUG: tstamps.all : list(id = c(16, 17, 18, 19, 20), type = c(2, 2, 1, 2, 1), tag = c("v0_release", "v1_release", "v1_rc_1", "v2_release", "v2_rc_3"), date = c(NA, NA, NA, NA, NA), projectId = c(8, 8, 8, 8, 8))
+2026-08-11 10:50:57 [codeface.R] DEBUG: boundaries : list(date.start = c(NA, NA), date.end = c(NA, NA), date.rc.start = c(NA, NA), tag = c("v0_release", "v1_release"), cycle = c("v0_release-v1_release", "v1_release-v2_release"))
+2026-08-11 10:50:57 [codeface.R] DEBUG: resdir : /tmp/codeface_test_project0tUiVq/.git/results/codeface_test_project0tUiVq/tag/001--v0_release-v1_release
+2026-08-11 10:50:57 [codeface.R] DEBUG: range.id : 7
+2026-08-11 10:50:57 [codeface.R] DEBUG: profile : FALSE
+2026-08-11 10:50:57 [codeface.R] DEBUG: jobs : 1
+2026-08-11 10:50:57 [codeface.R] DEBUG: use_corpus : FALSE
+2026-08-11 10:50:57 [codeface.R] DEBUG: Decimal MySQL column 2 imported as numeric
+2026-08-11 10:50:57 [codeface.R] DEBUG: Decimal MySQL column 3 imported as numeric
+2026-08-11 10:50:57 [codeface.R] DEBUG: Decimal MySQL column 4 imported as numeric
+2026-08-11 10:50:57 [codeface.R] DEBUG: Decimal MySQL column 5 imported as numeric
+2026-08-11 10:50:57 [codeface.R] DEBUG: incomplete final line found by readTableHeader on '/tmp/codeface_test_project0tUiVq/.git/results/codeface_test_project0tUiVq/tag/001--v0_release-v1_release/id_subsys.txt'
+2026-08-11 10:50:58 [codeface.R] DEBUG: no non-missing arguments to max; returning -Inf
+2026-08-11 10:50:58 [codeface.R] DEBUG: no non-missing arguments to min; returning Inf
+2026-08-11 10:50:58 [codeface.R] DEBUG: length of NULL cannot be changed
+2026-08-11 10:50:58 [codeface.R] DEBUG: no non-missing arguments to max; returning -Inf
+2026-08-11 10:50:58 [codeface.R] DEBUG: no non-missing arguments to min; returning Inf
+2026-08-11 10:50:58 [codeface.R] DEBUG: length of NULL cannot be changed
+2026-08-11 10:50:58 [codeface.R] DEBUG: no non-missing arguments to max; returning -Inf
+2026-08-11 10:50:58 [codeface.R] DEBUG: no non-missing arguments to min; returning Inf
+2026-08-11 10:50:58 [codeface.R] DEBUG: length of NULL cannot be changed
+2026-08-11 10:50:58 [codeface.R] DEBUG: no non-missing arguments to max; returning -Inf
+2026-08-11 10:50:58 [codeface.R] DEBUG: no non-missing arguments to min; returning Inf
+2026-08-11 10:50:58 [codeface.R] DEBUG: length of NULL cannot be changed
+2026-08-11 10:50:58 [codeface.R] DEBUG: no non-missing arguments to max; returning -Inf
+2026-08-11 10:50:58 [codeface.R] DEBUG: no non-missing arguments to min; returning Inf
+2026-08-11 10:50:58 [codeface.R] DEBUG: length of NULL cannot be changed
+2026-08-11 10:50:58 [codeface.R] DEBUG: no non-missing arguments to max; returning -Inf
+2026-08-11 10:50:58 [codeface.R] DEBUG: no non-missing arguments to min; returning Inf
+2026-08-11 10:50:58 [codeface.R] DEBUG: length of NULL cannot be changed
+2026-08-11 10:50:58 [codeface.R] DEBUG: no non-missing arguments to max; returning -Inf
+2026-08-11 10:50:58 [codeface.R] DEBUG: no non-missing arguments to min; returning Inf
+2026-08-11 10:50:58 [codeface.R] DEBUG: length of NULL cannot be changed
+2026-08-11 10:50:58 [codeface.R] DEBUG: no non-missing arguments to max; returning -Inf
+2026-08-11 10:50:58 [codeface.R] DEBUG: no non-missing arguments to min; returning Inf
+2026-08-11 10:50:58 [codeface.R] DEBUG: length of NULL cannot be changed
+2026-08-11 10:50:58 [codeface.R] DEBUG: no non-missing arguments to max; returning -Inf
+2026-08-11 10:50:58 [codeface.R] DEBUG: no non-missing arguments to min; returning Inf
+2026-08-11 10:50:58 [codeface.R] DEBUG: length of NULL cannot be changed
+2026-08-11 10:50:58 [codeface.R] DEBUG: no non-missing arguments to max; returning -Inf
+2026-08-11 10:50:58 [codeface.R] DEBUG: no non-missing arguments to min; returning Inf
+2026-08-11 10:50:58 [codeface.R] DEBUG: length of NULL cannot be changed
+2026-08-11 10:50:58 [codeface.R] DEBUG: no non-missing arguments to max; returning -Inf
+2026-08-11 10:50:58 [codeface.R] DEBUG: no non-missing arguments to min; returning Inf
+2026-08-11 10:50:58 [codeface.R] DEBUG: length of NULL cannot be changed
+2026-08-11 10:50:58 [codeface.R] DEBUG: no non-missing arguments to max; returning -Inf
+2026-08-11 10:50:58 [codeface.R] DEBUG: no non-missing arguments to min; returning Inf
+2026-08-11 10:50:58 [codeface.R] DEBUG: length of NULL cannot be changed
+2026-08-11 10:50:59 [codeface.R] DEBUG: number of rows of result is not a multiple of vector length (arg 1)
+2026-08-11 10:50:59 [codeface.R] DEBUG: number of rows of result is not a multiple of vector length (arg 1)
+NULL
+2026-08-11 10:50:59 [codeface.util] MainProcess INFO:   -> Revision range 1/2 (v0_release..v1_release): Detecting clusters done.
+2026-08-11 10:50:59 [codeface.util] MainProcess INFO:   -> Revision range 1/2 (v0_release..v1_release): Generating reports...
+2026-08-11 10:50:59 [codeface.util] MainProcess INFO:   -> Generating Reports...
+2026-08-11 10:50:59 [codeface.util] MainProcess DEVINFO:   -> Generating report
+2026-08-11 10:51:00 [codeface.util] MainProcess WARNING: Command 'lualatex -interaction=nonstopmode /tmp/codeface_test_project0tUiVq/.git/results/codeface_test_project0tUiVq/tag/001--v0_release-v1_release/report-v0_release_v1_release.tex' failed with exit code 1. Ignored.
+2026-08-11 10:51:00 [codeface.util] MainProcess INFO:   -> Revision range 1/2 (v0_release..v1_release): Report generation done.
+2026-08-11 10:51:00 [codeface.util] MainProcess INFO:   -> Revision range 2/2 (v1_release..v2_release): Analysing commits...
+2026-08-11 10:51:00 [codeface.cluster.cluster] MainProcess DEVINFO: Creating data base for v1_release..v2_release
+Pass 1/2:   0% |                                               | ETA:  --:--:--Pass 1/2: 100% |################################################| Time: 0:00:00
+2026-08-11 10:51:00 [codeface.cluster.cluster] MainProcess DEVINFO: Shelving the VCS object
+2026-08-11 10:51:00 [codeface.cluster.cluster] MainProcess DEVINFO: Finished shelving the VCS object
+2026-08-11 10:51:00 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_project0tUiVq/tag with ID 8
+2026-08-11 10:51:00 [codeface.cluster.cluster] MainProcess DEVINFO: Reading from data base /tmp/codeface_test_project0tUiVq/.git/results/codeface_test_project0tUiVq/tag/002--v1_release-v2_release/vcs_analysis.db...
+2026-08-11 10:51:00 [codeface.VCS] MainProcess DEVINFO: Using cached data to extract commit information
+2026-08-11 10:51:00 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_project0tUiVq/tag with ID 8
+Pass 2/2:   0% |                                               | ETA:  --:--:--Pass 2/2: 100% |################################################| Time: 0:00:00
+2026-08-11 10:51:00 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_project0tUiVq/tag with ID 8
+2026-08-11 10:51:00 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_project0tUiVq/tag with ID 8
+2026-08-11 10:51:00 [codeface.util] MainProcess INFO:   -> Revision range 2/2 (v1_release..v2_release): Commit analysis done.
+2026-08-11 10:51:00 [codeface.util] MainProcess INFO:   -> Revision range 2/2 (v1_release..v2_release): Detecting clusters...
+2026-08-11 10:51:04 [codeface.R.config] DEBUG: Set log level to 'devinfo' == 15
+2026-08-11 10:51:04 [codeface.R] DEBUG: Configuration options:
+2026-08-11 10:51:04 [codeface.R] DEBUG: dbhost : localhost
+2026-08-11 10:51:04 [codeface.R] DEBUG: dbuser : codeface
+2026-08-11 10:51:04 [codeface.R] DEBUG: dbpwd : codeface
+2026-08-11 10:51:04 [codeface.R] DEBUG: dbname : codeface_testing
+2026-08-11 10:51:04 [codeface.R] DEBUG: idServicePort : 8383
+2026-08-11 10:51:04 [codeface.R] DEBUG: idServiceHostname : localhost
+2026-08-11 10:51:04 [codeface.R] DEBUG: sleepTime : 1000
+2026-08-11 10:51:04 [codeface.R] DEBUG: proxyPort : 83
+2026-08-11 10:51:04 [codeface.R] DEBUG: dbport : 3306
+2026-08-11 10:51:04 [codeface.R] DEBUG: understand : FALSE
+2026-08-11 10:51:04 [codeface.R] DEBUG: sloccount : FALSE
+2026-08-11 10:51:04 [codeface.R] DEBUG: description : codeface_test_project0tUiVq Description
+2026-08-11 10:51:04 [codeface.R] DEBUG: mailinglists : list(list(name = "codeface_test_project0tUiVq.dev1", source = "generated", type = "dev"), list(name = "codeface_test_project0tUiVq.dev2", source = "generated", type = "dev"), list(name = "codeface_test_project0tUiVq.user1", source = "generated", type = "user"), list(name = "codeface_test_project0tUiVq.user2", source = "generated", type = "user"))
+2026-08-11 10:51:04 [codeface.R] DEBUG: project : codeface_test_project0tUiVq
+2026-08-11 10:51:04 [codeface.R] DEBUG: rcs : c("v0_rc_0", "v1_rc_1", "v2_rc_3")
+2026-08-11 10:51:04 [codeface.R] DEBUG: repo : codeface_test_project0tUiVq
+2026-08-11 10:51:04 [codeface.R] DEBUG: revisions : c("v0_release", "v1_release", "v2_release")
+2026-08-11 10:51:04 [codeface.R] DEBUG: tagging : tag
+2026-08-11 10:51:04 [codeface.R] DEBUG: artifactType : file
+2026-08-11 10:51:04 [codeface.R] DEBUG: dependencyType : none
+2026-08-11 10:51:04 [codeface.R] DEBUG: qualityType : corrective
+2026-08-11 10:51:04 [codeface.R] DEBUG: communicationType : mail
+2026-08-11 10:51:04 [codeface.R] DEBUG: pid : 8
+2026-08-11 10:51:04 [codeface.R] DEBUG: con : new("MySQLConnection", Id = c(0, 0))
+2026-08-11 10:51:04 [codeface.R] DEBUG: tstamps.release : list(id = c(16, 17, 19), type = c(2, 2, 2), tag = c("v0_release", "v1_release", "v2_release"), date = c(NA, NA, NA), projectId = c(8, 8, 8))
+2026-08-11 10:51:04 [codeface.R] DEBUG: tstamps.all : list(id = c(16, 17, 18, 19, 20), type = c(2, 2, 1, 2, 1), tag = c("v0_release", "v1_release", "v1_rc_1", "v2_release", "v2_rc_3"), date = c(NA, NA, NA, NA, NA), projectId = c(8, 8, 8, 8, 8))
+2026-08-11 10:51:04 [codeface.R] DEBUG: boundaries : list(date.start = c(NA, NA), date.end = c(NA, NA), date.rc.start = c(NA, NA), tag = c("v0_release", "v1_release"), cycle = c("v0_release-v1_release", "v1_release-v2_release"))
+2026-08-11 10:51:04 [codeface.R] DEBUG: resdir : /tmp/codeface_test_project0tUiVq/.git/results/codeface_test_project0tUiVq/tag/002--v1_release-v2_release
+2026-08-11 10:51:04 [codeface.R] DEBUG: range.id : 8
+2026-08-11 10:51:04 [codeface.R] DEBUG: profile : FALSE
+2026-08-11 10:51:04 [codeface.R] DEBUG: jobs : 1
+2026-08-11 10:51:04 [codeface.R] DEBUG: use_corpus : FALSE
+2026-08-11 10:51:04 [codeface.R] DEBUG: Decimal MySQL column 2 imported as numeric
+2026-08-11 10:51:04 [codeface.R] DEBUG: Decimal MySQL column 3 imported as numeric
+2026-08-11 10:51:04 [codeface.R] DEBUG: Decimal MySQL column 4 imported as numeric
+2026-08-11 10:51:04 [codeface.R] DEBUG: Decimal MySQL column 5 imported as numeric
+2026-08-11 10:51:04 [codeface.R] DEBUG: incomplete final line found by readTableHeader on '/tmp/codeface_test_project0tUiVq/.git/results/codeface_test_project0tUiVq/tag/002--v1_release-v2_release/id_subsys.txt'
+2026-08-11 10:51:04 [codeface.R] DEBUG: no non-missing arguments to max; returning -Inf
+2026-08-11 10:51:04 [codeface.R] DEBUG: no non-missing arguments to min; returning Inf
+2026-08-11 10:51:04 [codeface.R] DEBUG: length of NULL cannot be changed
+2026-08-11 10:51:04 [codeface.R] DEBUG: no non-missing arguments to max; returning -Inf
+2026-08-11 10:51:04 [codeface.R] DEBUG: no non-missing arguments to min; returning Inf
+2026-08-11 10:51:04 [codeface.R] DEBUG: length of NULL cannot be changed
+NULL
+2026-08-11 10:51:05 [codeface.util] MainProcess INFO:   -> Revision range 2/2 (v1_release..v2_release): Detecting clusters done.
+2026-08-11 10:51:05 [codeface.util] MainProcess INFO:   -> Revision range 2/2 (v1_release..v2_release): Generating reports...
+2026-08-11 10:51:05 [codeface.util] MainProcess INFO:   -> Generating Reports...
+2026-08-11 10:51:05 [codeface.util] MainProcess DEVINFO:   -> Generating report
+2026-08-11 10:51:06 [codeface.util] MainProcess WARNING: Command 'lualatex -interaction=nonstopmode /tmp/codeface_test_project0tUiVq/.git/results/codeface_test_project0tUiVq/tag/002--v1_release-v2_release/report-v1_release_v2_release.tex' failed with exit code 1. Ignored.
+2026-08-11 10:51:06 [codeface.util] MainProcess INFO:   -> Revision range 2/2 (v1_release..v2_release): Report generation done.
+2026-08-11 10:51:06 [codeface.util] MainProcess DEVINFO: Terminating workers...
+2026-08-11 10:51:06 [codeface.util] MainProcess DEVINFO: Workers terminated.
+2026-08-11 10:51:06 [codeface.project] MainProcess INFO: => Preparing time series data
+2026-08-11 10:51:06 [codeface.VCS] MainProcess DEVINFO: Using cached data to extract commit information
+2026-08-11 10:51:06 [codeface.VCS] MainProcess DEVINFO: Using cached data to extract commit information
+2026-08-11 10:51:06 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_project0tUiVq/tag with ID 8
+2026-08-11 10:51:06 [codeface.project] MainProcess INFO: => Performing complexity analysis
+2026-08-11 10:51:06 [codeface.project] MainProcess INFO:   -> Analysing range 7
+2026-08-11 10:51:07 [codeface.R.config] DEBUG: Set log level to 'devinfo' == 15
+2026-08-11 10:51:07 [codeface.R] DEBUG: Configuration options:
+2026-08-11 10:51:07 [codeface.R] DEBUG: dbhost : localhost
+2026-08-11 10:51:07 [codeface.R] DEBUG: dbuser : codeface
+2026-08-11 10:51:07 [codeface.R] DEBUG: dbpwd : codeface
+2026-08-11 10:51:07 [codeface.R] DEBUG: dbname : codeface_testing
+2026-08-11 10:51:07 [codeface.R] DEBUG: idServicePort : 8383
+2026-08-11 10:51:07 [codeface.R] DEBUG: idServiceHostname : localhost
+2026-08-11 10:51:07 [codeface.R] DEBUG: sleepTime : 1000
+2026-08-11 10:51:07 [codeface.R] DEBUG: proxyPort : 83
+2026-08-11 10:51:07 [codeface.R] DEBUG: dbport : 3306
+2026-08-11 10:51:07 [codeface.R] DEBUG: understand : FALSE
+2026-08-11 10:51:07 [codeface.R] DEBUG: sloccount : FALSE
+2026-08-11 10:51:07 [codeface.R] DEBUG: description : codeface_test_project0tUiVq Description
+2026-08-11 10:51:07 [codeface.R] DEBUG: mailinglists : list(list(name = "codeface_test_project0tUiVq.dev1", source = "generated", type = "dev"), list(name = "codeface_test_project0tUiVq.dev2", source = "generated", type = "dev"), list(name = "codeface_test_project0tUiVq.user1", source = "generated", type = "user"), list(name = "codeface_test_project0tUiVq.user2", source = "generated", type = "user"))
+2026-08-11 10:51:07 [codeface.R] DEBUG: project : codeface_test_project0tUiVq
+2026-08-11 10:51:07 [codeface.R] DEBUG: rcs : c("v0_rc_0", "v1_rc_1", "v2_rc_3")
+2026-08-11 10:51:07 [codeface.R] DEBUG: repo : codeface_test_project0tUiVq
+2026-08-11 10:51:07 [codeface.R] DEBUG: revisions : c("v0_release", "v1_release", "v2_release")
+2026-08-11 10:51:07 [codeface.R] DEBUG: tagging : tag
+2026-08-11 10:51:07 [codeface.R] DEBUG: artifactType : file
+2026-08-11 10:51:07 [codeface.R] DEBUG: dependencyType : none
+2026-08-11 10:51:07 [codeface.R] DEBUG: qualityType : corrective
+2026-08-11 10:51:07 [codeface.R] DEBUG: communicationType : mail
+2026-08-11 10:51:07 [codeface.R] DEBUG: pid : 8
+2026-08-11 10:51:07 [codeface.R] DEBUG: con : new("MySQLConnection", Id = c(0, 0))
+2026-08-11 10:51:07 [codeface.R] DEBUG: tstamps.release : list(id = c(16, 17, 19), type = c(2, 2, 2), tag = c("v0_release", "v1_release", "v2_release"), date = c(1357570800, 1358769042, 1358769042), projectId = c(8, 8, 8))
+2026-08-11 10:51:07 [codeface.R] DEBUG: tstamps.all : list(id = c(16, 17, 18, 19, 20), type = c(2, 2, 1, 2, 1), tag = c("v0_release", "v1_release", "v1_rc_1", "v2_release", "v2_rc_3"), date = c(1357570800, 1358769042, 1357653600, 1358769042, 1358509362), projectId = c(8, 8, 8, 8, 8))
+2026-08-11 10:51:07 [codeface.R] DEBUG: boundaries : list(date.start = c(1357570800, 1358769042), date.end = c(1358769042, 1358769042), date.rc.start = c(1357653600, 1358509362), tag = c("v0_release", "v1_release"), cycle = c("v0_release-v1_release", "v1_release-v2_release"))
+2026-08-11 10:51:07 [codeface.R] DEBUG: repodir : /tmp/codeface_test_project0tUiVq/.git
+2026-08-11 10:51:07 [codeface.R] DEBUG: range.id : 7
+2026-08-11 10:51:07 [codeface.R] DEBUG: profile : FALSE
+2026-08-11 10:51:07 [codeface.R] DEBUG: jobs : 1
+2026-08-11 10:51:07 [codeface.R] DEBUG: use_corpus : FALSE
+2026-08-11 10:51:07 [codeface.R.complexity] INFO: Using 1 jobs
+
+NULL
+2026-08-11 10:51:07 [codeface.project] MainProcess INFO:   -> Analysing range 8
+2026-08-11 10:51:08 [codeface.R.config] DEBUG: Set log level to 'devinfo' == 15
+2026-08-11 10:51:08 [codeface.R] DEBUG: Configuration options:
+2026-08-11 10:51:08 [codeface.R] DEBUG: dbhost : localhost
+2026-08-11 10:51:08 [codeface.R] DEBUG: dbuser : codeface
+2026-08-11 10:51:08 [codeface.R] DEBUG: dbpwd : codeface
+2026-08-11 10:51:08 [codeface.R] DEBUG: dbname : codeface_testing
+2026-08-11 10:51:08 [codeface.R] DEBUG: idServicePort : 8383
+2026-08-11 10:51:08 [codeface.R] DEBUG: idServiceHostname : localhost
+2026-08-11 10:51:08 [codeface.R] DEBUG: sleepTime : 1000
+2026-08-11 10:51:08 [codeface.R] DEBUG: proxyPort : 83
+2026-08-11 10:51:08 [codeface.R] DEBUG: dbport : 3306
+2026-08-11 10:51:08 [codeface.R] DEBUG: understand : FALSE
+2026-08-11 10:51:08 [codeface.R] DEBUG: sloccount : FALSE
+2026-08-11 10:51:08 [codeface.R] DEBUG: description : codeface_test_project0tUiVq Description
+2026-08-11 10:51:08 [codeface.R] DEBUG: mailinglists : list(list(name = "codeface_test_project0tUiVq.dev1", source = "generated", type = "dev"), list(name = "codeface_test_project0tUiVq.dev2", source = "generated", type = "dev"), list(name = "codeface_test_project0tUiVq.user1", source = "generated", type = "user"), list(name = "codeface_test_project0tUiVq.user2", source = "generated", type = "user"))
+2026-08-11 10:51:08 [codeface.R] DEBUG: project : codeface_test_project0tUiVq
+2026-08-11 10:51:08 [codeface.R] DEBUG: rcs : c("v0_rc_0", "v1_rc_1", "v2_rc_3")
+2026-08-11 10:51:08 [codeface.R] DEBUG: repo : codeface_test_project0tUiVq
+2026-08-11 10:51:08 [codeface.R] DEBUG: revisions : c("v0_release", "v1_release", "v2_release")
+2026-08-11 10:51:08 [codeface.R] DEBUG: tagging : tag
+2026-08-11 10:51:08 [codeface.R] DEBUG: artifactType : file
+2026-08-11 10:51:08 [codeface.R] DEBUG: dependencyType : none
+2026-08-11 10:51:08 [codeface.R] DEBUG: qualityType : corrective
+2026-08-11 10:51:08 [codeface.R] DEBUG: communicationType : mail
+2026-08-11 10:51:08 [codeface.R] DEBUG: pid : 8
+2026-08-11 10:51:08 [codeface.R] DEBUG: con : new("MySQLConnection", Id = c(0, 0))
+2026-08-11 10:51:08 [codeface.R] DEBUG: tstamps.release : list(id = c(16, 17, 19), type = c(2, 2, 2), tag = c("v0_release", "v1_release", "v2_release"), date = c(1357570800, 1358769042, 1358769042), projectId = c(8, 8, 8))
+2026-08-11 10:51:08 [codeface.R] DEBUG: tstamps.all : list(id = c(16, 17, 18, 19, 20), type = c(2, 2, 1, 2, 1), tag = c("v0_release", "v1_release", "v1_rc_1", "v2_release", "v2_rc_3"), date = c(1357570800, 1358769042, 1357653600, 1358769042, 1358509362), projectId = c(8, 8, 8, 8, 8))
+2026-08-11 10:51:08 [codeface.R] DEBUG: boundaries : list(date.start = c(1357570800, 1358769042), date.end = c(1358769042, 1358769042), date.rc.start = c(1357653600, 1358509362), tag = c("v0_release", "v1_release"), cycle = c("v0_release-v1_release", "v1_release-v2_release"))
+2026-08-11 10:51:08 [codeface.R] DEBUG: repodir : /tmp/codeface_test_project0tUiVq/.git
+2026-08-11 10:51:08 [codeface.R] DEBUG: range.id : 8
+2026-08-11 10:51:08 [codeface.R] DEBUG: profile : FALSE
+2026-08-11 10:51:08 [codeface.R] DEBUG: jobs : 1
+2026-08-11 10:51:08 [codeface.R] DEBUG: use_corpus : FALSE
+2026-08-11 10:51:08 [codeface.R.complexity] INFO: Using 1 jobs
+
+NULL
+2026-08-11 10:51:08 [codeface.project] MainProcess INFO: => Analysing time series
+2026-08-11 10:51:10 [codeface.R.config] DEBUG: Set log level to 'devinfo' == 15
+2026-08-11 10:51:10 [codeface.R] DEBUG: Configuration options:
+2026-08-11 10:51:10 [codeface.R] DEBUG: dbhost : localhost
+2026-08-11 10:51:10 [codeface.R] DEBUG: dbuser : codeface
+2026-08-11 10:51:10 [codeface.R] DEBUG: dbpwd : codeface
+2026-08-11 10:51:10 [codeface.R] DEBUG: dbname : codeface_testing
+2026-08-11 10:51:10 [codeface.R] DEBUG: idServicePort : 8383
+2026-08-11 10:51:10 [codeface.R] DEBUG: idServiceHostname : localhost
+2026-08-11 10:51:10 [codeface.R] DEBUG: sleepTime : 1000
+2026-08-11 10:51:10 [codeface.R] DEBUG: proxyPort : 83
+2026-08-11 10:51:10 [codeface.R] DEBUG: dbport : 3306
+2026-08-11 10:51:10 [codeface.R] DEBUG: understand : FALSE
+2026-08-11 10:51:10 [codeface.R] DEBUG: sloccount : FALSE
+2026-08-11 10:51:10 [codeface.R] DEBUG: description : codeface_test_project0tUiVq Description
+2026-08-11 10:51:10 [codeface.R] DEBUG: mailinglists : list(list(name = "codeface_test_project0tUiVq.dev1", source = "generated", type = "dev"), list(name = "codeface_test_project0tUiVq.dev2", source = "generated", type = "dev"), list(name = "codeface_test_project0tUiVq.user1", source = "generated", type = "user"), list(name = "codeface_test_project0tUiVq.user2", source = "generated", type = "user"))
+2026-08-11 10:51:10 [codeface.R] DEBUG: project : codeface_test_project0tUiVq
+2026-08-11 10:51:10 [codeface.R] DEBUG: rcs : c("v0_rc_0", "v1_rc_1", "v2_rc_3")
+2026-08-11 10:51:10 [codeface.R] DEBUG: repo : codeface_test_project0tUiVq
+2026-08-11 10:51:10 [codeface.R] DEBUG: revisions : c("v0_release", "v1_release", "v2_release")
+2026-08-11 10:51:10 [codeface.R] DEBUG: tagging : tag
+2026-08-11 10:51:10 [codeface.R] DEBUG: artifactType : file
+2026-08-11 10:51:10 [codeface.R] DEBUG: dependencyType : none
+2026-08-11 10:51:10 [codeface.R] DEBUG: qualityType : corrective
+2026-08-11 10:51:10 [codeface.R] DEBUG: communicationType : mail
+2026-08-11 10:51:10 [codeface.R] DEBUG: pid : 8
+2026-08-11 10:51:10 [codeface.R] DEBUG: con : new("MySQLConnection", Id = c(0, 0))
+2026-08-11 10:51:10 [codeface.R] DEBUG: tstamps.release : list(id = c(16, 17, 19), type = c(2, 2, 2), tag = c("v0_release", "v1_release", "v2_release"), date = c(1357570800, 1358769042, 1358769042), projectId = c(8, 8, 8))
+2026-08-11 10:51:10 [codeface.R] DEBUG: tstamps.all : list(id = c(16, 17, 18, 19, 20), type = c(2, 2, 1, 2, 1), tag = c("v0_release", "v1_release", "v1_rc_1", "v2_release", "v2_rc_3"), date = c(1357570800, 1358769042, 1357653600, 1358769042, 1358509362), projectId = c(8, 8, 8, 8, 8))
+2026-08-11 10:51:10 [codeface.R] DEBUG: boundaries : list(date.start = c(1357570800, 1358769042), date.end = c(1358769042, 1358769042), date.rc.start = c(1357653600, 1358509362), tag = c("v0_release", "v1_release"), cycle = c("v0_release-v1_release", "v1_release-v2_release"))
+2026-08-11 10:51:10 [codeface.R] DEBUG: resdir : /tmp/codeface_test_project0tUiVq/.git/results/codeface_test_project0tUiVq/tag
+2026-08-11 10:51:10 [codeface.R] DEBUG: profile : FALSE
+2026-08-11 10:51:10 [codeface.R] DEBUG: jobs : 1
+2026-08-11 10:51:10 [codeface.R] DEBUG: use_corpus : FALSE
+2026-08-11 10:51:10 [codeface.R] DEBUG: row names were found from a short variable and have been discarded
+2026-08-11 10:51:10 [codeface.R] DEBUG: row names were found from a short variable and have been discarded
+2026-08-11 10:51:10 [codeface.R] DEBUG: row names were found from a short variable and have been discarded
+geom_path: Each group consists of only one observation. Do you need to adjust
+the group aesthetic?
+geom_path: Each group consists of only one observation. Do you need to adjust
+the group aesthetic?
+2026-08-11 10:51:11 [codeface.R] DEBUG: Removed 4 rows containing non-finite values (stat_boxplot).
+2026-08-11 10:51:12 [codeface.R] DEBUG: Removed 4 rows containing non-finite values (stat_boxplot).
+2026-08-11 10:51:12 [codeface.R] DEBUG: Removed 4 rows containing non-finite values (stat_boxplot).
+2026-08-11 10:51:13 [codeface.R] DEBUG: Decimal MySQL column 3 imported as numeric
+2026-08-11 10:51:13 [codeface.R] DEBUG: Decimal MySQL column 4 imported as numeric
+2026-08-11 10:51:13 [codeface.R] DEBUG: Decimal MySQL column 5 imported as numeric
+2026-08-11 10:51:13 [codeface.R] DEBUG: Decimal MySQL column 6 imported as numeric
+2026-08-11 10:51:13 [codeface.R] DEBUG: Decimal MySQL column 3 imported as numeric
+2026-08-11 10:51:13 [codeface.R] DEBUG: Decimal MySQL column 4 imported as numeric
+2026-08-11 10:51:13 [codeface.R] DEBUG: Decimal MySQL column 5 imported as numeric
+2026-08-11 10:51:13 [codeface.R] DEBUG: Decimal MySQL column 6 imported as numeric
+2026-08-11 10:51:13 [codeface.R] DEBUG: Decimal MySQL column 3 imported as numeric
+2026-08-11 10:51:13 [codeface.R] DEBUG: Decimal MySQL column 4 imported as numeric
+2026-08-11 10:51:13 [codeface.R] DEBUG: Decimal MySQL column 5 imported as numeric
+2026-08-11 10:51:13 [codeface.R] DEBUG: Decimal MySQL column 6 imported as numeric
+2026-08-11 10:51:13 [codeface.R] DEBUG: Decimal MySQL column 3 imported as numeric
+2026-08-11 10:51:13 [codeface.R] DEBUG: Decimal MySQL column 4 imported as numeric
+2026-08-11 10:51:13 [codeface.R] DEBUG: Decimal MySQL column 5 imported as numeric
+2026-08-11 10:51:13 [codeface.R] DEBUG: Decimal MySQL column 6 imported as numeric
+2026-08-11 10:51:14 [codeface.R] DEBUG: Transformation introduced infinite values in continuous y-axis
+2026-08-11 10:51:14 [codeface.R] DEBUG: Removed 2 rows containing non-finite values (stat_boxplot).
+2026-08-11 10:51:14 [codeface.project] MainProcess INFO: => Codeface run complete!
+2026-08-11 10:51:14 [codeface.configuration] MainProcess DEVINFO: Loading global configuration file '/codeface/codeface_testing.conf'
+2026-08-11 10:51:14 [codeface.configuration] MainProcess DEVINFO: Loading project configuration file '/tmp/codeface_test_project0tUiVq/.git/testproject.conf'
+2026-08-11 10:51:14 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_project0tUiVq/tag with ID 8
+2026-08-11 10:51:14 [codeface.configuration] MainProcess DEVINFO: Loading global configuration file '/codeface/codeface_testing.conf'
+2026-08-11 10:51:14 [codeface.configuration] MainProcess DEVINFO: Loading project configuration file '/tmp/codeface_test_project0tUiVq/.git/testproject.conf'
+2026-08-11 10:51:15 [codeface.dbmanager] MainProcess DEVINFO: Using project codeface_test_project0tUiVq/tag with ID 8
+.
+----------------------------------------------------------------------
+Ran 4 tests in 81.490s
+
+OK
+
+===== running unittests =====
+
+
+===== running integration tests =====
+
+('Table not filled (expected): ', 'commit_communication')
+('Table not filled (expected): ', 'per_cluster_statistics')
+('Table not filled (expected): ', 'issue_change')
+('Table not filled (expected): ', 'watcher_list')
+('Table not filled (expected): ', 'issue_relations')
+('Table not filled (expected): ', 'issue')
+('Table not filled (expected): ', 'thread_density')
+('Table not filled (expected): ', 'commit_dependency')
+('Table not filled (expected): ', 'plot_bin')
+('Table not filled (expected): ', 'url_info')
+('Table not filled (expected): ', 'commit_communication')
+('Table not filled (expected): ', 'per_cluster_statistics')
+('Table not filled (expected): ', 'issue_change')
+('Table not filled (expected): ', 'watcher_list')
+('Table not filled (expected): ', 'issue_relations')
+('Table not filled (expected): ', 'issue')
+('Table not filled (expected): ', 'thread_density')
+('Table not filled (expected): ', 'commit_dependency')
+('Table not filled (expected): ', 'plot_bin')
+('Table not filled (expected): ', 'url_info')
+('Table not filled (expected): ', 'commit_communication')
+('Table not filled (expected): ', 'per_cluster_statistics')
+('Table not filled (expected): ', 'issue_change')
+('Table not filled (expected): ', 'watcher_list')
+('Table not filled (expected): ', 'issue_relations')
+('Table not filled (expected): ', 'issue')
+('Table not filled (expected): ', 'thread_density')
+('Table not filled (expected): ', 'plot_bin')
+('Table not filled (expected): ', 'url_info')
+('Table not filled (expected): ', 'commit_communication')
+('Table not filled (expected): ', 'per_cluster_statistics')
+('Table not filled (expected): ', 'issue_change')
+('Table not filled (expected): ', 'watcher_list')
+('Table not filled (expected): ', 'issue_relations')
+('Table not filled (expected): ', 'issue')
+('Table not filled (expected): ', 'thread_density')
+('Table not filled (expected): ', 'commit_dependency')
+('Table not filled (expected): ', 'plot_bin')
+('Table not filled (expected): ', 'url_info')
+
+===== All integration and unit tests succeeded :) =====

@@ -1,0 +1,1774 @@
+diff --git a/codeface/R/config.r b/codeface/R/config.r
+index 8b82fc8..13ac9d1 100644
+--- a/codeface/R/config.r
++++ b/codeface/R/config.r
+@@ -78,8 +78,18 @@ load.config <- function(global.file, project.file=NULL) {
+       stop(paste("Project configuration file", project.file, "does not exist!"))
+   }
+ 
+-  ## Append project configuration to conf
+-  conf <- c(conf, yaml.load_file(project.file))
++  ## Merge project configuration into conf.
++  ##
++  ## NOTE(lab07): this was `conf <- c(conf, yaml.load_file(project.file))`.
++  ## c() concatenates lists, it does not merge them: when a key is present in
++  ## both the global and the project file the result contains *two* elements
++  ## with that name, and `conf$key` resolves to the first one -- the global
++  ## value. Because `understand` and `sloccount` are defaulted to FALSE above
++  ## (i.e. before this line), every project configuration's `sloccount: true`
++  ## was silently discarded and do.complexity.analysis() always returned early,
++  ## leaving the sloccount_ts table empty. Replace duplicate keys instead.
++  project.conf <- yaml.load_file(project.file)
++  conf[names(project.conf)] <- project.conf
+ 
+   if (is.null(conf$project) || is.null(conf$repo)) {
+     stop("Malformed configuration: Specify project and repository!\n")
+diff --git a/codeface/R/shiny/apps/common.server.r b/codeface/R/shiny/apps/common.server.r
+index 156ae37..f4450bd 100644
+--- a/codeface/R/shiny/apps/common.server.r
++++ b/codeface/R/shiny/apps/common.server.r
+@@ -52,6 +52,27 @@ common.server.init <- function(input, output, session, app.name) {
+   ## Read out PID from the URL and check if it is valid
+   pid <- reactive({ args.list()$projectid })
+ 
++  ## NOTE(lab07): common.ui.r renders tags$h1(textOutput("quantarchHeader")),
++  ## but nothing anywhere in the frontend ever assigned that output. Every page
++  ## built on the common shell -- details, plots, timeseries, timezones --
++  ## therefore drew an empty h1 with 10px of padding above and below: a blank
++  ## band between the breadcrumb and the content where the page title belongs,
++  ## and one more way in which those pages did not match the dashboard.
++  ##
++  ## The title is the app's own nav.list label, prefixed with the project name
++  ## in the "<project> / <page>" form the dashboard already uses for its widget
++  ## title bars.
++  output$quantarchHeader <- renderText({
++    page <- if (app.name %in% names(nav.list)) {
++      label.text(nav.list[[app.name]]$label(paramstr()))
++    } else {
++      app.name
++    }
++    project <- projects.list$name[projects.list$id ==
++                                  suppressWarnings(as.numeric(pid()))]
++    if (length(project) == 1) { paste(project, page, sep=" / ") } else { page }
++  })
++
+   ## returns the choices named vector
+   choices <- projects.choices(projects.list)
+ 
+@@ -100,21 +121,60 @@ detailPage <- function(app.name=NULL, widgets=NULL, additional.input=list()){
+     pid = allpids$pid
+     selected = allpids$selected  # to be used for comparisons
+ 
+-    observe({
++    range.id <- reactive({input$view})
++
++    if (is.null(widgets)) {
++      ## NOTE(lab07): this was strsplit(allpids$args.list()$widget, ","), and a
++      ## URL with no widget parameter makes that strsplit(NULL, ","), which
++      ## raises "non-character argument". It runs in the server function
++      ## itself, so the session dies before anything is drawn:
++      ## /apps/details/?projectid=2 -- what you get by trimming a details link,
++      ## or by following nav.list$details$url, which carries no widget --
++      ## answered with "Disconnected from the server" and left the actual
++      ## reason in the app log where nobody looks. Treat a missing parameter as
++      ## an empty selection and report it properly below.
++      widgets <- isolate({
++        w <- allpids$args.list()$widget
++        if (is.null(w)) { character(0) } else { unlist(strsplit(as.character(w), ",")) }
++      })
++    }
++
++    ## NOTE(lab07): the projectid checks below used to be stop() calls inside an
++    ## observe(). stop() in an observer tears the session down just as fatally,
++    ## so a missing or non-numeric projectid also reached the user as
++    ## "Disconnected from the server" rather than as something actionable.
++    ## Unknown widget names were not checked at all and failed later, deeper in
++    ## widget construction, with an equally opaque crash.
++    ##
++    ## Report the reason in the page and leave the session up.
++    page.problem <- isolate({
+       if (!is.vector(pid())) {
+-        stop("No projectid parameter in URL")
+-      } else if (is.na(as.numeric(pid()))) {
+-        stop("projectid URL parameter is empty")
++        "This page needs a projectid parameter in its URL, for example ?projectid=1"
++      } else if (is.na(suppressWarnings(as.numeric(pid())))) {
++        paste("The projectid URL parameter is not a number:", pid())
++      } else if (length(widgets) == 0) {
++        "This page needs a widget parameter in its URL naming the widgets to show."
++      } else if (!all(widgets %in% names(widget.list))) {
++        paste("No such widget:", paste(setdiff(widgets, names(widget.list)),
++                                       collapse=", "))
++      } else {
++        NULL
+       }
+-      loginfo(paste("New Project ID: ", pid()))
+     })
+ 
+-    range.id <- reactive({input$view})
+-
+-    if (is.null(widgets)) {
+-      widgets <- isolate({unlist(strsplit(allpids$args.list()$widget,","))})
++    if (!is.null(page.problem)) {
++      logwarn(paste("Cannot build detail page:", page.problem))
++      output$quantarchContent <- renderUI({
++        div(class="span12",
++            div(class="alert", tags$strong("Nothing to show. "), page.problem))
++      })
++      return(invisible(NULL))
+     }
+ 
++    observe({
++      loginfo(paste("New Project ID: ", pid()))
++    })
++
+ 
+     ## Note that since R always works by value, you CAN NOT change an
+     ## object in e.g. a for loop; you always have to get a copy
+diff --git a/codeface/R/shiny/apps/common.ui.r b/codeface/R/shiny/apps/common.ui.r
+index 2515566..77cc356 100644
+--- a/codeface/R/shiny/apps/common.ui.r
++++ b/codeface/R/shiny/apps/common.ui.r
+@@ -19,6 +19,12 @@
+ shinybootstrap2::withBootstrap2({
+ shinyUI(bootstrapPage(
+   tagList(
++    ## NOTE(lab07): the shared stylesheet was linked only by dashboard/ui.r, so
++    ## every page built on this common shell -- details, plots, timeseries,
++    ## timezones -- rendered with unstyled Bootstrap defaults. See the header
++    ## of nav/js/codeface.css.
++    tags$head(tags$link(rel = "stylesheet", type = "text/css",
++                        href = "nav/codeface.css")),
+     tags$div( class = "container",
+       ## first row contains breadcrumb and selectors for projects to compare with
+   		tags$div( class="row", style="margin-top: 10px; height: 36px;",
+diff --git a/codeface/R/shiny/apps/dashboard/server.r b/codeface/R/shiny/apps/dashboard/server.r
+index 50c161b..a83bfbf 100644
+--- a/codeface/R/shiny/apps/dashboard/server.r
++++ b/codeface/R/shiny/apps/dashboard/server.r
+@@ -132,8 +132,25 @@ widgetbase.output <- function(input, output, id, widget.class, topic, pid, size_
+       detail.link <- list()
+     }
+     
+-    all.link <- div(style="float:right;", 
+-                    a(class="link_projects", href=paste("?widget=", widget.class[[1]], sep=""), ""))
++    ## NOTE(lab07): this used to be
++    ##   href=paste("?widget=", widget.class[[1]], sep="")
++    ## widget.class[[1]] is the `widget.classes` field, which createWidgetClass
++    ## builds as c(class, "widget") -- a character *vector* (e.g. three elements
++    ## for widget.overview.project). paste() therefore returned a vector, so the
++    ## href attribute had length > 1.
++    ##
++    ## The htmltools of 2013 silently used the first element; current htmltools
++    ## rejects it, and the whole R session dies while rendering:
++    ##   Warning in if (!is.na(attribValue)) : the condition has length > 1
++    ##   Error in writeImpl(text): Text to be written must be a length-one
++    ##                             character vector
++    ## Shiny Server then reports "The application unexpectedly exited", which
++    ## the browser shows as "Disconnected from the server".
++    ##
++    ## The link wants this widget's own class name, i.e. the first element.
++    all.link <- div(style="float:right;",
++                    a(class="link_projects",
++                      href=paste("?widget=", widget.class$widget.classes[[1]], sep=""), ""))
+     
+     ## append footer
+     footer <- tags$div(class="link_bar", detail.link, all.link)
+@@ -443,7 +460,16 @@ shinyServer(function(input, output, session) {
+   observe({
+ 
+     ## modal dialog Save button will trigger this context
+-    if (input$addWidgetButton == 0) return()
++    ## NOTE(lab07): this was `if (input$addWidgetButton == 0) return()`. The
++    ## button lives in the "Add Widget" modal, which does not exist yet when
++    ## the session starts, so the input is NULL on the observer's first run --
++    ## and NULL == 0 is logical(0), which makes `if` raise
++    ##   Error in if: argument is of length zero
++    ## An unhandled error in an observer closes the Shiny session, so the
++    ## dashboard sent its widgets, drew them, and then dropped the connection:
++    ## the page loaded and immediately reported "Disconnected from the server".
++    ## Treat "no button yet" the same as "not clicked".
++    if (is.null(input$addWidgetButton) || input$addWidgetButton == 0) return()
+     ## modal dialog selectInput is isolated, so it will only buffer the data
+     widget.classname <- isolate({input$addwidget.class.name})
+ 
+diff --git a/codeface/R/shiny/apps/dashboard/ui.r b/codeface/R/shiny/apps/dashboard/ui.r
+index 6b48036..68a1ad8 100644
+--- a/codeface/R/shiny/apps/dashboard/ui.r
++++ b/codeface/R/shiny/apps/dashboard/ui.r
+@@ -29,8 +29,10 @@ shinyUI(bootstrapPage(
+       ## TODOS: Einbinden der js resourcen aus dem nav/js verzeichnis (js pfad generieren und hier mit einbinden)
+       ##
+   	  
+-  		## Adapt the styles as needed (some seem to be ignored)
+-  		tags$link(rel = 'stylesheet', type = 'text/css', href = 'styles.css'),
++  		## NOTE(lab07): was href='styles.css', i.e. this app's own www/ copy.
++  		## The stylesheet is now shared with the other five apps from nav/;
++  		## see the header of nav/js/codeface.css.
++  		tags$link(rel = 'stylesheet', type = 'text/css', href = 'nav/codeface.css'),
+   		tags$script(src = "gridsterWidgetsExt.js"),
+       tags$script(src = "nav/qa_modal.js"),
+       tags$script(src = 'js/raphael.2.1.0.min.js'),
+diff --git a/codeface/R/shiny/apps/plots/global.r b/codeface/R/shiny/apps/plots/global.r
+new file mode 100644
+index 0000000..5fa2931
+--- /dev/null
++++ b/codeface/R/shiny/apps/plots/global.r
+@@ -0,0 +1,17 @@
++## This file is part of Codeface. Codeface is free software: you can
++## redistribute it and/or modify it under the terms of the GNU General Public
++## License as published by the Free Software Foundation, version 2.
++##
++## This program is distributed in the hope that it will be useful, but WITHOUT
++## ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
++## FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
++## details.
++
++## NOTE(lab07): this file was missing. The projects/details/dashboard apps each
++## have a global.r that sources common.server.r, which is what defines the
++## shared navigation helpers (breadcrumbOutput and friends) and the global
++## `conf` / `projects.list` objects. Without it these three apps load their UI
++## via common.ui.r but die on first render with
++##   Error in breadcrumbOutput: could not find function "breadcrumbOutput"
++## and the server returns HTTP 500.
++source("../common.server.r", chdir=TRUE)
+diff --git a/codeface/R/shiny/apps/plots/server.r b/codeface/R/shiny/apps/plots/server.r
+index 105f053..2228325 100644
+--- a/codeface/R/shiny/apps/plots/server.r
++++ b/codeface/R/shiny/apps/plots/server.r
+@@ -17,7 +17,12 @@
+ ## All Rights Reserved.
+ 
+ source("../common.server.r", chdir=TRUE)
+-shinyServer(detailPage("timeseries", c("widget.timeseries.plots"),
++## NOTE(lab07): this app announced itself to the navigation as "timeseries" --
++## a leftover from being copied out of the timeseries app. The name is looked
++## up in nav.list to build the breadcrumb, so /apps/plots/ titled itself
++## "Mailing list activity" and hung itself under Communication, when its own
++## nav.list entry says "Time series of complexity metrics" under Complexity.
++shinyServer(detailPage("plots", c("widget.timeseries.plots"),
+     additional.input = list(
+         smooth = radioButtons("smooth", "Smoothing window size",
+                         choices = c("None" = 0,
+diff --git a/codeface/R/shiny/apps/projects/server.r b/codeface/R/shiny/apps/projects/server.r
+index 331c774..41315e4 100644
+--- a/codeface/R/shiny/apps/projects/server.r
++++ b/codeface/R/shiny/apps/projects/server.r
+@@ -32,18 +32,21 @@ shinyServer(function(input, output, session) {
+   pid <- reactive({ args.list()[["projectid"]] })
+ 
+ 	## Calculate valid selected PID
++	## NOTE(lab07): this used to clamp the project id into [1, #projects] and
++	## the loop below then compared it against the *row index* of the list
++	## entry. Those two only agree when project ids happen to run 1..n. Our
++	## flask project has id 2 and is the only project, so the id was clamped to
++	## 1 and the right row lit up by coincidence; add a second project, or
++	## delete and re-add one so the ids have a gap, and the sidebar highlights
++	## a different project than the one the URL selects.
++	## Match on the id itself, and keep "no project chosen" distinct from
++	## "the first project", so the bare landing page highlights nothing.
+ 	valid.pid <- reactive({
+-    projects.n <- nrow(projects.list);
+-		if (projects.n == 0) stop("no projects") # must be non-zero
+-    valid.pid <- 0
+-		## if URL parameter supplied a project id, check valid range
+-		if (!is.null(pid()) && !(str_trim(as.character(pid())) == "")) {
+-			valid.pid <- as.integer(pid())
+-			if (valid.pid < 1) valid.pid <- 1
+-			if (valid.pid > projects.n) valid.pid <- projects.n
+-    }
+-    valid.pid
+-  })
++		if (nrow(projects.list) == 0) stop("no projects") # must be non-zero
++		requested <- suppressWarnings(as.integer(str_trim(as.character(pid()))))
++		if (length(requested) == 1 && !is.na(requested) &&
++		    requested %in% projects.list$id) { requested } else { NA }
++	})
+ 
+ 	## Reactive Block: Output navigation sidebar with current projects
+ 	output$selectionlistelements <- renderUI({
+@@ -55,7 +58,10 @@ shinyServer(function(input, output, session) {
+ 		  for (i in 1:nrow(childrenIds)) {
+ 			  ptr <- nav.list[[as.character(childrenIds$id[i])]]
+   			cparamstr <- as.character(childrenIds$params[i])
+-  			if ( i == valid.pid()) {
++  			## childrenIds is built from projects.list in order, so row i is
++  			## project projects.list$id[i] -- compare ids, not positions.
++  			this.pid <- projects.list$id[[i]]
++  			if (!is.na(valid.pid()) && this.pid == valid.pid()) {
+ 	  		  childtags <- tagAppendChild(childtags,
+ 				  tags$li( class = "active", a(href = ptr$url(cparamstr), ptr$label(cparamstr))))
+ 		  	} else {
+@@ -68,8 +74,11 @@ shinyServer(function(input, output, session) {
+     #print(childtags)
+ 
+ 		## finally return the html
++		## NOTE(lab07): the header read "Open Source Projects" while the
++		## breadcrumb directly above it, and the nav.list entry that feeds it,
++		## both say "Codeface projects". Same list, two names.
+ 		tagsul <- tags$ul( class = "nav nav-list",
+-							tags$li( class="nav-header",  "Open Source Projects"))
++							tags$li( class="nav-header",  "Codeface projects"))
+ 		tagAppendChild( tagsul, childtags )
+ 		})
+ 
+diff --git a/codeface/R/shiny/apps/projects/ui.r b/codeface/R/shiny/apps/projects/ui.r
+index e7084fb..4583438 100644
+--- a/codeface/R/shiny/apps/projects/ui.r
++++ b/codeface/R/shiny/apps/projects/ui.r
+@@ -25,18 +25,38 @@ suppressPackageStartupMessages(library(shiny))
+ 
+ shinybootstrap2::withBootstrap2({
+ shinyUI(bootstrapPage(
++	## NOTE(lab07): the shared stylesheet was linked only by dashboard/ui.r;
++	## see the header of nav/js/codeface.css.
++	tags$head(tags$link(rel = "stylesheet", type = "text/css",
++	                    href = "nav/codeface.css")),
++
+ 	tags$div( class = "container",
+ 		## div holds breadcrumb
+-		tags$div( class="row", 
+-			uiOutput("quantarchBreadcrumb"))
+-		
++		## NOTE(lab07): three things differed from every other app's shell in
++		## common.ui.r, so the landing page did not line up with the pages it
++		## links to. The breadcrumb row had no top margin or fixed height, so
++		## the breadcrumb sat higher here than anywhere else; the output was
++		## declared with uiOutput while the rest of the frontend uses the
++		## breadcrumbOutput helper (same markup, but only one of them says
++		## what it is); and there was no page title at all.
++		tags$div( class="row", style="margin-top: 10px; height: 36px;",
++			tags$div( class="span12", style="height: 100%;",
++			          breadcrumbOutput("quantarchBreadcrumb")))
++
++		## second row contains the page title, as in common.ui.r
++		,tags$div( class="row",
++			tags$div( class="span12", style="padding: 10px 0px;",
++			          tags$h1("Codeface projects")))
++
+ 		## div holds navigation sidebar
+-		,tags$div( class="row", 
+-			tags$div( id="selectionlistelements", class="span4 well shiny-html-output" , list()),
+-			tags$div( class="span8", list() ))
+-		
++		## NOTE(lab07): the empty span8 next to it held an empty list() and
++		## rendered nothing; it is dropped rather than left as dead markup.
++		,tags$div( class="row",
++			tags$div( id="selectionlistelements",
++			          class="span4 well shiny-html-output", list()))
++
+ 		## TODO: init iframe communication, if needed
+ 		#,tags$script(src = "navigation/initiframecomm.js")
+-		) 
++		)
+ ))
+ })
+diff --git a/codeface/R/shiny/apps/timeseries/global.r b/codeface/R/shiny/apps/timeseries/global.r
+new file mode 100644
+index 0000000..5fa2931
+--- /dev/null
++++ b/codeface/R/shiny/apps/timeseries/global.r
+@@ -0,0 +1,17 @@
++## This file is part of Codeface. Codeface is free software: you can
++## redistribute it and/or modify it under the terms of the GNU General Public
++## License as published by the Free Software Foundation, version 2.
++##
++## This program is distributed in the hope that it will be useful, but WITHOUT
++## ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
++## FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
++## details.
++
++## NOTE(lab07): this file was missing. The projects/details/dashboard apps each
++## have a global.r that sources common.server.r, which is what defines the
++## shared navigation helpers (breadcrumbOutput and friends) and the global
++## `conf` / `projects.list` objects. Without it these three apps load their UI
++## via common.ui.r but die on first render with
++##   Error in breadcrumbOutput: could not find function "breadcrumbOutput"
++## and the server returns HTTP 500.
++source("../common.server.r", chdir=TRUE)
+diff --git a/codeface/R/shiny/apps/timezones/global.r b/codeface/R/shiny/apps/timezones/global.r
+new file mode 100644
+index 0000000..5fa2931
+--- /dev/null
++++ b/codeface/R/shiny/apps/timezones/global.r
+@@ -0,0 +1,17 @@
++## This file is part of Codeface. Codeface is free software: you can
++## redistribute it and/or modify it under the terms of the GNU General Public
++## License as published by the Free Software Foundation, version 2.
++##
++## This program is distributed in the hope that it will be useful, but WITHOUT
++## ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
++## FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
++## details.
++
++## NOTE(lab07): this file was missing. The projects/details/dashboard apps each
++## have a global.r that sources common.server.r, which is what defines the
++## shared navigation helpers (breadcrumbOutput and friends) and the global
++## `conf` / `projects.list` objects. Without it these three apps load their UI
++## via common.ui.r but die on first render with
++##   Error in breadcrumbOutput: could not find function "breadcrumbOutput"
++## and the server returns HTTP 500.
++source("../common.server.r", chdir=TRUE)
+diff --git a/codeface/R/shiny/index.html b/codeface/R/shiny/index.html
+index 9aaf0b5..b2eef20 100644
+--- a/codeface/R/shiny/index.html
++++ b/codeface/R/shiny/index.html
+@@ -1,13 +1,15 @@
+-<!--
+-Copyright Siemens AG 2013
+-
+-Copying and distribution of this file, with or without modification,
+-are permitted in any medium without royalty provided the copyright
+-notice and this notice are preserved.  This file is offered as-is,
+-without any warranty.
+--->
+-
++<!doctype html>
++<!-- NOTE(lab07): landing page. Shiny Server mounts each app under its own URL
++     path (site_dir + directory_index), so the apps live at /apps/<name>/ and
++     the site root is just a directory listing. This redirects the root to the
++     projects app, which is the frontend's intended entry point. -->
+ <html>
+-    <head><meta http-equiv="refresh" content="0; url=apps/dashboard"></head>
+-    <body />
++  <head>
++    <meta charset="utf-8">
++    <meta http-equiv="refresh" content="0; url=apps/projects/">
++    <title>Codeface</title>
++  </head>
++  <body>
++    <p>Redirecting to the <a href="apps/projects/">Codeface projects view</a>&hellip;</p>
++  </body>
+ </html>
+diff --git a/codeface/R/shiny/nav/breadcrumb.config.r b/codeface/R/shiny/nav/breadcrumb.config.r
+index 8995811..54e0c58 100644
+--- a/codeface/R/shiny/nav/breadcrumb.config.r
++++ b/codeface/R/shiny/nav/breadcrumb.config.r
+@@ -44,8 +44,15 @@ nav.list$projects <- list(
+     "Codeface projects"
+   },
+   ## (2) configure URL for the breadcrumb entry
++  ## NOTE(lab07): this pointed at "../dashboard/". This is the root of the
++  ## hierarchy -- nav.list$dashboard$parentId names it as the dashboard's
++  ## parent -- so it is the "go up" link every other page shows, labelled
++  ## "Codeface projects". Sending it to the dashboard meant that from
++  ## /apps/dashboard/?projectid=2 the up-link led back into the dashboard
++  ## (just without a project) instead of up to the projects app, which is the
++  ## page that actually lists the projects and the site's entry point.
+   url = function(paramstr = "") {
+-    "../dashboard/"
++    "../projects/"
+   }, # params can, for instance, be used for highlighting
+ 
+   ## (3) configure children displayed in dropdown
+@@ -114,17 +121,24 @@ constant.func <- function(value) {
+   return(f)
+ }
+ 
++## NOTE(lab07): these built "../details?projectid=2", with no slash before the
++## query string, while dashboard/server.r builds the same links as
++## "../details/?projectid=2". Both reach the app -- Shiny Server answers the
++## slashless form with a 301 to the canonical one and does carry the query
++## string across -- so every menu navigation cost a redundant round trip, and
++## the two halves of the frontend disagreed about how to name the same page.
++## Use the canonical form in both places.
+ constant.func.url <- function(name) {
+   if (grepl("\\?", name)) {
+     url.split <- strsplit(name, split="?", fixed=TRUE)[[1]]
+     q <- url.split[[2]]
+     f <- function(paramstr="") {
+       new.paramstr <- merge.query.strings(paramstr, q)
+-      paste("../", url.split[[1]], "?", new.paramstr, sep='')
++      paste("../", url.split[[1]], "/?", new.paramstr, sep='')
+     }
+   } else {
+     f <- function(paramstr="") {
+-      paste("../", name, "?", paramstr, sep='')
++      paste("../", name, "/?", paramstr, sep='')
+     }
+   }
+   return(f)
+@@ -161,6 +175,33 @@ nav.list$details <- list(
+ force(nav.list$details$label())
+ force(nav.list$details$url())
+ 
++## NOTE(lab07): the timezones app had no nav.list entry at all. The loop above
++## registers the apps named in the project.apps.* lists, and timezones is not
++## in any of them -- its content is reachable as a details page
++## (widget=widget.timezones.commits), so the standalone app was left out.
++## It is still served, though, and it calls detailPage("timezones"), so
++## renderBreadcrumbPanel fell through to its not-a-configured-app branch and
++## the page rendered the literal string
++##   ERROR (renderBreadcrumbPanel): originid= timezones is not a configured app id.
++## where its breadcrumb belongs.
++##
++## Registering it here fixes the breadcrumb. It is deliberately not added to
++## any project.apps.* list: those drive the dropdown menus, which already list
++## "Developer commit timezones" via the details route, and a second entry
++## pointing at the same content would be the inconsistency in the other
++## direction.
++nav.list$timezones <- list(
++  label = constant.func("Developer commit timezones"),
++  url = constant.func.url("timezones"),
++  childrenIds = function(paramstr) { data.frame() }, # NULL
++  parentId = function(paramstr="") {
++    id <- c("dashboard2")
++    data.frame(id=id, paramstr=paramstr)
++  }
++)
++force(nav.list$timezones$label())
++force(nav.list$timezones$url())
++
+ ##
+ ## Configure the project dashboard
+ ##
+diff --git a/codeface/R/shiny/nav/breadcrumb.shiny.r b/codeface/R/shiny/nav/breadcrumb.shiny.r
+index 1020417..16857a8 100644
+--- a/codeface/R/shiny/nav/breadcrumb.shiny.r
++++ b/codeface/R/shiny/nav/breadcrumb.shiny.r
+@@ -121,22 +121,41 @@ breadcrumbPanelData <- function (originId, paramstr = "") {
+ breadcrumbPanel <- function( breadcrumb ) {
+   # create Bootstrap compatible XML
+ 
++  ## NOTE(lab07): breadcrumb labels are not all plain strings. nav.list$dashboard2
++  ## returns tagList(symbol, name), where symbol is the div produced by
++  ## make.symbol() -- so the five topic entries (Basics, Communication,
++  ## Construction, Complexity, Collaboration) arrive here as tag objects.
++  ##
++  ## The label was passed through as.character(), which on a tag renders it to
++  ## its HTML *source text*. htmltools then escaped that text when it was used
++  ## as a child, so the breadcrumb and its dropdowns displayed
++  ##   <div style="font-family: symbola; display: inline; font-weight: 500;">&#128129</div> Basics
++  ## verbatim instead of the icon followed by "Basics". Plain-string labels
++  ## ("Codeface projects", the project name, the leaf page titles) were
++  ## unaffected, which is why only the topic level looked broken.
++  ##
++  ## Tags are therefore left alone and only genuinely atomic values coerced --
++  ## the coercion still matters because childrenIds() builds its columns with
++  ## data.frame(), which yields factors on the R releases this code targets.
++  as.label <- function( x ) {
++    if (inherits(x, c("shiny.tag", "shiny.tag.list", "html"))) x else as.character(x)
++  }
+ 
+   divider.tag <- function( x=FALSE ) {
+     if(x) { tags$span() } else { tags$span( class="divider","/")}}
+ 
+   bc.link <- function( bcurl, bclabel, x=FALSE ) {
+     if(x) {
+-      tags$b( as.character(bclabel) )
++      tags$b( as.label(bclabel) )
+     } else {
+       a( "data-target"="#", href = as.character(bcurl),
+-         as.character(bclabel))
++         as.label(bclabel))
+     }}
+ 
+   bc.children <- function( bcchildren, x=FALSE ) {
+     popdown.tags <- function(x) {
+-      tags$li(role="presentation", style="display:inline;", a(href=as.character(x$url),tabindex="-1", 
+-                                     role="menuitem", as.character(x$label)))
++      tags$li(role="presentation", style="display:inline;", a(href=as.character(x$url),tabindex="-1",
++                                     role="menuitem", as.label(x$label)))
+     }
+     if( length(bcchildren) == 0 ) {
+       NULL
+@@ -249,6 +268,19 @@ pageWithBreadcrumbAndHeader <- function (breadcrumbPanel, headerPanel, mainPanel
+ ## Utility function to be used in server.r
+ ##
+ 
++## NOTE(lab07): companion to as.label() in breadcrumbPanel(). A nav.list label
++## may be a tag object rather than a string, so anywhere a label has to go into
++## a text-only slot -- the page heading, say -- it must be reduced to its text
++## content first. Raw HTML fragments (the &#nnnn; entity a symbol is built
++## from) contribute no readable text and are dropped.
++label.text <- function( x ) {
++  if (inherits(x, "html")) return("")
++  if (is.character(x)) return(paste(x, collapse=""))
++  if (inherits(x, "shiny.tag")) return(label.text(x$children))
++  if (is.list(x)) return(paste(vapply(x, label.text, character(1)), collapse=""))
++  as.character(x)
++}
++
+ renderBreadcrumbPanel <- function(originid = "", paramstr = "") {
+   if ( originid %in% names(nav.list) ) {
+ 
+@@ -291,11 +323,59 @@ compareWithProjectsOutput <- function( outputId ) {
+ ## server.r function to render the output elements
+ ##
+ chosenSelectInput <- function(inputId, label, choices, multiple=FALSE, selected=NULL, options = list()) {
+-  select <- selectInput(inputId, "", choices, multiple=multiple, selected=selected)
+-  select.tag <- select[[2]]
+-  select.tag$attribs$class <- "chosen-select"
+-  select.tag$attribs[["data-placeholder"]] <- label
+-  select[[2]] <- select.tag
++  ## NOTE(lab07): selectize=FALSE did not exist in 2013 -- selectInput()
++  ## returned a plain <select>, which this function then enhanced with the
++  ## Chosen jQuery plugin below. Current Shiny auto-enhances every multi-value
++  ## selectInput with its own Selectize.js widget unless told not to, so
++  ## without this argument two client-side libraries wrapped the same
++  ## <select>: Shiny's Selectize box stacked above the Chosen box this
++  ## function builds, both reading "Select Projects for Comparison".
++  select <- selectInput(inputId, "", choices, multiple=multiple, selected=selected,
++                        selectize=FALSE)
++
++  ## NOTE(lab07): the Chosen attributes used to be applied by position:
++  ##   select.tag <- select[[2]]
++  ##   select.tag$attribs$class <- "chosen-select"
++  ##   select.tag$attribs[["data-placeholder"]] <- label
++  ##   select[[2]] <- select.tag
++  ##
++  ## In the Shiny of 2013 selectInput() returned tagList(label, select), so
++  ## [[2]] was the <select> element. Current Shiny wraps the control in a
++  ## container div, and a shiny.tag is list(name, attribs, children) -- so
++  ## [[2]] is the *attribs list*. The assignments therefore buried a nested
++  ## entry called "attribs", holding a two-element list, inside the div's own
++  ## attributes. Rendering that died with
++  ##   Warning in if (!is.na(attribValue)): the condition has length > 1
++  ##   Error in writeImpl: Text to be written must be a length-one character
++  ##                       vector
++  ## which Shiny reports as a failed output, so the dashboard and all four
++  ## detail pages drew an error box where the project-comparison selector
++  ## belongs -- and, because the class never reached the real <select>, Chosen
++  ## had nothing to attach to either.
++  ##
++  ## Locate the <select> by name instead; that does not care how Shiny chooses
++  ## to wrap it.
++  set.chosen <- function(x) {
++    if (inherits(x, "shiny.tag")) {
++      if (identical(x$name, "select")) {
++        x$attribs$class <- "chosen-select"
++        x$attribs[["data-placeholder"]] <- label
++        return(x)
++      }
++      x$children <- lapply(x$children, set.chosen)
++      return(x)
++    }
++    if (is.list(x)) {
++      ## lapply() drops the shiny.tag.list class; put it back.
++      keep <- attributes(x)
++      x <- lapply(x, set.chosen)
++      attributes(x) <- keep
++      return(x)
++    }
++    x
++  }
++  select <- set.chosen(select)
++
+   opts <- toJSON(options, collapse="")
+   if (length(options) == 0) opts <- ""
+   js <- paste("$('.chosen-select#",inputId,"').chosen(",opts,");", sep="",collapse="")
+@@ -324,9 +404,17 @@ projects.selected <- function(projects.list = list(id=list(),name=list()), pids.
+   }
+   pids.selected <- unlist(strsplit(pids.selected.css,","))
+   projects.list.index <- projects.list$id %in% pids.selected
+-  pnames.selected.vector <- unlist(projects.list$name[projects.list.index])
+-  if (length(pnames.selected.vector) == 0)    pnames.selected.vector <- NULL
+-  pnames.selected.vector
++  ## NOTE(lab07): this returned projects.list$name[...], the display labels.
++  ## Its only consumer is the `selected` argument of selectInput(), and the
++  ## Shiny of the day matched that against the choice *names*; current Shiny
++  ## matches it against the choice *values*, which projects.choices() sets to
++  ## the project ids. Returning names therefore selected nothing: pick projects
++  ## to compare, reload, and the selector came up empty while the qacompareids
++  ## cookie still held the ids and the widgets below were still comparing them.
++  ## Return the ids, so the control agrees with the state it is displaying.
++  pids.selected.vector <- unlist(projects.list$id[projects.list.index])
++  if (length(pids.selected.vector) == 0)    pids.selected.vector <- NULL
++  pids.selected.vector
+ }
+ 
+ projects.selector <- function(projects.list = list(id=list(),name=list()), pids.selected.css = "" ) {
+diff --git a/codeface/R/shiny/apps/dashboard/www/styles.css b/codeface/R/shiny/nav/js/codeface.css
+similarity index 54%
+rename from codeface/R/shiny/apps/dashboard/www/styles.css
+rename to codeface/R/shiny/nav/js/codeface.css
+index fe08cc1..21c21c1 100644
+--- a/codeface/R/shiny/apps/dashboard/www/styles.css
++++ b/codeface/R/shiny/nav/js/codeface.css
+@@ -6,6 +6,22 @@
+  * without any warranty.
+  */
+ 
++/* NOTE(lab07): this file used to live at apps/dashboard/www/styles.css.
++ *
++ * A Shiny app only serves its own www/ directory, so a stylesheet kept there
++ * is reachable from that one app and nowhere else -- and only dashboard/ui.r
++ * ever linked it. The result was that the dashboard had the Codeface link
++ * colours, heading sizes and widget chrome while projects, details, plots,
++ * timeseries and timezones fell back to bare Bootstrap 2: blue underlined
++ * links, a 36px h1, and no styling at all for the widget boxes those pages
++ * also render.
++ *
++ * nav/js is already the frontend's shared asset directory (chosen.min.css and
++ * symbola.css live here) and breadcrumb.shiny.r publishes it to every app as
++ * the "nav" resource prefix, so putting the stylesheet here makes one copy
++ * reachable from all six apps as nav/codeface.css.
++ */
++
+ body {
+     background-color: #FFF;
+     font-family: 'Helvetica Neue', Arial, sans-serif;
+@@ -72,7 +88,21 @@ a:hover {
+   line-height: normal;
+ }
+ 
+-div .grid_title {
++/* NOTE(lab07): the rules below were written as "div .grid_title",
++ * "div .title_bar" and so on. The space makes that a *descendant* combinator
++ * -- "an element of this class somewhere inside a div" -- rather than the
++ * intended "a div of this class". On the dashboard they happened to match
++ * anyway, because every widget ends up nested inside div.container, but the
++ * same markup rendered outside a div ancestor silently lost its styling, and
++ * .widget_view_select is applied to a <select>, not a div, so the intended
++ * "div.widget_view_select" would not have matched it at all.
++ *
++ * Plain class selectors say what these rules mean and hold wherever the
++ * markup is used. Two rules further down already used the correct
++ * "div.title_bar" form, which is what confirms the intent.
++ */
++
++.grid_title {
+   margin-top: 30px;
+   margin-bottom: 20px;
+   font-size: 22px;
+@@ -80,17 +110,17 @@ div .grid_title {
+   text-align: center;
+ }
+ 
+-div .grid_bigtext {
++.grid_bigtext {
+   font-weight: bold;
+   font-size: 80px;
+ }
+ 
+-div .grid_medtext {
++.grid_medtext {
+   font-weight: bold;
+   font-size: 40px;
+ }
+ 
+-div .widget_title {
++.widget_title {
+   margin-top: 2px;
+   margin-bottom: 2px;
+   font-size: 12px;
+@@ -99,7 +129,7 @@ div .widget_title {
+   line-height: normal;
+ }
+ 
+-div .widget_view_select {
++.widget_view_select {
+   margin-top: 0px;
+   margin-bottom: 0px;
+   width: 80%;
+@@ -110,11 +140,11 @@ div .widget_view_select {
+   line-height: normal;
+ }
+ 
+-div.title_bar td {
++.title_bar td {
+   padding-top:5px;
+ }
+ 
+-div .title_bar {
++.title_bar {
+   position: absolute;
+   top: 0px;
+   left: 0px;
+@@ -126,7 +156,7 @@ div .title_bar {
+   text-align: center;
+ }
+ 
+-div .link_bar {
++.link_bar {
+   position: absolute;
+   left: 0px;
+   bottom: 0px;
+@@ -135,18 +165,17 @@ div .link_bar {
+   width: 100%;
+ }
+ 
+-div.title_bar .control-label {
++.title_bar .control-label {
+   margin-bottom:0px;
+ }
+ 
+-div .content_box {
++.content_box {
+   margin-top: 25px;
+   margin-bottom: 15px;
+   height: 90%;
+   width: 100%;
+ }
+ 
+-div .shiny-plot-output {
++.shiny-plot-output {
+   overflow:hidden;
+ }
+-
+diff --git a/codeface/R/shiny/symbols.r b/codeface/R/shiny/symbols.r
+index e72a6dd..238d88a 100644
+--- a/codeface/R/shiny/symbols.r
++++ b/codeface/R/shiny/symbols.r
+@@ -19,9 +19,17 @@
+ ## A good listing is at
+ ## http://de.wikipedia.org/wiki/Unicodeblock_Verschiedene_Symbole
+ 
++## NOTE(lab07): the reference was built as paste("&#", unicode.hex, sep=""),
++## which has two problems. It omits the closing semicolon, so the reference is
++## only terminated by whatever character happens to follow it -- fine before a
++## "<", silently wrong before a digit. And it leans on R's default formatting
++## of the numeric literal: these are written as hex (0x1f323) but paste() emits
++## the decimal value, and for a round enough number R switches to scientific
++## notation, so a symbol could come out as "&#1.28e+05". Emitting the hex form
++## with sprintf is exact and needs no closing-character luck.
+ make.symbol <- function(unicode.hex) {
+-  div(style="font-family: symbola; display: inline; font-weight: 500;", 
+-      HTML(paste("&#",unicode.hex,sep="")))
++  div(style="font-family: symbola; display: inline; font-weight: 500;",
++      HTML(sprintf("&#x%X;", as.integer(unicode.hex))))
+   ## Uncomment this to make the example html file
+   #intToUtf8(unicode.hex)
+ }
+@@ -73,7 +81,17 @@ symbol.abstract.cross.heavy <- make.symbol(0x2716)
+ symbol.abstract.error <- make.symbol(0x21af)
+ symbols.abstract <- list(
+                          good = symbol.abstract.checkmark,
+-                         mostly.good = paste("(", symbol.abstract.checkmark, ")", sep=""),
++                         ## NOTE(lab07): this was
++                         ##   paste("(", symbol.abstract.checkmark, ")", sep="")
++                         ## paste() on a tag stringifies it to HTML source, so
++                         ## unlike its five siblings this entry was a plain
++                         ## character vector. htmltools escapes such a string
++                         ## when it is used as a child, so the Construction
++                         ## widget in its "mostly good" state displayed
++                         ##   (<div style="font-family: symbola; ...">&#10003</div>)
++                         ## as text instead of a parenthesised checkmark.
++                         ## tagList keeps the pieces as tags.
++                         mostly.good = tagList("(", symbol.abstract.checkmark, ")"),
+                          warn = symbol.abstract.warning,
+                          mostly.bad = symbol.abstract.cross,
+                          bad = symbol.abstract.cross.heavy,
+@@ -178,8 +196,13 @@ symbol.construction <- make.symbol(0x1f528) # Hammer
+ 
+ symbol.test.file <- function(filename) {
+   fileConn <- file(filename)
++  ## NOTE(lab07): this linked styles.css, which never declared the symbola
++  ## @font-face -- that lives in nav/js/symbola.css, next to the .ttf. The
++  ## preview therefore asked for font-family: symbola and rendered in whatever
++  ## the browser fell back to, which is precisely what this file exists to
++  ## check. Write the page next to nav/js/ for the relative path to resolve.
+   writeLines(c('<html><head>',
+-               '<link rel="stylesheet" type="text/css" href="styles.css"/>',
++               '<link rel="stylesheet" type="text/css" href="symbola.css"/>',
+                '</head><body style="font-size: 100px; font-family: symbola;">',
+                unlist(symbols.weather),
+                "<br>",
+diff --git a/codeface/R/shiny/widgets.r b/codeface/R/shiny/widgets.r
+index 77006b4..b5179ee 100644
+--- a/codeface/R/shiny/widgets.r
++++ b/codeface/R/shiny/widgets.r
+@@ -233,7 +233,19 @@ initWidget.widget <- function(w) {
+       ## If this fails; check that the initWidget only calls the superclass
+       ## after all the variables necessary for listViews have been filled!
+       l <- listViews(w)()
+-      l[[max(1, length(l)/2)]]
++      ## NOTE(lab07): l[[max(1, length(l)/2)]] assumed listViews() always
++      ## returns at least one choice. A widget whose views are derived from
++      ## data that does not exist for this project (e.g. mailing-list plots
++      ## on a git-only analysis) gets an empty vector here, and l[[1]] on
++      ## that raises "subscript out of bounds". Because every renderWidget
++      ## method reads the current view via w$view(), the failure surfaced
++      ## as though it came from the render code itself, not from here. There
++      ## genuinely is no view to default to in that case.
++      if (length(l) == 0) {
++        NULL
++      } else {
++        l[[max(1, length(l)/2)]]
++      }
+       #listViews(w)()[[1]]
+     } else {
+       w$view.raw()
+diff --git a/codeface/R/shiny/widgets/overview.r b/codeface/R/shiny/widgets/overview.r
+index 754d2a2..fcabd15 100644
+--- a/codeface/R/shiny/widgets/overview.r
++++ b/codeface/R/shiny/widgets/overview.r
+@@ -80,11 +80,22 @@ make.indicator <- function(symbol, color) {
+ 
+ 
+ ## Return HTML for an overview box
+-overview.html <- function(title, bigtext, subtitle, link, subtitle.size="100%") {
++##
++## NOTE(lab07): the subtitle rule declared font-size twice --
++##   paste("font-size:", subtitle.size, "; ... font-size: 60px; ...")
++## -- and the later declaration wins, so subtitle.size was dead. The only
++## caller that passes it, renderWidget.widget.overview.topic, asks for "400%"
++## to draw the topic icon large and got 60px like everything else.
++##
++## The default is 60px rather than the original "100%" precisely so that the
++## callers which do not pass a size keep rendering exactly as they do now:
++## for them the parameter was never reaching the stylesheet either way.
++overview.html <- function(title, bigtext, subtitle, link, subtitle.size="60px") {
+   tagList(
+     tags$div(class="grid_title", title),
+     tags$div(class='grid_bigtext', style="font-size:120px; line-height: 80px; text-align: center", bigtext),
+-    tags$div(style=paste("font-size:", subtitle.size, "; text-align: center; font-size: 60px; line-height: 40px; margin-top: 25px"), subtitle)
++    tags$div(style=paste("text-align: center; font-size: ", subtitle.size,
++                         "; line-height: 40px; margin-top: 25px", sep=""), subtitle)
+   )
+ }
+ 
+diff --git a/codeface/R/shiny/widgets/plots.r b/codeface/R/shiny/widgets/plots.r
+index 68c232f..8acb20d 100644
+--- a/codeface/R/shiny/widgets/plots.r
++++ b/codeface/R/shiny/widgets/plots.r
+@@ -17,8 +17,20 @@
+ ## All Rights Reserved.
+ 
+ suppressPackageStartupMessages(library(scales))
++suppressPackageStartupMessages(library(grid))
+ source("../../ts_utils.r", chdir=TRUE)
+ 
++## NOTE(lab07): shared placeholder for a widget.timeseries-family plot when
++## there is no series to show -- e.g. a mailing-list-derived metric on a
++## project that was analysed git-only, so the `plots` table simply has no
++## matching row. Mirrors the "No data available!" grid.text() placeholder
++## widget.timezones.commits already draws for the same situation, so an empty
++## widget looks like a deliberate state rather than a crash.
++no.data.plot <- function(msg = "No data available!") {
++  grid.newpage()
++  grid.text(msg, gp=gpar(fontsize=22, col="darkgrey"))
++}
++
+ ## Visualise time series including release boundaries
+ get.ts.data <- function(con, pid, name) {
+   plot.id <- get.plot.id.con(con, pid, name)
+@@ -109,8 +121,22 @@ initWidget.widget.timeseries.plots <- function(w) {
+ 
+ renderWidget.widget.timeseries <- function(w) {
+   renderPlot({
+-    name <- w$plots()$name[[which(w$plots()$id==w$view())]]
+-    labely <- w$plots()$labely[[which(w$plots()$id==w$view())]]
++    ## NOTE(lab07): this indexed w$plots() by which(...==w$view()) without
++    ## checking that anything matched. When a project has no row for this
++    ## series (e.g. mailing-list-derived plots on a git-only analysis),
++    ## w$plots() has zero rows, listViews() returns an empty choice list, and
++    ## w$view() is NULL -- so `which()` returns integer(0) and `[[integer(0)]]`
++    ## raises "subscript out of bounds", which Shiny reports as "An error has
++    ## occurred". Show the same placeholder widget.timezones.commits already
++    ## uses for "nothing to plot" instead of crashing the output.
++    plots <- w$plots()
++    view <- w$view()
++    if (nrow(plots) == 0 || is.null(view) || !(view %in% plots$id)) {
++      no.data.plot("No time series data available for this project.")
++      return(invisible(NULL))
++    }
++    name <- plots$name[[which(plots$id==view)]]
++    labely <- plots$labely[[which(plots$id==view)]]
+     if(is.na(labely)) labely <- name
+     ts <- get.ts.data(conf$con, w$pid(), name)
+     g <- do.ts.plot(ts, w$boundaries(), name, labely, w$smooth.or.def(),
+diff --git a/codeface/R/shiny/widgets/tagcloud.r b/codeface/R/shiny/widgets/tagcloud.r
+index 901a87a..9c1215a 100644
+--- a/codeface/R/shiny/widgets/tagcloud.r
++++ b/codeface/R/shiny/widgets/tagcloud.r
+@@ -35,7 +35,11 @@ initWidget.widget.tagcloud.mlsubjects <- function(w) {
+     " ORDER BY count DESC LIMIT 100"))})
+   w$frequencies <- reactive({
+     d <- w$data()
+-    lapply(1:length(d$subject), function(i) {
++    ## NOTE(lab07): was 1:length(d$subject). R's `:` counts down as readily as
++    ## up, so when there are no subjects (length 0) this is 1:0 = c(1, 0), not
++    ## an empty sequence -- and d$subject[[0]] raises "subscript out of
++    ## bounds". seq_len() is the safe form: seq_len(0) is genuinely empty.
++    lapply(seq_len(length(d$subject)), function(i) {
+            freqs <- termFreq(PlainTextDocument(stripWhitespace(removeWords(
+                              removeNumbers(removePunctuation(d$subject[[i]])),
+                              c(stopwords("english"), "V","v", "PATCH", "PATCHv",
+@@ -52,6 +56,15 @@ initWidget.widget.tagcloud.mlsubjects <- function(w) {
+ 
+ renderWidget.widget.tagcloud.mlsubjects <- function(w) {
+   renderUI({
++    ## NOTE(lab07): fixing the seq_len() bug above still leaves this crashing
++    ## on an empty freq_subjects table (git-only analysis, no mailing list) --
++    ## row_sums() on the resulting NULL raises "'x' must be an array of at
++    ## least two dimensions". Report it the same way common.server.r reports
++    ## a missing page parameter, instead of an unhandled error.
++    if (nrow(w$data()) == 0) {
++      return(div(class="alert",
++                 "No mailing list subject data for this project."))
++    }
+     toString(names(w$frequency()))
+     toString(w$frequency())
+     v <- w$frequency()
+diff --git a/codeface/R/shiny/widgets/timeseries.r b/codeface/R/shiny/widgets/timeseries.r
+index de86851..992a413 100644
+--- a/codeface/R/shiny/widgets/timeseries.r
++++ b/codeface/R/shiny/widgets/timeseries.r
+@@ -41,7 +41,18 @@ initWidget.widget.timeseries.messages.per.day <- function(w) {
+ 
+ renderWidget.widget.timeseries.messages.per.day <- function(w) {
+   renderPlot({
+-    name <- w$plots()$name[[which(w$plots()$id==w$view())]]
++    ## NOTE(lab07): same "subscript out of bounds" crash as
++    ## renderWidget.widget.timeseries in plots.r, and the same fix -- this
++    ## widget is specific to mailing-list activity, so a git-only analysis
++    ## (no mailing lists configured) always leaves w$plots() with zero rows
++    ## here, and it crashed on every single load.
++    plots <- w$plots()
++    view <- w$view()
++    if (nrow(plots) == 0 || is.null(view) || !(view %in% plots$id)) {
++      no.data.plot("No mailing list activity data for this project.")
++      return(invisible(NULL))
++    }
++    name <- plots$name[[which(plots$id==view)]]
+     ts <- get.ts.data(conf$con, w$pid(), name)
+     print(do.ts.plot(ts, w$boundaries(), name, "Messages per Day", w$smooth.or.def(), w$transform.or.def()))
+   })
+diff --git a/codeface/R/sloccount.r b/codeface/R/sloccount.r
+index e1e1cb0..10074e4 100644
+--- a/codeface/R/sloccount.r
++++ b/codeface/R/sloccount.r
+@@ -23,7 +23,22 @@ source("config.r")
+ ## that belong to a project. cost.per.py specifies how much a developer
+ ## costs, in a currency of your choice.
+ gather.sloccount.results <- function(dir, cost.per.py) {
+-  return(do.system("sloccount", str_c("--personcost ", cost.per.py, " ", dir)))
++  ## NOTE(lab07): sloccount keeps its intermediate data in a single directory
++  ## that defaults to ~/.slocdata. do.complexity.analysis() calls this from
++  ## inside mclapply.db(), so on any run with -j > 1 the concurrent instances
++  ## race on that shared path and all but one die with
++  ##   mkdir: cannot create directory '/root/.slocdata': File exists
++  ## exiting 1. The failures are swallowed (do.system redirects stderr to
++  ## /dev/null), so the symptom was merely a near-empty sloccount_ts table.
++  ## Give every invocation its own data directory. Note sloccount requires
++  ## the directory to already exist -- passing a non-existent path makes it
++  ## abort with "Error: <path> is not a directory".
++  datadir <- tempfile("slocdata")
++  dir.create(datadir, recursive=TRUE, showWarnings=FALSE)
++  on.exit(unlink(datadir, recursive=TRUE), add=TRUE)
++
++  return(do.system("sloccount", str_c("--datadir ", datadir,
++                                      " --personcost ", cost.per.py, " ", dir)))
+ }
+ 
+ ## Append a new entry to a sloccount time series in the database
+diff --git a/conf/flask-smoke.conf b/conf/flask-smoke.conf
+new file mode 100644
+index 0000000..2aee671
+--- /dev/null
++++ b/conf/flask-smoke.conf
+@@ -0,0 +1,16 @@
++# Minimal Flask configuration used as a fast smoke test while debugging the
++# environment: a single release range (3.0.0 -> 3.1.0) so a full pipeline pass
++# takes minutes rather than hours. -*- yaml -*-
++
++---
++project: flask_smoke
++repo: flask
++description: Flask - single-range smoke test
++
++revisions: [ "3.0.0", "3.1.0" ]
++rcs:       [ "",      ""      ]
++
++tagging: proximity
++
++sloccount: true
++understand: false
+diff --git a/conf/flask.conf b/conf/flask.conf
+new file mode 100644
+index 0000000..d37a9b3
+--- /dev/null
++++ b/conf/flask.conf
+@@ -0,0 +1,21 @@
++# Codeface configuration for Flask (https://github.com/pallets/flask) -*- yaml -*-
++# Lab 07 target project.
++#
++# Analysis windows are the Flask release tags; `proximity` tagging links
++# developers that touched nearby code regions (requires exuberant-ctags).
++# No mailing list is configured: Flask coordinates on GitHub, and the `run`
++# subcommand does not need one.
++
++---
++project: flask
++repo: flask
++description: Flask - a lightweight WSGI web application framework
++
++revisions: [ "1.0", "1.1.0", "2.0.0", "2.1.0", "2.2.0", "2.3.0", "3.0.0", "3.1.0" ]
++rcs:       [ "",    "",      "",      "",      "",      "",      "",      ""      ]
++
++tagging: proximity
++
++# Complexity analysis settings
++sloccount: true
++understand: false
+diff --git a/id_service/package-lock.json b/id_service/package-lock.json
+new file mode 100644
+index 0000000..35b3686
+--- /dev/null
++++ b/id_service/package-lock.json
+@@ -0,0 +1,646 @@
++{
++  "name": "id_service",
++  "version": "1.0.0",
++  "lockfileVersion": 1,
++  "requires": true,
++  "dependencies": {
++    "accepts": {
++      "version": "1.3.8",
++      "resolved": "https://registry.npmjs.org/accepts/-/accepts-1.3.8.tgz",
++      "integrity": "sha512-PYAthTa2m2VKxuvSD3DPC/Gy+U+sOA1LAuT8mkmRuvw+NACSaeXEQ+NHcVF7rONl6qcaxV3Uuemwawk+7+SJLw==",
++      "requires": {
++        "mime-types": "~2.1.34",
++        "negotiator": "0.6.3"
++      }
++    },
++    "addressparser": {
++      "version": "0.3.2",
++      "resolved": "https://registry.npmjs.org/addressparser/-/addressparser-0.3.2.tgz",
++      "integrity": "sha512-fDlslCJpojuY1cnb7tY7COAriA7cdSzDiWyrWNdFn7Cjd+jrEgZavqkOgD/wg+eH765YPnQjqlS88OL/Q0Qtkg=="
++    },
++    "argparse": {
++      "version": "1.0.10",
++      "resolved": "https://registry.npmjs.org/argparse/-/argparse-1.0.10.tgz",
++      "integrity": "sha512-o5Roy6tNG4SL/FOkCAN6RzjiakZS25RLYFrcMttJqbdd8BWrnA+fGz57iN5Pb06pvBGvl5gQ0B48dJlslXvoTg==",
++      "requires": {
++        "sprintf-js": "~1.0.2"
++      }
++    },
++    "array-flatten": {
++      "version": "1.1.1",
++      "resolved": "https://registry.npmjs.org/array-flatten/-/array-flatten-1.1.1.tgz",
++      "integrity": "sha512-PCVAQswWemu6UdxsDFFX/+gVeYqKAod3D3UVm91jHwynguOwAvYPhx8nNlM++NqRcK6CxxpUafjmhIdKiHibqg=="
++    },
++    "bignumber.js": {
++      "version": "9.0.0",
++      "resolved": "https://registry.npmjs.org/bignumber.js/-/bignumber.js-9.0.0.tgz",
++      "integrity": "sha512-t/OYhhJ2SD+YGBQcjY8GzzDHEk9f3nerxjtfa6tlMXfe7frs/WozhvCNoGvpM0P3bNf3Gq5ZRMlGr5f3r4/N8A=="
++    },
++    "body-parser": {
++      "version": "1.20.6",
++      "resolved": "https://registry.npmjs.org/body-parser/-/body-parser-1.20.6.tgz",
++      "integrity": "sha512-p5tAzS57i5MV9fZFDj9LeIiTZEufbSe2eDozP+ElheSUq1m74CRq1jI4mYNDdVs9vQztXFLuk/Gd6BWTdwRJ5g==",
++      "requires": {
++        "bytes": "~3.1.2",
++        "content-type": "~1.0.5",
++        "debug": "2.6.9",
++        "depd": "2.0.0",
++        "destroy": "~1.2.0",
++        "http-errors": "~2.0.1",
++        "iconv-lite": "~0.4.24",
++        "on-finished": "~2.4.1",
++        "qs": "~6.15.1",
++        "raw-body": "~2.5.3",
++        "type-is": "~1.6.18",
++        "unpipe": "~1.0.0"
++      }
++    },
++    "bytes": {
++      "version": "3.1.2",
++      "resolved": "https://registry.npmjs.org/bytes/-/bytes-3.1.2.tgz",
++      "integrity": "sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg=="
++    },
++    "call-bind-apply-helpers": {
++      "version": "1.0.2",
++      "resolved": "https://registry.npmjs.org/call-bind-apply-helpers/-/call-bind-apply-helpers-1.0.2.tgz",
++      "integrity": "sha512-Sp1ablJ0ivDkSzjcaJdxEunN5/XvksFJ2sMBFfq6x0ryhQV/2b/KwFe21cMpmHtPOSij8K99/wSfoEuTObmuMQ==",
++      "requires": {
++        "es-errors": "^1.3.0",
++        "function-bind": "^1.1.2"
++      }
++    },
++    "call-bound": {
++      "version": "1.0.4",
++      "resolved": "https://registry.npmjs.org/call-bound/-/call-bound-1.0.4.tgz",
++      "integrity": "sha512-+ys997U96po4Kx/ABpBCqhA9EuxJaQWDQg7295H4hBphv3IZg0boBKuwYpt4YXp6MZ5AmZQnU/tyMTlRpaSejg==",
++      "requires": {
++        "call-bind-apply-helpers": "^1.0.2",
++        "get-intrinsic": "^1.3.0"
++      }
++    },
++    "content-disposition": {
++      "version": "0.5.4",
++      "resolved": "https://registry.npmjs.org/content-disposition/-/content-disposition-0.5.4.tgz",
++      "integrity": "sha512-FveZTNuGw04cxlAiWbzi6zTAL/lhehaWbTtgluJh4/E95DqMwTmha3KZN1aAWA8cFIhHzMZUvLevkw5Rqk+tSQ==",
++      "requires": {
++        "safe-buffer": "5.2.1"
++      }
++    },
++    "content-type": {
++      "version": "1.0.5",
++      "resolved": "https://registry.npmjs.org/content-type/-/content-type-1.0.5.tgz",
++      "integrity": "sha512-nTjqfcBFEipKdXCv4YDQWCfmcLZKm81ldF0pAopTvyrFGVbcR6P/VAAd5G7N+0tTr8QqiU0tFadD6FK4NtJwOA=="
++    },
++    "cookie": {
++      "version": "0.7.2",
++      "resolved": "https://registry.npmjs.org/cookie/-/cookie-0.7.2.tgz",
++      "integrity": "sha512-yki5XnKuf750l50uGTllt6kKILY4nQ1eNIQatoXEByZ5dWgnKqbnqmTrBE5B4N7lrMJKQ2ytWMiTO2o0v6Ew/w=="
++    },
++    "cookie-signature": {
++      "version": "1.0.7",
++      "resolved": "https://registry.npmjs.org/cookie-signature/-/cookie-signature-1.0.7.tgz",
++      "integrity": "sha512-NXdYc3dLr47pBkpUCHtKSwIOQXLVn8dZEuywboCOJY/osA0wFSLlSawr3KN8qXJEyX66FcONTH8EIlVuK0yyFA=="
++    },
++    "core-util-is": {
++      "version": "1.0.3",
++      "resolved": "https://registry.npmjs.org/core-util-is/-/core-util-is-1.0.3.tgz",
++      "integrity": "sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ=="
++    },
++    "debug": {
++      "version": "2.6.9",
++      "resolved": "https://registry.npmjs.org/debug/-/debug-2.6.9.tgz",
++      "integrity": "sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==",
++      "requires": {
++        "ms": "2.0.0"
++      }
++    },
++    "depd": {
++      "version": "2.0.0",
++      "resolved": "https://registry.npmjs.org/depd/-/depd-2.0.0.tgz",
++      "integrity": "sha512-g7nH6P6dyDioJogAAGprGpCtVImJhpPk/roCzdb3fIh61/s/nPsfR6onyMwkCAR/OlC3yBC0lESvUoQEAssIrw=="
++    },
++    "destroy": {
++      "version": "1.2.0",
++      "resolved": "https://registry.npmjs.org/destroy/-/destroy-1.2.0.tgz",
++      "integrity": "sha512-2sJGJTaXIIaR1w4iJSNoN0hnMY7Gpc/n8D4qSCJw8QqFWXf7cuAgnEHxBpweaVcPevC2l3KpjYCx3NypQQgaJg=="
++    },
++    "dunder-proto": {
++      "version": "1.0.1",
++      "resolved": "https://registry.npmjs.org/dunder-proto/-/dunder-proto-1.0.1.tgz",
++      "integrity": "sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==",
++      "requires": {
++        "call-bind-apply-helpers": "^1.0.1",
++        "es-errors": "^1.3.0",
++        "gopd": "^1.2.0"
++      }
++    },
++    "ee-first": {
++      "version": "1.1.1",
++      "resolved": "https://registry.npmjs.org/ee-first/-/ee-first-1.1.1.tgz",
++      "integrity": "sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow=="
++    },
++    "encodeurl": {
++      "version": "2.0.0",
++      "resolved": "https://registry.npmjs.org/encodeurl/-/encodeurl-2.0.0.tgz",
++      "integrity": "sha512-Q0n9HRi4m6JuGIV1eFlmvJB7ZEVxu93IrMyiMsGC0lrMJMWzRgx6WGquyfQgZVb31vhGgXnfmPNNXmxnOkRBrg=="
++    },
++    "es-define-property": {
++      "version": "1.0.1",
++      "resolved": "https://registry.npmjs.org/es-define-property/-/es-define-property-1.0.1.tgz",
++      "integrity": "sha512-e3nRfgfUZ4rNGL232gUgX06QNyyez04KdjFrF+LTRoOXmrOgFKDg4BCdsjW8EnT69eqdYGmRpJwiPVYNrCaW3g=="
++    },
++    "es-errors": {
++      "version": "1.3.0",
++      "resolved": "https://registry.npmjs.org/es-errors/-/es-errors-1.3.0.tgz",
++      "integrity": "sha512-Zf5H2Kxt2xjTvbJvP2ZWLEICxA6j+hAmMzIlypy4xcBg1vKVnx89Wy0GbS+kf5cwCVFFzdCFh2XSCFNULS6csw=="
++    },
++    "es-object-atoms": {
++      "version": "1.1.2",
++      "resolved": "https://registry.npmjs.org/es-object-atoms/-/es-object-atoms-1.1.2.tgz",
++      "integrity": "sha512-HWcBoN6NileqtSydK2FqHbS/LoDd2pqrnQHLyJzBj4kOp/ky2MWMN694xOfkK8/SnUsW2DH7EfyVlydKCsm1Zw==",
++      "requires": {
++        "es-errors": "^1.3.0"
++      }
++    },
++    "escape-html": {
++      "version": "1.0.3",
++      "resolved": "https://registry.npmjs.org/escape-html/-/escape-html-1.0.3.tgz",
++      "integrity": "sha512-NiSupZ4OeuGwr68lGIeym/ksIZMJodUGOSCZ/FSnTxcrekbvqrgdUxlJOMpijaKZVjAJrWrGs/6Jy8OMuyj9ow=="
++    },
++    "esprima": {
++      "version": "4.0.1",
++      "resolved": "https://registry.npmjs.org/esprima/-/esprima-4.0.1.tgz",
++      "integrity": "sha512-eGuFFw7Upda+g4p+QHvnW0RyTX/SVeJBDM/gCtMARO0cLuT2HcEKnTPvhjV6aGeqrCB/sbNop0Kszm0jsaWU4A=="
++    },
++    "etag": {
++      "version": "1.8.1",
++      "resolved": "https://registry.npmjs.org/etag/-/etag-1.8.1.tgz",
++      "integrity": "sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg=="
++    },
++    "express": {
++      "version": "4.22.2",
++      "resolved": "https://registry.npmjs.org/express/-/express-4.22.2.tgz",
++      "integrity": "sha512-IuL+Elrou2ZvCFHs18/CIzy2Nzvo25nZ1/D2eIZlz7c+QUayAcYoiM2BthCjs+EBHVpjYjcuLDAiCWgeIX3X1Q==",
++      "requires": {
++        "accepts": "~1.3.8",
++        "array-flatten": "1.1.1",
++        "body-parser": "~1.20.5",
++        "content-disposition": "~0.5.4",
++        "content-type": "~1.0.4",
++        "cookie": "~0.7.1",
++        "cookie-signature": "~1.0.6",
++        "debug": "2.6.9",
++        "depd": "2.0.0",
++        "encodeurl": "~2.0.0",
++        "escape-html": "~1.0.3",
++        "etag": "~1.8.1",
++        "finalhandler": "~1.3.1",
++        "fresh": "~0.5.2",
++        "http-errors": "~2.0.0",
++        "merge-descriptors": "1.0.3",
++        "methods": "~1.1.2",
++        "on-finished": "~2.4.1",
++        "parseurl": "~1.3.3",
++        "path-to-regexp": "~0.1.12",
++        "proxy-addr": "~2.0.7",
++        "qs": "~6.15.1",
++        "range-parser": "~1.2.1",
++        "safe-buffer": "5.2.1",
++        "send": "~0.19.0",
++        "serve-static": "~1.16.2",
++        "setprototypeof": "1.2.0",
++        "statuses": "~2.0.1",
++        "type-is": "~1.6.18",
++        "utils-merge": "1.0.1",
++        "vary": "~1.1.2"
++      }
++    },
++    "finalhandler": {
++      "version": "1.3.2",
++      "resolved": "https://registry.npmjs.org/finalhandler/-/finalhandler-1.3.2.tgz",
++      "integrity": "sha512-aA4RyPcd3badbdABGDuTXCMTtOneUCAYH/gxoYRTZlIJdF0YPWuGqiAsIrhNnnqdXGswYk6dGujem4w80UJFhg==",
++      "requires": {
++        "debug": "2.6.9",
++        "encodeurl": "~2.0.0",
++        "escape-html": "~1.0.3",
++        "on-finished": "~2.4.1",
++        "parseurl": "~1.3.3",
++        "statuses": "~2.0.2",
++        "unpipe": "~1.0.0"
++      }
++    },
++    "forwarded": {
++      "version": "0.2.0",
++      "resolved": "https://registry.npmjs.org/forwarded/-/forwarded-0.2.0.tgz",
++      "integrity": "sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow=="
++    },
++    "fresh": {
++      "version": "0.5.2",
++      "resolved": "https://registry.npmjs.org/fresh/-/fresh-0.5.2.tgz",
++      "integrity": "sha512-zJ2mQYM18rEFOudeV4GShTGIQ7RbzA7ozbU9I/XBpm7kqgMywgmylMwXHxZJmkVoYkna9d2pVXVXPdYTP9ej8Q=="
++    },
++    "function-bind": {
++      "version": "1.1.2",
++      "resolved": "https://registry.npmjs.org/function-bind/-/function-bind-1.1.2.tgz",
++      "integrity": "sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA=="
++    },
++    "get-intrinsic": {
++      "version": "1.3.0",
++      "resolved": "https://registry.npmjs.org/get-intrinsic/-/get-intrinsic-1.3.0.tgz",
++      "integrity": "sha512-9fSjSaos/fRIVIp+xSJlE6lfwhES7LNtKaCBIamHsjr2na1BiABJPo0mOjjz8GJDURarmCPGqaiVg5mfjb98CQ==",
++      "requires": {
++        "call-bind-apply-helpers": "^1.0.2",
++        "es-define-property": "^1.0.1",
++        "es-errors": "^1.3.0",
++        "es-object-atoms": "^1.1.1",
++        "function-bind": "^1.1.2",
++        "get-proto": "^1.0.1",
++        "gopd": "^1.2.0",
++        "has-symbols": "^1.1.0",
++        "hasown": "^2.0.2",
++        "math-intrinsics": "^1.1.0"
++      }
++    },
++    "get-proto": {
++      "version": "1.0.1",
++      "resolved": "https://registry.npmjs.org/get-proto/-/get-proto-1.0.1.tgz",
++      "integrity": "sha512-sTSfBjoXBp89JvIKIefqw7U2CCebsc74kiY6awiGogKtoSGbgjYE/G/+l9sF3MWFPNc9IcoOC4ODfKHfxFmp0g==",
++      "requires": {
++        "dunder-proto": "^1.0.1",
++        "es-object-atoms": "^1.0.0"
++      }
++    },
++    "gopd": {
++      "version": "1.2.0",
++      "resolved": "https://registry.npmjs.org/gopd/-/gopd-1.2.0.tgz",
++      "integrity": "sha512-ZUKRh6/kUFoAiTAtTYPZJ3hw9wNxx+BIBOijnlG9PnrJsCcSjs1wyyD6vJpaYtgnzDrKYRSqf3OO6Rfa93xsRg=="
++    },
++    "has-symbols": {
++      "version": "1.1.0",
++      "resolved": "https://registry.npmjs.org/has-symbols/-/has-symbols-1.1.0.tgz",
++      "integrity": "sha512-1cDNdwJ2Jaohmb3sg4OmKaMBwuC48sYni5HUw2DvsC8LjGTLK9h+eb1X6RyuOHe4hT0ULCW68iomhjUoKUqlPQ=="
++    },
++    "hasown": {
++      "version": "2.0.4",
++      "resolved": "https://registry.npmjs.org/hasown/-/hasown-2.0.4.tgz",
++      "integrity": "sha512-T2UbfbBEF32wiepXIsMlTW9+dDYC6wMh/t/vYA4tuOMKqWz/n3vr1NFSxQiyP+zk2mXsoMA/i/7qV6LKut1t1A==",
++      "requires": {
++        "function-bind": "^1.1.2"
++      }
++    },
++    "http-errors": {
++      "version": "2.0.1",
++      "resolved": "https://registry.npmjs.org/http-errors/-/http-errors-2.0.1.tgz",
++      "integrity": "sha512-4FbRdAX+bSdmo4AUFuS0WNiPz8NgFt+r8ThgNWmlrjQjt1Q7ZR9+zTlce2859x4KSXrwIsaeTqDoKQmtP8pLmQ==",
++      "requires": {
++        "depd": "~2.0.0",
++        "inherits": "~2.0.4",
++        "setprototypeof": "~1.2.0",
++        "statuses": "~2.0.2",
++        "toidentifier": "~1.0.1"
++      }
++    },
++    "iconv-lite": {
++      "version": "0.4.24",
++      "resolved": "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.24.tgz",
++      "integrity": "sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==",
++      "requires": {
++        "safer-buffer": ">= 2.1.2 < 3"
++      }
++    },
++    "inherits": {
++      "version": "2.0.4",
++      "resolved": "https://registry.npmjs.org/inherits/-/inherits-2.0.4.tgz",
++      "integrity": "sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ=="
++    },
++    "ipaddr.js": {
++      "version": "1.9.1",
++      "resolved": "https://registry.npmjs.org/ipaddr.js/-/ipaddr.js-1.9.1.tgz",
++      "integrity": "sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g=="
++    },
++    "isarray": {
++      "version": "1.0.0",
++      "resolved": "https://registry.npmjs.org/isarray/-/isarray-1.0.0.tgz",
++      "integrity": "sha512-VLghIWNM6ELQzo7zwmcg0NmTVyWKYjvIeM83yjp0wRDTmUnrM678fQbcKBo6n2CJEF0szoG//ytg+TKla89ALQ=="
++    },
++    "js-yaml": {
++      "version": "3.15.1",
++      "resolved": "https://registry.npmjs.org/js-yaml/-/js-yaml-3.15.1.tgz",
++      "integrity": "sha512-S99WuO3HlhO3XN41EtYUNl9zzXjoJx7QvmipxsJVxtCBT0YHEFy+iOJhjSvrmV12nYhWpZaM8lPHkJm0yUMbag==",
++      "requires": {
++        "argparse": "^1.0.7",
++        "esprima": "^4.0.0"
++      }
++    },
++    "math-intrinsics": {
++      "version": "1.1.0",
++      "resolved": "https://registry.npmjs.org/math-intrinsics/-/math-intrinsics-1.1.0.tgz",
++      "integrity": "sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g=="
++    },
++    "media-typer": {
++      "version": "0.3.0",
++      "resolved": "https://registry.npmjs.org/media-typer/-/media-typer-0.3.0.tgz",
++      "integrity": "sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ=="
++    },
++    "merge-descriptors": {
++      "version": "1.0.3",
++      "resolved": "https://registry.npmjs.org/merge-descriptors/-/merge-descriptors-1.0.3.tgz",
++      "integrity": "sha512-gaNvAS7TZ897/rVaZ0nMtAyxNyi/pdbjbAwUpFQpN70GqnVfOiXpeUUMKRBmzXaSQ8DdTX4/0ms62r2K+hE6mQ=="
++    },
++    "methods": {
++      "version": "1.1.2",
++      "resolved": "https://registry.npmjs.org/methods/-/methods-1.1.2.tgz",
++      "integrity": "sha512-iclAHeNqNm68zFtnZ0e+1L2yUIdvzNoauKU4WBA3VvH/vPFieF7qfRlwUZU+DA9P9bPXIS90ulxoUoCH23sV2w=="
++    },
++    "mime": {
++      "version": "1.6.0",
++      "resolved": "https://registry.npmjs.org/mime/-/mime-1.6.0.tgz",
++      "integrity": "sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg=="
++    },
++    "mime-db": {
++      "version": "1.52.0",
++      "resolved": "https://registry.npmjs.org/mime-db/-/mime-db-1.52.0.tgz",
++      "integrity": "sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg=="
++    },
++    "mime-types": {
++      "version": "2.1.35",
++      "resolved": "https://registry.npmjs.org/mime-types/-/mime-types-2.1.35.tgz",
++      "integrity": "sha512-ZDY+bPm5zTTF+YpCrAU9nK0UgICYPT0QtT1NZWFv4s++TNkcgVaT0g6+4R2uI4MjQjzysHB1zxuWL50hzaeXiw==",
++      "requires": {
++        "mime-db": "1.52.0"
++      }
++    },
++    "ms": {
++      "version": "2.0.0",
++      "resolved": "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz",
++      "integrity": "sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A=="
++    },
++    "mysql": {
++      "version": "2.18.1",
++      "resolved": "https://registry.npmjs.org/mysql/-/mysql-2.18.1.tgz",
++      "integrity": "sha512-Bca+gk2YWmqp2Uf6k5NFEurwY/0td0cpebAucFpY/3jhrwrVGuxU2uQFCHjU19SJfje0yQvi+rVWdq78hR5lig==",
++      "requires": {
++        "bignumber.js": "9.0.0",
++        "readable-stream": "2.3.7",
++        "safe-buffer": "5.1.2",
++        "sqlstring": "2.3.1"
++      },
++      "dependencies": {
++        "safe-buffer": {
++          "version": "5.1.2",
++          "resolved": "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.1.2.tgz",
++          "integrity": "sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g=="
++        }
++      }
++    },
++    "negotiator": {
++      "version": "0.6.3",
++      "resolved": "https://registry.npmjs.org/negotiator/-/negotiator-0.6.3.tgz",
++      "integrity": "sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg=="
++    },
++    "object-inspect": {
++      "version": "1.13.4",
++      "resolved": "https://registry.npmjs.org/object-inspect/-/object-inspect-1.13.4.tgz",
++      "integrity": "sha512-W67iLl4J2EXEGTbfeHCffrjDfitvLANg0UlX3wFUUSTx92KXRFegMHUVgSqE+wvhAbi4WqjGg9czysTV2Epbew=="
++    },
++    "on-finished": {
++      "version": "2.4.1",
++      "resolved": "https://registry.npmjs.org/on-finished/-/on-finished-2.4.1.tgz",
++      "integrity": "sha512-oVlzkg3ENAhCk2zdv7IJwd/QUD4z2RxRwpkcGY8psCVcCYZNq4wYnVWALHM+brtuJjePWiYF/ClmuDr8Ch5+kg==",
++      "requires": {
++        "ee-first": "1.1.1"
++      }
++    },
++    "parseurl": {
++      "version": "1.3.3",
++      "resolved": "https://registry.npmjs.org/parseurl/-/parseurl-1.3.3.tgz",
++      "integrity": "sha512-CiyeOxFT/JZyN5m0z9PfXw4SCBJ6Sygz1Dpl0wqjlhDEGGBP1GnsUVEL0p63hoG1fcj3fHynXi9NYO4nWOL+qQ=="
++    },
++    "path-to-regexp": {
++      "version": "0.1.13",
++      "resolved": "https://registry.npmjs.org/path-to-regexp/-/path-to-regexp-0.1.13.tgz",
++      "integrity": "sha512-A/AGNMFN3c8bOlvV9RreMdrv7jsmF9XIfDeCd87+I8RNg6s78BhJxMu69NEMHBSJFxKidViTEdruRwEk/WIKqA=="
++    },
++    "process-nextick-args": {
++      "version": "2.0.1",
++      "resolved": "https://registry.npmjs.org/process-nextick-args/-/process-nextick-args-2.0.1.tgz",
++      "integrity": "sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag=="
++    },
++    "proxy-addr": {
++      "version": "2.0.7",
++      "resolved": "https://registry.npmjs.org/proxy-addr/-/proxy-addr-2.0.7.tgz",
++      "integrity": "sha512-llQsMLSUDUPT44jdrU/O37qlnifitDP+ZwrmmZcoSKyLKvtZxpyV0n2/bD/N4tBAAZ/gJEdZU7KMraoK1+XYAg==",
++      "requires": {
++        "forwarded": "0.2.0",
++        "ipaddr.js": "1.9.1"
++      }
++    },
++    "qs": {
++      "version": "6.15.3",
++      "resolved": "https://registry.npmjs.org/qs/-/qs-6.15.3.tgz",
++      "integrity": "sha512-O9gl3zCl5h5blw1KGUzQKhA5oUXSl8rwUIM5o0S3nCXMliSvy5Dzx7/DJcI+SwgICv+IneSZwhBh1oSyEHA71A==",
++      "requires": {
++        "es-define-property": "^1.0.1",
++        "side-channel": "^1.1.1"
++      }
++    },
++    "range-parser": {
++      "version": "1.2.1",
++      "resolved": "https://registry.npmjs.org/range-parser/-/range-parser-1.2.1.tgz",
++      "integrity": "sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg=="
++    },
++    "raw-body": {
++      "version": "2.5.3",
++      "resolved": "https://registry.npmjs.org/raw-body/-/raw-body-2.5.3.tgz",
++      "integrity": "sha512-s4VSOf6yN0rvbRZGxs8Om5CWj6seneMwK3oDb4lWDH0UPhWcxwOWw5+qk24bxq87szX1ydrwylIOp2uG1ojUpA==",
++      "requires": {
++        "bytes": "~3.1.2",
++        "http-errors": "~2.0.1",
++        "iconv-lite": "~0.4.24",
++        "unpipe": "~1.0.0"
++      }
++    },
++    "readable-stream": {
++      "version": "2.3.7",
++      "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.3.7.tgz",
++      "integrity": "sha512-Ebho8K4jIbHAxnuxi7o42OrZgF/ZTNcsZj6nRKyUmkhLFq8CHItp/fy6hQZuZmP/n3yZ9VBUbp4zz/mX8hmYPw==",
++      "requires": {
++        "core-util-is": "~1.0.0",
++        "inherits": "~2.0.3",
++        "isarray": "~1.0.0",
++        "process-nextick-args": "~2.0.0",
++        "safe-buffer": "~5.1.1",
++        "string_decoder": "~1.1.1",
++        "util-deprecate": "~1.0.1"
++      },
++      "dependencies": {
++        "safe-buffer": {
++          "version": "5.1.2",
++          "resolved": "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.1.2.tgz",
++          "integrity": "sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g=="
++        }
++      }
++    },
++    "safe-buffer": {
++      "version": "5.2.1",
++      "resolved": "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.2.1.tgz",
++      "integrity": "sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ=="
++    },
++    "safer-buffer": {
++      "version": "2.1.2",
++      "resolved": "https://registry.npmjs.org/safer-buffer/-/safer-buffer-2.1.2.tgz",
++      "integrity": "sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg=="
++    },
++    "send": {
++      "version": "0.19.2",
++      "resolved": "https://registry.npmjs.org/send/-/send-0.19.2.tgz",
++      "integrity": "sha512-VMbMxbDeehAxpOtWJXlcUS5E8iXh6QmN+BkRX1GARS3wRaXEEgzCcB10gTQazO42tpNIya8xIyNx8fll1OFPrg==",
++      "requires": {
++        "debug": "2.6.9",
++        "depd": "2.0.0",
++        "destroy": "1.2.0",
++        "encodeurl": "~2.0.0",
++        "escape-html": "~1.0.3",
++        "etag": "~1.8.1",
++        "fresh": "~0.5.2",
++        "http-errors": "~2.0.1",
++        "mime": "1.6.0",
++        "ms": "2.1.3",
++        "on-finished": "~2.4.1",
++        "range-parser": "~1.2.1",
++        "statuses": "~2.0.2"
++      },
++      "dependencies": {
++        "ms": {
++          "version": "2.1.3",
++          "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
++          "integrity": "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA=="
++        }
++      }
++    },
++    "serve-static": {
++      "version": "1.16.3",
++      "resolved": "https://registry.npmjs.org/serve-static/-/serve-static-1.16.3.tgz",
++      "integrity": "sha512-x0RTqQel6g5SY7Lg6ZreMmsOzncHFU7nhnRWkKgWuMTu5NN0DR5oruckMqRvacAN9d5w6ARnRBXl9xhDCgfMeA==",
++      "requires": {
++        "encodeurl": "~2.0.0",
++        "escape-html": "~1.0.3",
++        "parseurl": "~1.3.3",
++        "send": "~0.19.1"
++      }
++    },
++    "setprototypeof": {
++      "version": "1.2.0",
++      "resolved": "https://registry.npmjs.org/setprototypeof/-/setprototypeof-1.2.0.tgz",
++      "integrity": "sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw=="
++    },
++    "side-channel": {
++      "version": "1.1.1",
++      "resolved": "https://registry.npmjs.org/side-channel/-/side-channel-1.1.1.tgz",
++      "integrity": "sha512-6x6dK6zJdpTzF4sQeNYxwtvBzf6Eg4GtlesS94HOvTudUeyK2WXAaIfmDgsyslYrRBeFIlsi54AYsFGUuhmvrQ==",
++      "requires": {
++        "es-errors": "^1.3.0",
++        "object-inspect": "^1.13.4",
++        "side-channel-list": "^1.0.1",
++        "side-channel-map": "^1.0.1",
++        "side-channel-weakmap": "^1.0.2"
++      }
++    },
++    "side-channel-list": {
++      "version": "1.0.1",
++      "resolved": "https://registry.npmjs.org/side-channel-list/-/side-channel-list-1.0.1.tgz",
++      "integrity": "sha512-mjn/0bi/oUURjc5Xl7IaWi/OJJJumuoJFQJfDDyO46+hBWsfaVM65TBHq2eoZBhzl9EchxOijpkbRC8SVBQU0w==",
++      "requires": {
++        "es-errors": "^1.3.0",
++        "object-inspect": "^1.13.4"
++      }
++    },
++    "side-channel-map": {
++      "version": "1.0.1",
++      "resolved": "https://registry.npmjs.org/side-channel-map/-/side-channel-map-1.0.1.tgz",
++      "integrity": "sha512-VCjCNfgMsby3tTdo02nbjtM/ewra6jPHmpThenkTYh8pG9ucZ/1P8So4u4FGBek/BjpOVsDCMoLA/iuBKIFXRA==",
++      "requires": {
++        "call-bound": "^1.0.2",
++        "es-errors": "^1.3.0",
++        "get-intrinsic": "^1.2.5",
++        "object-inspect": "^1.13.3"
++      }
++    },
++    "side-channel-weakmap": {
++      "version": "1.0.2",
++      "resolved": "https://registry.npmjs.org/side-channel-weakmap/-/side-channel-weakmap-1.0.2.tgz",
++      "integrity": "sha512-WPS/HvHQTYnHisLo9McqBHOJk2FkHO/tlpvldyrnem4aeQp4hai3gythswg6p01oSoTl58rcpiFAjF2br2Ak2A==",
++      "requires": {
++        "call-bound": "^1.0.2",
++        "es-errors": "^1.3.0",
++        "get-intrinsic": "^1.2.5",
++        "object-inspect": "^1.13.3",
++        "side-channel-map": "^1.0.1"
++      }
++    },
++    "sprintf-js": {
++      "version": "1.0.3",
++      "resolved": "https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.0.3.tgz",
++      "integrity": "sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g=="
++    },
++    "sqlstring": {
++      "version": "2.3.1",
++      "resolved": "https://registry.npmjs.org/sqlstring/-/sqlstring-2.3.1.tgz",
++      "integrity": "sha512-ooAzh/7dxIG5+uDik1z/Rd1vli0+38izZhGzSa34FwR7IbelPWCCKSNIl8jlL/F7ERvy8CB2jNeM1E9i9mXMAQ=="
++    },
++    "statuses": {
++      "version": "2.0.2",
++      "resolved": "https://registry.npmjs.org/statuses/-/statuses-2.0.2.tgz",
++      "integrity": "sha512-DvEy55V3DB7uknRo+4iOGT5fP1slR8wQohVdknigZPMpMstaKJQWhwiYBACJE3Ul2pTnATihhBYnRhZQHGBiRw=="
++    },
++    "string_decoder": {
++      "version": "1.1.1",
++      "resolved": "https://registry.npmjs.org/string_decoder/-/string_decoder-1.1.1.tgz",
++      "integrity": "sha512-n/ShnvDi6FHbbVfviro+WojiFzv+s8MPMHBczVePfUpDJLwoLT0ht1l4YwBCbi8pJAveEEdnkHyPyTP/mzRfwg==",
++      "requires": {
++        "safe-buffer": "~5.1.0"
++      },
++      "dependencies": {
++        "safe-buffer": {
++          "version": "5.1.2",
++          "resolved": "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.1.2.tgz",
++          "integrity": "sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g=="
++        }
++      }
++    },
++    "toidentifier": {
++      "version": "1.0.1",
++      "resolved": "https://registry.npmjs.org/toidentifier/-/toidentifier-1.0.1.tgz",
++      "integrity": "sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA=="
++    },
++    "type-is": {
++      "version": "1.6.18",
++      "resolved": "https://registry.npmjs.org/type-is/-/type-is-1.6.18.tgz",
++      "integrity": "sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==",
++      "requires": {
++        "media-typer": "0.3.0",
++        "mime-types": "~2.1.24"
++      }
++    },
++    "unpipe": {
++      "version": "1.0.0",
++      "resolved": "https://registry.npmjs.org/unpipe/-/unpipe-1.0.0.tgz",
++      "integrity": "sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ=="
++    },
++    "util-deprecate": {
++      "version": "1.0.2",
++      "resolved": "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz",
++      "integrity": "sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw=="
++    },
++    "utils-merge": {
++      "version": "1.0.1",
++      "resolved": "https://registry.npmjs.org/utils-merge/-/utils-merge-1.0.1.tgz",
++      "integrity": "sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA=="
++    },
++    "vary": {
++      "version": "1.1.2",
++      "resolved": "https://registry.npmjs.org/vary/-/vary-1.1.2.tgz",
++      "integrity": "sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg=="
++    }
++  }
++}
+diff --git a/setup.py b/setup.py
+index 224eac2..09cd292 100644
+--- a/setup.py
++++ b/setup.py
+@@ -27,6 +27,12 @@ setup(name='codeface',
+       packages=find_packages(exclude=['experiments']),
+       package_data={'codeface': ['R/*.r', 'R/cluster/*.r', 'perl/*.pl']},
+       entry_points={'console_scripts': ['codeface = codeface.cli:main']},
+-      install_requires=['progressbar', 'VCS', 'python_ctags','PyYAML',
++      # NOTE(lab07): 'VCS' was removed from this list. Codeface's version
++      # control abstraction is the in-tree module codeface/VCS.py; 'VCS' on
++      # PyPI is an unrelated 2011 package by a different author, so declaring
++      # it as a dependency makes pip download foreign code that is never used
++      # (and that no longer installs). The remaining names are pinned in
++      # docker/python_requirements_pinned.txt to their last py2.7 releases.
++      install_requires=['progressbar', 'python_ctags', 'PyYAML',
+                         'MySQL_python', 'jira']
+       )

@@ -1,0 +1,16 @@
+[services] MySQL already running
+[services] ID service already running on :8080
+[services] all services ready
+
+==============================================================
+ codeface run
+   project conf : conf/flask-smoke.conf
+   results dir  : /work/res
+   git dir      : /work/git-repos
+   extra args   : -j2 --recreate
+==============================================================
+
+usage: codeface [-h] [-l {debug,devinfo,info,warning,error}] [-f LOGFILE]
+                [-j JOBS]
+                {test,run,ml,conway,dynamic} ...
+codeface: error: unrecognized arguments: --recreate

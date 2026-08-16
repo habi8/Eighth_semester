@@ -1,0 +1,129 @@
+[services] MySQL already running
+[services] starting Node.js ID service ...
+[services] ID service is up (log: /var/log/id_service.log)
+[services] all services ready
+
+==============================================================
+ codeface run
+   project conf : conf/flask.conf
+   results dir  : /work/res
+   git dir      : /work/git-repos
+   jobs         : 4
+   extra args   : 
+==============================================================
+
+/codeface/codeface/configuration.py:88: YAMLLoadWarning: calling yaml.load() without Loader=... is deprecated, as the default Loader is unsafe. Please read https://msg.pyyaml.org/load for full details.
+  return yaml.load(open(filename))
+2026-08-11 11:17:58 [codeface.project] MainProcess INFO: => Setting up project 'flask'
+2026-08-11 11:17:58 [codeface.dbmanager] MainProcess WARNING: Deleting and re-creating project flask/proximity.
+2026-08-11 11:17:58 [codeface.dbmanager] MainProcess INFO: Adding 8 new releases...
+2026-08-11 11:17:58 [codeface.util] Process-1 INFO:   -> Revision range 1/7 (1.0..1.1.0): Analysing commits...
+2026-08-11 11:17:58 [codeface.util] Process-2 INFO:   -> Revision range 2/7 (1.1.0..2.0.0): Analysing commits...
+2026-08-11 11:17:58 [codeface.util] Process-4 INFO:   -> Revision range 4/7 (2.1.0..2.2.0): Analysing commits...
+2026-08-11 11:17:58 [codeface.util] Process-3 INFO:   -> Revision range 3/7 (2.0.0..2.1.0): Analysing commits...
+Blame Analysis:   0% |                                         | ETA:  --:--:--Blame Analysis:   0% |                                         | ETA:  --:--:--Blame Analysis:   0% |                                         | ETA:  --:--:--Blame Analysis:   0% |                                         | ETA:  --:--:--Blame Analysis:  22% |#########                                 | ETA:  0:00:16Blame Analysis:  46% |###################                       | ETA:  0:00:08Blame Analysis:  33% |##############                            | ETA:  0:00:11Blame Analysis:  60% |#########################                 | ETA:  0:00:04Blame Analysis:  45% |###################                       | ETA:  0:00:10Blame Analysis:  66% |############################              | ETA:  0:00:06Blame Analysis:  93% |#######################################   | ETA:  0:00:01Blame Analysis:  68% |############################              | ETA:  0:00:06Blame Analysis: 100% |##########################################| Time: 0:00:14
+Pass 1/2:   0% |                                               | ETA:  --:--:--Pass 1/2:   9% |####                                            | ETA:  0:00:08Pass 1/2:  19% |#########                                       | ETA:  0:00:08Blame Analysis: 100% |##########################################| Time: 0:00:17
+Pass 1/2:   0% |                                               | ETA:  --:--:--Blame Analysis:  91% |######################################    | ETA:  0:00:01Pass 1/2:  29% |##############                                  | ETA:  0:00:07Pass 1/2:  16% |########                                        | ETA:  0:00:04Pass 1/2:  39% |###################                             | ETA:  0:00:06Pass 1/2:  33% |################                                | ETA:  0:00:04Pass 1/2:  49% |#######################                         | ETA:  0:00:05Pass 1/2:  50% |########################                        | ETA:  0:00:03Pass 1/2:  59% |############################                    | ETA:  0:00:04Blame Analysis: 100% |##########################################| Time: 0:00:20
+Pass 1/2:   0% |                                               | ETA:  --:--:--Blame Analysis: 100% |##########################################| ETA:  0:00:00Pass 1/2:  67% |################################                | ETA:  0:00:02Blame Analysis: 100% |##########################################| Time: 0:00:20
+Pass 1/2:   0% |                                               | ETA:  --:--:--Pass 1/2:  69% |#################################               | ETA:  0:00:03Pass 1/2:   7% |###                                             | ETA:  0:00:12Pass 1/2:   6% |###                                             | ETA:  0:00:13Pass 1/2:  84% |########################################        | ETA:  0:00:00Pass 1/2:  79% |######################################          | ETA:  0:00:02Pass 1/2:  15% |#######                                         | ETA:  0:00:11Pass 1/2:  12% |######                                          | ETA:  0:00:12Pass 1/2: 100% |################################################| Time: 0:00:06
+Pass 1/2:  89% |##########################################      | ETA:  0:00:01Pass 1/2:  23% |###########                                     | ETA:  0:00:10Pass 1/2:  19% |#########                                       | ETA:  0:00:12Pass 1/2:  99% |############################################### | ETA:  0:00:00Pass 1/2: 100% |################################################| Time: 0:00:10
+Pass 1/2:  31% |##############                                  | ETA:  0:00:092026-08-11 11:18:25 [codeface.util] Process-4 INFO:   -> Revision range 4/7 (2.1.0..2.2.0): Commit analysis done.
+2026-08-11 11:18:25 [codeface.util] Process-4 INFO:   -> Revision range 5/7 (2.2.0..2.3.0): Analysing commits...
+Pass 1/2:  25% |############                                    | ETA:  0:00:11Pass 1/2:  38% |##################                              | ETA:  0:00:082026-08-11 11:18:26 [codeface.util] Process-3 INFO:   -> Revision range 3/7 (2.0.0..2.1.0): Commit analysis done.
+2026-08-11 11:18:26 [codeface.util] Process-3 INFO:   -> Revision range 6/7 (2.3.0..3.0.0): Analysing commits...
+Pass 1/2:  32% |###############                                 | ETA:  0:00:10Blame Analysis:   0% |                                         | ETA:  --:--:--Pass 1/2:  46% |######################                          | ETA:  0:00:07Blame Analysis:   0% |                                         | ETA:  --:--:--Pass 1/2:  38% |##################                              | ETA:  0:00:09Pass 1/2:  54% |##########################                      | ETA:  0:00:06Pass 1/2:  44% |#####################                           | ETA:  0:00:08Pass 1/2:  62% |#############################                   | ETA:  0:00:05Pass 1/2:  51% |########################                        | ETA:  0:00:07Pass 1/2:  70% |#################################               | ETA:  0:00:04Pass 1/2:  57% |###########################                     | ETA:  0:00:06Pass 1/2:  77% |#####################################           | ETA:  0:00:02Pass 1/2:  64% |##############################                  | ETA:  0:00:05Pass 1/2:  85% |#########################################       | ETA:  0:00:01Pass 1/2:  70% |#################################               | ETA:  0:00:04Pass 1/2:  93% |############################################    | ETA:  0:00:00Pass 1/2:  76% |####################################            | ETA:  0:00:03Blame Analysis:  43% |##################                        | ETA:  0:00:10Pass 1/2: 100% |################################################| Time: 0:00:13
+Pass 1/2:  83% |########################################        | ETA:  0:00:02Pass 1/2:  89% |###########################################     | ETA:  0:00:012026-08-11 11:18:36 [codeface.util] Process-1 INFO:   -> Revision range 1/7 (1.0..1.1.0): Commit analysis done.
+2026-08-11 11:18:36 [codeface.util] Process-1 INFO:   -> Revision range 7/7 (3.0.0..3.1.0): Analysing commits...
+Pass 1/2:  96% |##############################################  | ETA:  0:00:00Blame Analysis:  74% |###############################           | ETA:  0:00:03Pass 1/2: 100% |################################################| Time: 0:00:15
+Blame Analysis:   0% |                                         | ETA:  --:--:--2026-08-11 11:18:39 [codeface.util] Process-2 INFO:   -> Revision range 2/7 (1.1.0..2.0.0): Commit analysis done.
+2026-08-11 11:18:39 [codeface.util] Process-2 INFO:   -> Revision range 4/7 (2.1.0..2.2.0): Detecting clusters...
+Blame Analysis:  86% |####################################      | ETA:  0:00:02Blame Analysis: 100% |##########################################| Time: 0:00:13
+Pass 1/2:   0% |                                               | ETA:  --:--:--Pass 1/2:  23% |###########                                     | ETA:  0:00:03Pass 1/2:  47% |######################                          | ETA:  0:00:02Pass 1/2:  70% |#################################               | ETA:  0:00:01Blame Analysis: 100% |##########################################| Time: 0:00:18
+Pass 1/2:   0% |                                               | ETA:  --:--:--Pass 1/2:  94% |#############################################   | ETA:  0:00:00Pass 1/2:  15% |#######                                         | ETA:  0:00:05Pass 1/2: 100% |################################################| Time: 0:00:04
+Blame Analysis:  45% |###################                       | ETA:  0:00:102026-08-11 11:18:46 [codeface.util] Process-3 INFO:   -> Revision range 6/7 (2.3.0..3.0.0): Commit analysis done.
+2026-08-11 11:18:46 [codeface.util] Process-3 INFO:   -> Revision range 3/7 (2.0.0..2.1.0): Detecting clusters...
+NULL
+Pass 1/2:  31% |###############                                 | ETA:  0:00:042026-08-11 11:18:47 [codeface.util] Process-2 INFO:   -> Revision range 4/7 (2.1.0..2.2.0): Detecting clusters done.
+2026-08-11 11:18:47 [codeface.util] Process-2 INFO:   -> Revision range 1/7 (1.0..1.1.0): Detecting clusters...
+Pass 1/2:  47% |######################                          | ETA:  0:00:03Pass 1/2:  62% |##############################                  | ETA:  0:00:02Pass 1/2:  78% |#####################################           | ETA:  0:00:01Pass 1/2:  94% |#############################################   | ETA:  0:00:00Pass 1/2: 100% |################################################| Time: 0:00:07
+2026-08-11 11:18:53 [codeface.util] Process-4 INFO:   -> Revision range 5/7 (2.2.0..2.3.0): Commit analysis done.
+2026-08-11 11:18:53 [codeface.util] Process-4 INFO:   -> Revision range 2/7 (1.1.0..2.0.0): Detecting clusters...
+Blame Analysis:  90% |######################################    | ETA:  0:00:01NULL
+2026-08-11 11:18:54 [codeface.util] Process-3 INFO:   -> Revision range 3/7 (2.0.0..2.1.0): Detecting clusters done.
+2026-08-11 11:18:54 [codeface.util] Process-3 INFO:   -> Revision range 6/7 (2.3.0..3.0.0): Detecting clusters...
+NULL
+2026-08-11 11:18:55 [codeface.util] Process-2 INFO:   -> Revision range 1/7 (1.0..1.1.0): Detecting clusters done.
+2026-08-11 11:18:55 [codeface.util] Process-2 INFO:   -> Revision range 4/7 (2.1.0..2.2.0): Generating reports...
+2026-08-11 11:18:55 [codeface.util] Process-2 INFO:   -> Generating Reports...
+2026-08-11 11:18:57 [codeface.util] Process-2 INFO:   -> Revision range 4/7 (2.1.0..2.2.0): Report generation done.
+2026-08-11 11:18:57 [codeface.util] Process-2 INFO:   -> Revision range 5/7 (2.2.0..2.3.0): Detecting clusters...
+Blame Analysis: 100% |##########################################| Time: 0:00:19
+Pass 1/2:   0% |                                               | ETA:  --:--:--Pass 1/2:  16% |#######                                         | ETA:  0:00:05Pass 1/2:  32% |###############                                 | ETA:  0:00:04NULL
+NULL
+2026-08-11 11:19:01 [codeface.util] Process-4 INFO:   -> Revision range 2/7 (1.1.0..2.0.0): Detecting clusters done.
+2026-08-11 11:19:01 [codeface.util] Process-4 INFO:   -> Revision range 3/7 (2.0.0..2.1.0): Generating reports...
+2026-08-11 11:19:01 [codeface.util] Process-4 INFO:   -> Generating Reports...
+2026-08-11 11:19:01 [codeface.util] Process-3 INFO:   -> Revision range 6/7 (2.3.0..3.0.0): Detecting clusters done.
+2026-08-11 11:19:01 [codeface.util] Process-3 INFO:   -> Revision range 1/7 (1.0..1.1.0): Generating reports...
+2026-08-11 11:19:01 [codeface.util] Process-3 INFO:   -> Generating Reports...
+Pass 1/2:  48% |#######################                         | ETA:  0:00:032026-08-11 11:19:02 [codeface.util] Process-3 INFO:   -> Revision range 1/7 (1.0..1.1.0): Report generation done.
+2026-08-11 11:19:02 [codeface.util] Process-3 INFO:   -> Revision range 2/7 (1.1.0..2.0.0): Generating reports...
+2026-08-11 11:19:02 [codeface.util] Process-3 INFO:   -> Generating Reports...
+2026-08-11 11:19:02 [codeface.util] Process-4 INFO:   -> Revision range 3/7 (2.0.0..2.1.0): Report generation done.
+2026-08-11 11:19:02 [codeface.util] Process-4 INFO:   -> Revision range 6/7 (2.3.0..3.0.0): Generating reports...
+2026-08-11 11:19:02 [codeface.util] Process-4 INFO:   -> Generating Reports...
+Pass 1/2:  65% |###############################                 | ETA:  0:00:022026-08-11 11:19:02 [codeface.util] Process-3 INFO:   -> Revision range 2/7 (1.1.0..2.0.0): Report generation done.
+2026-08-11 11:19:03 [codeface.util] Process-4 INFO:   -> Revision range 6/7 (2.3.0..3.0.0): Report generation done.
+Pass 1/2:  81% |#######################################         | ETA:  0:00:01NULL
+Pass 1/2:  97% |##############################################  | ETA:  0:00:002026-08-11 11:19:04 [codeface.util] Process-2 INFO:   -> Revision range 5/7 (2.2.0..2.3.0): Detecting clusters done.
+2026-08-11 11:19:04 [codeface.util] Process-3 INFO:   -> Revision range 5/7 (2.2.0..2.3.0): Generating reports...
+2026-08-11 11:19:04 [codeface.util] Process-3 INFO:   -> Generating Reports...
+Pass 1/2: 100% |################################################| Time: 0:00:06
+2026-08-11 11:19:05 [codeface.util] Process-3 INFO:   -> Revision range 5/7 (2.2.0..2.3.0): Report generation done.
+2026-08-11 11:19:05 [codeface.util] Process-1 INFO:   -> Revision range 7/7 (3.0.0..3.1.0): Commit analysis done.
+2026-08-11 11:19:05 [codeface.util] Process-4 INFO:   -> Revision range 7/7 (3.0.0..3.1.0): Detecting clusters...
+NULL
+2026-08-11 11:19:11 [codeface.util] Process-4 INFO:   -> Revision range 7/7 (3.0.0..3.1.0): Detecting clusters done.
+2026-08-11 11:19:11 [codeface.util] Process-2 INFO:   -> Revision range 7/7 (3.0.0..3.1.0): Generating reports...
+2026-08-11 11:19:11 [codeface.util] Process-2 INFO:   -> Generating Reports...
+2026-08-11 11:19:11 [codeface.util] Process-2 INFO:   -> Revision range 7/7 (3.0.0..3.1.0): Report generation done.
+2026-08-11 11:19:11 [codeface.project] MainProcess INFO: => Preparing time series data
+2026-08-11 11:19:13 [codeface.project] MainProcess INFO: => Performing complexity analysis
+2026-08-11 11:19:13 [codeface.project] MainProcess INFO:   -> Analysing range 1
+2026-08-11 11:19:14 [codeface.R.complexity] INFO: Using 4 jobs
+
+2026-08-11 11:19:14 [codeface.R.complexity] INFO: Analysing 42 code samples
+
+2026-08-11 11:19:20 [codeface.project] MainProcess INFO:   -> Analysing range 2
+2026-08-11 11:19:21 [codeface.R.complexity] INFO: Using 4 jobs
+
+2026-08-11 11:19:21 [codeface.R.complexity] INFO: Analysing 44 code samples
+
+2026-08-11 11:19:26 [codeface.project] MainProcess INFO:   -> Analysing range 3
+2026-08-11 11:19:28 [codeface.R.complexity] INFO: Using 4 jobs
+
+2026-08-11 11:19:28 [codeface.R.complexity] INFO: Analysing 40 code samples
+
+2026-08-11 11:19:33 [codeface.project] MainProcess INFO:   -> Analysing range 4
+2026-08-11 11:19:34 [codeface.R.complexity] INFO: Using 4 jobs
+
+2026-08-11 11:19:34 [codeface.R.complexity] INFO: Analysing 16 code samples
+
+2026-08-11 11:19:36 [codeface.project] MainProcess INFO:   -> Analysing range 5
+2026-08-11 11:19:37 [codeface.R.complexity] INFO: Using 4 jobs
+
+2026-08-11 11:19:37 [codeface.R.complexity] INFO: Analysing 31 code samples
+
+2026-08-11 11:19:42 [codeface.project] MainProcess INFO:   -> Analysing range 6
+2026-08-11 11:19:43 [codeface.R.complexity] INFO: Using 4 jobs
+
+2026-08-11 11:19:43 [codeface.R.complexity] INFO: Analysing 21 code samples
+
+2026-08-11 11:19:46 [codeface.project] MainProcess INFO:   -> Analysing range 7
+2026-08-11 11:19:47 [codeface.R.complexity] INFO: Using 4 jobs
+
+2026-08-11 11:19:47 [codeface.R.complexity] INFO: Analysing 41 code samples
+
+2026-08-11 11:19:53 [codeface.project] MainProcess INFO: => Analysing time series
+2026-08-11 11:20:06 [codeface.R] INFO: Unusual time zone offset:  360
+2026-08-11 11:20:07 [codeface.project] MainProcess INFO: => Codeface run complete!

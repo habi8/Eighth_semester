@@ -1,0 +1,75 @@
+[services] MySQL already running
+[services] ID service already running on :8080
+[services] all services ready
+
+==============================================================
+ codeface run
+   project conf : conf/flask-smoke.conf
+   results dir  : /work/res
+   git dir      : /work/git-repos
+   extra args   : -j2
+==============================================================
+
+/codeface/codeface/configuration.py:88: YAMLLoadWarning: calling yaml.load() without Loader=... is deprecated, as the default Loader is unsafe. Please read https://msg.pyyaml.org/load for full details.
+  return yaml.load(open(filename))
+2026-08-11 10:28:02 [codeface.project] MainProcess INFO: => Setting up project 'flask_smoke'
+2026-08-11 10:28:02 [codeface.dbmanager] MainProcess WARNING: Deleting and re-creating project flask_smoke/proximity.
+2026-08-11 10:28:02 [codeface.dbmanager] MainProcess INFO: Adding 2 new releases...
+2026-08-11 10:28:02 [codeface.util] Process-1 INFO:   -> Revision range 1/1 (3.0.0..3.1.0): Analysing commits...
+Blame Analysis:   0% |                                         | ETA:  --:--:--Blame Analysis:  45% |###################                       | ETA:  0:00:08Blame Analysis:  90% |######################################    | ETA:  0:00:01Blame Analysis: 100% |##########################################| Time: 0:00:16
+Pass 1/2:   0% |                                               | ETA:  --:--:--Pass 1/2:  16% |#######                                         | ETA:  0:00:04Pass 1/2:  32% |###############                                 | ETA:  0:00:03Pass 1/2:  48% |#######################                         | ETA:  0:00:02Pass 1/2:  65% |###############################                 | ETA:  0:00:01Pass 1/2:  81% |#######################################         | ETA:  0:00:00Pass 1/2:  97% |##############################################  | ETA:  0:00:00Pass 1/2: 100% |################################################| Time: 0:00:05
+2026-08-11 10:28:26 [codeface.util] Process-1 INFO:   -> Revision range 1/1 (3.0.0..3.1.0): Commit analysis done.
+2026-08-11 10:28:26 [codeface.util] Process-2 INFO:   -> Revision range 1/1 (3.0.0..3.1.0): Detecting clusters...
+NULL
+2026-08-11 10:28:31 [codeface.util] Process-2 INFO:   -> Revision range 1/1 (3.0.0..3.1.0): Detecting clusters done.
+2026-08-11 10:28:31 [codeface.util] Process-1 INFO:   -> Revision range 1/1 (3.0.0..3.1.0): Generating reports...
+2026-08-11 10:28:31 [codeface.util] Process-1 INFO:   -> Generating Reports...
+2026-08-11 10:28:33 [codeface.util] Process-1 INFO:   -> Revision range 1/1 (3.0.0..3.1.0): Report generation done.
+2026-08-11 10:28:33 [codeface.project] MainProcess INFO: => Preparing time series data
+2026-08-11 10:28:34 [codeface.project] MainProcess INFO: => Performing complexity analysis
+2026-08-11 10:28:34 [codeface.project] MainProcess INFO:   -> Analysing range 1
+2026-08-11 10:28:35 [codeface.R.complexity] INFO: Using 2 jobs
+
+NULL
+2026-08-11 10:28:35 [codeface.project] MainProcess INFO: => Analysing time series
+2026-08-11 10:28:38 [codeface.R] INFO: Traceback:
+  0: 
+  1: config.script.run({
+         conf <- config.from.args(positional.args = list("re
+  2: withCallingHandlers(expr, error = function(e) {
+         if (!interactive()) {
+      
+  3: do.commit.analysis(resdir, graphdir, conf)
+  4: ggsave(file.path(graphdir, "ts_commits.svg"), g, width = 12, height = 8)
+  5: dev(filename = filename, width = dim[1], height = dim[2], ...)
+  6: svglite::svglite
+  7: getExportedValue(pkg, name)
+  8: asNamespace(ns)
+  9: getNamespace(ns)
+ 10: loadNamespace(name)
+ 11: withRestarts(stop(cond), retry_loadNamespace = function() NULL)
+ 12: withOneRestart(expr, restarts[[1]])
+ 13: doWithOneRestart(return(expr), restart)
+
+2026-08-11 10:28:38 [codeface.R] CRITICAL: there is no package called ‘svglite’
+2026-08-11 10:28:39 [codeface.R] INFO: Error dump was written to 'error.dump.rda'.
+2026-08-11 10:28:39 [codeface.R] INFO: To debug, launch R and run 'load("error.dump.rda"); debugger(error.dump)'
+2026-08-11 10:28:39 [codeface.util] MainProcess ERROR: Command '/codeface/codeface/R/analyse_ts.r --loglevel info -c /codeface/codeface.conf -p /tmp/flask_smokeJ5Wh4Y -j 2 /work/res/flask_smoke/proximity' failed with exit code 1. 
+(stdout: None
+stderr: None)
+Traceback (most recent call last):
+  File "/usr/local/bin/codeface", line 11, in <module>
+    load_entry_point('codeface', 'console_scripts', 'codeface')()
+  File "/codeface/codeface/cli.py", line 242, in main
+    return run(sys.argv)
+  File "/codeface/codeface/cli.py", line 238, in run
+    return args.func(args)
+  File "/codeface/codeface/cli.py", line 129, in cmd_run
+    args.profile_r, args.jobs, args.tagging, args.reuse_db)
+  File "/codeface/codeface/project.py", line 192, in project_analyse
+    execute_command(cmd, direct_io=True, cwd=cwd)
+  File "/codeface/codeface/util.py", line 283, in execute_command
+    raise Exception(msg)
+Exception: Command '/codeface/codeface/R/analyse_ts.r --loglevel info -c /codeface/codeface.conf -p /tmp/flask_smokeJ5Wh4Y -j 2 /work/res/flask_smoke/proximity' failed with exit code 1. 
+(stdout: None
+stderr: None)
